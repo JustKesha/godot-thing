@@ -1,5 +1,6 @@
 # Custom
 /assets/
+*.tmp
 
 # Godot 4+ specific ignores
 .godot/
