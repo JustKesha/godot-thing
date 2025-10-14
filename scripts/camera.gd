@@ -3,8 +3,9 @@ class_name PlayerCameraController extends Node
 @export var camera: Camera3D
 @export var trypod: Node3D
 
+@export_group("General")
 @export var sensitivity := 50.0
-@export var turnrate := 15.0
+@export var turn_rate := 15.0
 @export var mouse_mode := Input.MOUSE_MODE_CAPTURED
 @export var h_sensitivity := 1.0
 @export var h_min := -1.0
@@ -12,13 +13,14 @@ class_name PlayerCameraController extends Node
 @export var v_sensitivity := 1.0
 @export var v_min := -0.9
 @export var v_max := 0.85
-@export var sensitivity_devider := 100000.0
+var sensitivity_divider := 100000.0
 
 @export var is_user_input_on := true
-@export var is_rotating := false
+var is_rotating := false
 
+@export_group("Target Lock")
 @export var is_target_locked := false
-@export var lock_turnrate := 3.5
+@export var lock_turn_rate := 3.5
 @export var lock_object: Node3D = null:
 	set(value):
 		if value is Node3D:
@@ -129,20 +131,15 @@ func _ready():
 	Input.set_mouse_mode(mouse_mode)
 
 func _input(event: InputEvent):
-	if Input.is_action_pressed('use'):
-		var target = $"../../../World/Light/post_lantern/OmniLight3D"
-		look(target)
-		return
-	
 	if not is_user_input_on: return
 	if is_target_locked: return
 	if not event is InputEventMouseMotion: return
 	
-	target_x_rotation -= event.relative.y * sensitivity * v_sensitivity / sensitivity_devider
-	target_y_rotation -= event.relative.x * sensitivity * h_sensitivity / sensitivity_devider
+	target_x_rotation -= event.relative.y * sensitivity * v_sensitivity / sensitivity_divider
+	target_y_rotation -= event.relative.x * sensitivity * h_sensitivity / sensitivity_divider
 
 func _process(delta: float):
-	var speed := turnrate
+	var speed := turn_rate
 	
 	if is_target_locked:
 		if lock_object:
@@ -158,7 +155,7 @@ func _process(delta: float):
 		
 		target_x_rotation = lock_angle.x
 		target_y_rotation = lock_angle.y
-		speed = lock_turnrate
+		speed = lock_turn_rate
 	elif not is_rotating: return
 	
 	camera.rotation.x = lerp(camera.rotation.x, target_x_rotation, speed * delta)
