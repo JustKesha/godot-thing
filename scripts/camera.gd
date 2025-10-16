@@ -8,8 +8,8 @@ class_name PlayerCameraController extends Node
 @export var turn_rate := 15.0
 @export var mouse_mode := Input.MOUSE_MODE_CAPTURED
 @export var h_sensitivity := 1.0
-@export var h_min := -1.0
-@export var h_max := 1.0
+@export var h_min := -1.25
+@export var h_max := 1.25
 @export var v_sensitivity := 1.0
 @export var v_min := -0.9
 @export var v_max := 0.85
@@ -69,8 +69,13 @@ var target_y_rotation := 0.0:
 			target_y_rotation = clamp(value, h_min, h_max)
 		is_rotating = true
 
-func face(where: Variant): lock(where, 2.0, true, true)
-func look(at: Variant, how_long: float = 1.75): lock(at, how_long, false, false)
+func face(where: Variant, reset_after: bool = true):
+	lock(where, 2.0, true, true)
+	if reset_after: lock_start_angle = Vector2.ZERO
+
+func look(at: Variant, how_long: float = 1.75, reset_after: bool = true):
+	lock(at, how_long, false, false)
+	if reset_after: lock_start_angle = Vector2.ZERO
 
 ## [param objective] can be a [Vector2] camera angle, [Vector3] world position
 ## or a [Node3D] object to lock onto. Use [param duration] [param -1] to lock
@@ -99,7 +104,7 @@ func unlock():
 	lock_angle = Vector2.ZERO
 	lock_await_goal = false
 	lock_timer.stop()
-	if not lock_keep_angle: lock(lock_start_angle, 1.0, true, true)
+	if not lock_keep_angle: lock(lock_start_angle, 1.5, true, true)
 	else: awake()
 
 func get_camera_angle() -> Vector2:
