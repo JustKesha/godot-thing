@@ -5,7 +5,7 @@ var base_position := Vector3.ZERO
 var base_rotation := Vector2.ZERO
 
 @export_group("Screen Shake")
-enum ShakeStrength { OFF = 0, LOW = 20, MILD = 40, MEDIUM = 75, HIGH = 100 }
+enum ShakeStrength { OFF = 0, LOW = 15, MILD = 40, MEDIUM = 75, HIGH = 100 }
 @export var shake_strength: float = ShakeStrength.LOW
 @export var shake_amplitude := 3.5
 @export var shake_speed := 0.75
@@ -17,7 +17,7 @@ var shake_time := 0.0
 
 @export_group("Head Bobbing")
 @export var bob_speed := 4.5
-@export var bob_amplitude := 0.04
+@export var bob_amplitude := 0.045
 @export var bob_smoothness := 5.0
 var current_bob_intensity := 0.0
 var target_bob_intensity := 0.0
@@ -54,8 +54,9 @@ func apply_bob(delta: float):
 	
 	head.position = base_position + bob_pos
 
-func _on_player_move(speed: float):
-	target_bob_intensity = speed * bob_amplitude
+func _on_player_move():
+	# Might be better to use distance traveled instead
+	target_bob_intensity = Stats.speed * bob_amplitude
 
 func _on_player_stop():
 	target_bob_intensity = 0.0

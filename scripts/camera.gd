@@ -69,18 +69,20 @@ var target_y_rotation := 0.0:
 			target_y_rotation = clamp(value, h_min, h_max)
 		is_rotating = true
 
-func face(where: Variant, reset_after: bool = true):
+func face(where: Variant):
 	lock(where, 2.0, true, true)
-	if reset_after: lock_start_angle = Vector2.ZERO
 
-func look(at: Variant, how_long: float = 1.75, reset_after: bool = true):
-	lock(at, how_long, false, false)
+## NOTE The [param duration] determines the total number of seconds for which
+## the player's free camera movement is obstructed (including turn time),
+## not how long the player will face the target.
+func look(at: Variant, reset_after: bool = true, duration: float = 1.75):
+	lock(at, duration, false, false)
 	if reset_after: lock_start_angle = Vector2.ZERO
 
 ## [param objective] can be a [Vector2] camera angle, [Vector3] world position
 ## or a [Node3D] object to lock onto. Use [param duration] [param -1] to lock
 ## until manually reset. When [param auto_unlock] is [param true], will
-## reset once the [param objective] condition is reached.
+## reset once the [param objective] condition is reached. Using seconds.
 func lock(
 	objective: Variant,
 	timeout: float = -1.0,
