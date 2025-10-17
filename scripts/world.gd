@@ -6,8 +6,13 @@ class_name WorldGenerator extends Node
 @export_group("Segmentation")
 @export var preload_segments := 10
 @export var segment_spacing := 10.0
-@export var segment_unload_at_z := 20.0
+@export var segment_unload_z := 20.0
 var loaded_segments: Array[Node3D] = []
+
+@export_group("Horizon")
+@export var horizon_start_z := -10
+@export var segment_spawn_depth := .125
+@export var segment_digout_speed := .25
 
 func init() -> void:
 	clear()
@@ -22,6 +27,9 @@ func update() -> void:
 func move(delta: float, speed: float = Stats.speed) -> void:
 	for segment in loaded_segments:
 		segment.position.z += delta * speed
+		if segment.position.y < 0:
+			segment.position.y += delta * speed * segment_digout_speed
+			if segment.position.y > 0: segment.position.y = 0
 
 func clear() -> int:
 	var segments_removed := 1
@@ -59,13 +67,18 @@ func get_next_segment_position() -> Vector3:
 	var index = len(loaded_segments) - 1
 	var pos = Vector3.FORWARD * index * segment_spacing
 	
+	print(str(index)+', z = '+str(pos.z))
+	if pos.z < horizon_start_z:
+		pos.y = index * segment_spacing * -segment_spawn_depth
+	
+	#print(str(index)+', y = '+str(pos.y))
 	return pos
 
 func get_next_segment() -> Resource:
 	return SetPieces.pieces.pick_random()
 
 func is_segment_unload_time(segment: Node3D) -> bool:
-	return segment.position.z > segment_unload_at_z
+	return segment.position.z > segment_unload_z
 
 func _on_player_move() -> void:
 	update()
