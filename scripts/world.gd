@@ -2,10 +2,11 @@ class_name WorldGenerator extends Node
 
 @export var world: Node3D
 @export var player: Node3D
+
+@export_group("Segmentation")
 @export var preload_segments := 10
 @export var segment_spacing := 10.0
-@export var segment_unload_at_z := 10.0
-
+@export var segment_unload_at_z := 20.0
 var loaded_segments: Array[Node3D] = []
 
 func init() -> void:
@@ -55,7 +56,10 @@ func unload_segment(segment: Node3D) -> void:
 		loaded_segments.erase(segment)
 
 func get_next_segment_position() -> Vector3:
-	return Vector3.FORWARD * len(loaded_segments) * segment_spacing
+	var index = len(loaded_segments) - 1
+	var pos = Vector3.FORWARD * index * segment_spacing
+	
+	return pos
 
 func get_next_segment() -> Resource:
 	return SetPieces.pieces.pick_random()
