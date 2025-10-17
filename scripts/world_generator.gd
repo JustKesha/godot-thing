@@ -59,12 +59,11 @@ func clean() -> int:
 	
 	return len(segments_to_remove)
 
-func load_segment(segment: Resource):
-	var instance := segment.instantiate() as Node3D
-	world.add_child(instance)
-	instance.position = get_next_segment_position()
-	instance.rotation = get_next_segment_angle()
-	loaded_segments.append(instance)
+func load_segment(segment: Node3D):
+	world.add_child(segment)
+	segment.position = get_next_segment_position()
+	segment.rotation = get_next_segment_angle()
+	loaded_segments.append(segment)
 
 func unload_segment(segment: Node3D):
 	if is_instance_valid(segment):
@@ -92,8 +91,8 @@ func get_next_segment_angle() -> Vector3:
 func get_next_segment_index() -> int:
 	return len(loaded_segments) - 1
 
-func get_next_segment() -> Resource:
-	return WorldSegments.list.pick_random()
+func get_next_segment() -> Node3D:
+	return WorldSegments.get_random()
 
 func is_segment_unload_time(segment: Node3D) -> bool:
 	return segment.position.z > segment_unload_z
