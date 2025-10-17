@@ -1,4 +1,10 @@
-# Custom
+# TEMP
+project.godot
+.editorconfig
+.gitattributes
+/scenes/
+
+# Project specific
 /assets/
 *.tmp
 
