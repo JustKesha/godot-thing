@@ -11,10 +11,8 @@ var loaded_segments: Array[Node3D] = []
 
 @export_group("Horizon")
 @export var horizon_start_index := 2
-@export var segment_spawn_depth := .35
-@export var segment_spawn_angle := .035
-@export var horizon_appear_speed := .35
-@export var horizon_rotate_speed := .035
+@export var segment_spawn_depth := .25
+@export var segment_spawn_angle := .05
 
 func init():
 	clear()
@@ -31,11 +29,11 @@ func move(delta: float, speed: float = Stats.speed):
 		segment.position.z += delta * speed
 		
 		if segment.position.y < 0:
-			segment.position.y += delta * speed * horizon_appear_speed
+			segment.position.y += delta * speed * segment_spawn_depth
 			if segment.position.y > 0: segment.position.y = 0
 		
 		if segment.rotation.x < 0:
-			segment.rotation.x += delta * speed * horizon_rotate_speed
+			segment.rotation.x += delta * speed * segment_spawn_angle
 			if segment.rotation.x > 0: segment.rotation.x = 0
 
 func clear() -> int:
