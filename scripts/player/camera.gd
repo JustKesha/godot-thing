@@ -29,7 +29,7 @@ var is_rotating := false
 		else:
 			lock_object = null
 			is_target_locked = false
-@export var lock_position: Vector3 = Vector3.ZERO:
+@export var lock_position := Vector3.ZERO:
 	set(value):
 		if value or is_target_locked:
 			lock_position = value
@@ -37,7 +37,7 @@ var is_rotating := false
 		else:
 			lock_position = Vector3.ZERO
 			is_target_locked = false
-@export var lock_angle: Vector2 = Vector2.ZERO:
+@export var lock_angle := Vector2.ZERO:
 	set(value):
 		if value or is_target_locked:
 			lock_angle = value
@@ -75,7 +75,11 @@ func face(where: Variant):
 ## NOTE The [param duration] determines the total number of seconds for which
 ## the player's free camera movement is obstructed (including turn time),
 ## not how long the player will face the target.
-func look(at: Variant, reset_after: bool = true, duration: float = 1.75):
+func look(
+	at: Variant,
+	reset_after: bool = true,
+	duration: float = 1.75
+	):
 	lock(at, duration, false, false)
 	if reset_after: lock_start_angle = Vector2.ZERO
 

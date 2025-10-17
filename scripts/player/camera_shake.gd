@@ -5,8 +5,9 @@ var base_position := Vector3.ZERO
 var base_rotation := Vector2.ZERO
 
 @export_group("Screen Shake")
+@export var is_screen_shake_on := true # NOTE Does not reset cam position
 enum ShakeStrength { OFF = 0, LOW = 15, MILD = 40, MEDIUM = 75, HIGH = 100 }
-@export var shake_strength: float = ShakeStrength.LOW
+@export var shake_strength := ShakeStrength.LOW
 @export var shake_amplitude := 3.5
 @export var shake_speed := 0.75
 var shake_amplitude_divider := 15000
@@ -16,6 +17,7 @@ var shake_h_offset_multiplier := 2.3
 var shake_time := 0.0
 
 @export_group("Head Bobbing")
+@export var is_head_bobbing_on := true # NOTE Does not reset cam position
 @export var bob_speed := 4.5
 @export var bob_amplitude := 0.045
 @export var bob_smoothness := 5.0
@@ -27,7 +29,7 @@ var bob_h_multiplier := 3.0
 var bob_time := 0.0
 
 func apply_shake(delta: float):
-	if shake_strength == 0: return
+	if not is_screen_shake_on or shake_strength == 0: return
 	
 	shake_time += delta * shake_speed * shake_strength/shake_speed_divider
 	
@@ -41,6 +43,8 @@ func apply_shake(delta: float):
 	head.rotation.y = base_rotation.y + shake_rot.y
 
 func apply_bob(delta: float):
+	if not is_head_bobbing_on: return
+	
 	current_bob_intensity = lerp(current_bob_intensity, target_bob_intensity, bob_smoothness * delta)
 	if current_bob_intensity < bob_intensity_threshold: return
 	
@@ -55,7 +59,6 @@ func apply_bob(delta: float):
 	head.position = base_position + bob_pos
 
 func _on_player_move():
-	# Might be better to use distance traveled instead
 	target_bob_intensity = Stats.speed * bob_amplitude
 
 func _on_player_stop():

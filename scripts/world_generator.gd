@@ -16,17 +16,17 @@ var loaded_segments: Array[Node3D] = []
 @export var horizon_appear_speed := .35
 @export var horizon_rotate_speed := .035
 
-func init() -> void:
+func init():
 	clear()
 	update()
 
-func update() -> void:
+func update():
 	clean()
 	
 	while len(loaded_segments) < preload_segments:
 		load_segment(get_next_segment())
 
-func move(delta: float, speed: float = Stats.speed) -> void:
+func move(delta: float, speed: float = Stats.speed):
 	for segment in loaded_segments:
 		segment.position.z += delta * speed
 		
@@ -59,14 +59,14 @@ func clean() -> int:
 	
 	return len(segments_to_remove)
 
-func load_segment(segment: Resource) -> void:
+func load_segment(segment: Resource):
 	var instance := segment.instantiate() as Node3D
 	world.add_child(instance)
 	instance.position = get_next_segment_position()
 	instance.rotation = get_next_segment_angle()
 	loaded_segments.append(instance)
 
-func unload_segment(segment: Node3D) -> void:
+func unload_segment(segment: Node3D):
 	if is_instance_valid(segment):
 		segment.queue_free()
 		loaded_segments.erase(segment)
@@ -93,13 +93,13 @@ func get_next_segment_index() -> int:
 	return len(loaded_segments) - 1
 
 func get_next_segment() -> Resource:
-	return SetPieces.pieces.pick_random()
+	return WorldSegments.list.pick_random()
 
 func is_segment_unload_time(segment: Node3D) -> bool:
 	return segment.position.z > segment_unload_z
 
-func _on_player_move() -> void:
+func _on_player_move():
 	update()
 
-func _ready() -> void:
+func _ready():
 	init()
