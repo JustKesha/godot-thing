@@ -10,9 +10,11 @@ class_name WorldGenerator extends Node
 var loaded_segments: Array[Node3D] = []
 
 @export_group("Horizon")
-@export var horizon_start_z := -10
-@export var segment_spawn_depth := .125
-@export var segment_digout_speed := .25
+@export var horizon_start_index := 2
+@export var segment_spawn_depth := .35
+@export var segment_spawn_angle := .035
+@export var horizon_appear_speed := .35
+@export var horizon_rotate_speed := .035
 
 func init() -> void:
 	clear()
@@ -27,9 +29,14 @@ func update() -> void:
 func move(delta: float, speed: float = Stats.speed) -> void:
 	for segment in loaded_segments:
 		segment.position.z += delta * speed
+		
 		if segment.position.y < 0:
-			segment.position.y += delta * speed * segment_digout_speed
+			segment.position.y += delta * speed * horizon_appear_speed
 			if segment.position.y > 0: segment.position.y = 0
+		
+		if segment.rotation.x < 0:
+			segment.rotation.x += delta * speed * horizon_rotate_speed
+			if segment.rotation.x > 0: segment.rotation.x = 0
 
 func clear() -> int:
 	var segments_removed := 1
@@ -55,7 +62,8 @@ func clean() -> int:
 func load_segment(segment: Resource) -> void:
 	var instance := segment.instantiate() as Node3D
 	world.add_child(instance)
-	instance.global_position = get_next_segment_position()
+	instance.position = get_next_segment_position()
+	instance.rotation = get_next_segment_angle()
 	loaded_segments.append(instance)
 
 func unload_segment(segment: Node3D) -> void:
@@ -64,15 +72,25 @@ func unload_segment(segment: Node3D) -> void:
 		loaded_segments.erase(segment)
 
 func get_next_segment_position() -> Vector3:
-	var index = len(loaded_segments) - 1
+	var index = get_next_segment_index()
 	var pos = Vector3.FORWARD * index * segment_spacing
 	
-	print(str(index)+', z = '+str(pos.z))
-	if pos.z < horizon_start_z:
-		pos.y = index * segment_spacing * -segment_spawn_depth
+	if index >= horizon_start_index:
+		pos.y = (index - horizon_start_index) * segment_spacing * -segment_spawn_depth
 	
-	#print(str(index)+', y = '+str(pos.y))
 	return pos
+
+func get_next_segment_angle() -> Vector3:
+	var index = get_next_segment_index()
+	var ang = Vector3.ZERO
+	
+	if index >= horizon_start_index:
+		ang.x = (index - horizon_start_index) * segment_spacing * -segment_spawn_angle
+	
+	return ang
+
+func get_next_segment_index() -> int:
+	return len(loaded_segments) - 1
 
 func get_next_segment() -> Resource:
 	return SetPieces.pieces.pick_random()
