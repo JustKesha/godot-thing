@@ -21,7 +21,7 @@ signal reignited
 	set(value):
 		var before = intensity
 		
-		intensity = clamp(value, min_intensity, max_intensity)
+		intensity = clampf(value, min_intensity, max_intensity)
 		
 		if intensity != before:
 			intensity_changed.emit(intensity)
@@ -61,16 +61,26 @@ var _intensity_snap_threshold := 0.005
 @export var halo_fog_multiplier := 3.0
 var _halo: OmniLight3D
 
+@export_group("Flickering")
+@export var flicker_intensity := 0.15
+@export var flicker_transition := 6.5
+@export var flicker_min_duration := 0.1
+@export var flicker_max_duration := 0.3
+var _flicker_target_intensity := 0.0
+var _flicker_current_intensity := 0.0
+var _flicker_timer := 0.0
+
 func _update():
 	var lit_multiplier := 1 if is_lit else 0
+	var fact_intensity := _current_intensity + _flicker_current_intensity
 	
-	light_energy = _current_intensity * energy_multiplier * lit_multiplier
-	omni_range = _current_intensity * radius_multiplier
+	light_energy = fact_intensity * energy_multiplier * lit_multiplier
+	omni_range = fact_intensity * radius_multiplier
 	
 	if _halo:
-		_halo.light_energy = _current_intensity * halo_energy_multiplier
-		_halo.omni_range = _current_intensity * halo_radius_multiplier
-		_halo.light_volumetric_fog_energy = _current_intensity * halo_fog_multiplier
+		_halo.light_energy = fact_intensity * halo_energy_multiplier
+		_halo.omni_range = fact_intensity * halo_radius_multiplier
+		_halo.light_volumetric_fog_energy = fact_intensity * halo_fog_multiplier
 
 func _transition(delta: float):
 	if not is_lit: return
@@ -82,6 +92,21 @@ func _transition(delta: float):
 	
 	_current_intensity = lerp(_current_intensity,
 		intensity, delta * intensity_transition_speed)
+
+func _flicker(delta: float):
+	if flicker_intensity <= 0.0:
+		_flicker_current_intensity = 0.0
+		return
+	
+	_flicker_timer -= delta
+	if _flicker_timer <= 0:
+		_flicker_target_intensity = randf_range(-flicker_intensity, flicker_intensity)
+		_flicker_timer = randf_range(flicker_min_duration, flicker_max_duration)
+	
+	_flicker_current_intensity = lerp(_flicker_current_intensity,
+		_flicker_target_intensity, delta * flicker_transition)
+	
+	_update()
 
 func _create_halo():
 	if _halo: return
@@ -105,3 +130,4 @@ func _ready():
 
 func _process(delta: float):
 	_transition(delta)
+	_flicker(delta)
