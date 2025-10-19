@@ -28,11 +28,15 @@ signal reignited
 @export var min_intensity := 1.0:
 	set(value):
 		min_intensity = value
-		intensity = intensity
+		if min_intensity > max_intensity:
+			min_intensity = max_intensity
+		_awake()
 @export var max_intensity := 6.0:
 	set(value):
 		max_intensity = value
-		intensity = intensity
+		if max_intensity < min_intensity:
+			max_intensity = min_intensity
+		_awake()
 @export var energy_multiplier := 0.25:
 	set(value):
 		energy_multiplier = value
@@ -123,8 +127,11 @@ func _remove_halo():
 	_halo.queue_free()
 	_halo = null
 
-func _ready():
+func _awake():
 	intensity = intensity
+
+func _ready():
+	_awake()
 	if create_halo: _create_halo()
 	_update()
 
