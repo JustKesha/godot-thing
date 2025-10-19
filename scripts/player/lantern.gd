@@ -3,7 +3,7 @@ extends Node
 @export var light: InteractiveLight
 
 @export_group("General")
-@export var intensity_change_rate := 0.45
+@export var intensity_change_rate := 0.65
 @export var update_rate := 1.0
 var update_timer := 0.0
 
@@ -11,10 +11,10 @@ var update_timer := 0.0
 @export var fuel := 75.0:
 	set(value):
 		fuel = clampf(value, 0, fuel_limit)
-		if fuel == 0:
-			light.is_lit = false
+		if fuel == 0: extinguish()
 @export var fuel_limit := 100.0
-@export var fuel_deplition_rate := 3.5
+@export var fuel_depletion_rate_min := 0.1
+@export var fuel_depletion_rate_max := 0.75
 
 func lightup(intensity: float = -1.0):
 	light.is_lit = true
@@ -23,17 +23,32 @@ func lightup(intensity: float = -1.0):
 func extinguish():
 	light.is_lit = false
 
-func change_intensity(dir: float, strength: float = intensity_change_rate) -> float:
+func change_intensity(dir: float,
+	strength: float = intensity_change_rate) -> float:
 	light.intensity += dir * strength
 	return light.intensity
 
-func deplete(how_much: float = fuel_deplition_rate):
-	if not light.is_lit: return
+func deplete(how_much: float = -1.0):
+	if how_much < 0:
+		how_much = get_depletion_rate()
+	
 	fuel -= how_much
-	print('LANTERN F:',fuel,'%, DR:',fuel_deplition_rate)
+	print('LANTERN F: ',fuel,'%, I: ',light.intensity,' DR: ',how_much)
+
+func get_depletion_rate() -> float:
+	var normalized_intensity = (
+		( light.intensity - light.min_intensity )
+		/ ( light.max_intensity - light.min_intensity )
+	)
+	var depletion_rate = (
+		normalized_intensity
+		* (fuel_depletion_rate_max - fuel_depletion_rate_min)
+		+ fuel_depletion_rate_min
+	)
+	return depletion_rate
 
 func update():
-	deplete()
+	if light.is_lit: deplete()
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed('light'):
