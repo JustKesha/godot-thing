@@ -12,8 +12,21 @@ var update_timer := 0.0
 	set(value):
 		fuel = clampf(value, 0, fuel_limit)
 		if fuel == 0: extinguish()
+		
+		elif fuel < 20:
+			light.flicker_intensity = 0.6
+			light.flicker_min_duration = 0.05
+			light.flicker_max_duration = 0.15
+		elif fuel < 50:
+			light.flicker_intensity = 0.3
+			light.flicker_min_duration = 0.05
+			light.flicker_max_duration = 0.25
+		else:
+			light.flicker_intensity = 0.1
+			light.flicker_min_duration = 0.2
+			light.flicker_max_duration = 0.4
 @export var fuel_limit := 100.0
-@export var fuel_depletion_rate_min := 0.1
+@export var fuel_depletion_rate_min := 0.15
 @export var fuel_depletion_rate_max := 0.75
 
 func lightup(intensity: float = -1.0):
