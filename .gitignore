@@ -3,6 +3,7 @@ project.godot
 .editorconfig
 .gitattributes
 /scenes/
+/fonts/
 
 # Project specific
 /assets/
