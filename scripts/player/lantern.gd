@@ -54,8 +54,18 @@ var fuel_bar_bg_width := 0.0:
 			fuel_bar_bg.position.x = (
 				(fuel_bar_center_x - fuel_bar_bg.size.x) / 2
 				)
-@export var fuel_bar_scale := 2.0
-@export var fuel_bar_trans_speed := 3.5
+@export var fuel_under_bar: ColorRect
+var fuel_under_bar_width := 0.0:
+	set(value):
+		fuel_under_bar_width = value
+		if fuel_under_bar:
+			fuel_under_bar.size.x = fuel_under_bar_width * fuel_bar_scale
+			fuel_under_bar.position.x = (
+				(fuel_bar_center_x - fuel_under_bar.size.x) / 2
+				)
+@export var fuel_bar_scale := 3.0
+@export var fuel_bar_trans_speed := 1.75
+@export var fuel_under_bar_trans_speed := 8
 var fuel_bar_center_x := 0.0
 
 func lightup(intensity: float = -1.0):
@@ -93,17 +103,20 @@ func _update():
 
 func _update_ui(delta: float):
 	if not fuel_bar: return
+	var fuel_trg := (fuel / fuel_limit) * fuel_limit
 
 	fuel_bar_width = lerp(fuel_bar_width,
-		(fuel / fuel_limit) * fuel_limit, fuel_bar_trans_speed * delta)
+		fuel_trg, fuel_bar_trans_speed * delta)
 	
 	fuel_bar_bg_width = lerp(fuel_bar_bg_width,
 		fuel_limit, fuel_bar_trans_speed * delta)
+	
+	fuel_under_bar_width = lerp(fuel_under_bar_width,
+		fuel_trg, fuel_under_bar_trans_speed * delta)
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed('light'):
 		light.is_lit = not light.is_lit
-		fuel_limit -= 15
 	
 	elif event.is_action_pressed('light_up'):
 		change_intensity(1)
