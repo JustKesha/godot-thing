@@ -27,17 +27,16 @@ var update_timer := 0.0
 			light.flicker_max_duration = 0.25
 @export var fuel_limit := 100.0:
 	set(value):
-		fuel_limit = value
+		if value < 0:
+			fuel_limit = 0
+		else:
+			fuel_limit = value
 		fuel = fuel
 @export var fuel_depletion_rate_min := 0.15
 @export var fuel_depletion_rate_max := 0.75
 
 @export_group("UI")
 @export var fuel_bar: ColorRect
-@export var fuel_bar_bg: ColorRect
-@export var fuel_bar_trans_speed := 3.5
-var fuel_bar_scale := 2.0
-var fuel_bar_center_x := 0.0
 var fuel_bar_width := 0.0:
 	set(value):
 		fuel_bar_width = value
@@ -46,6 +45,18 @@ var fuel_bar_width := 0.0:
 			fuel_bar.position.x = (
 				(fuel_bar_center_x - fuel_bar.size.x) / 2
 				)
+@export var fuel_bar_bg: ColorRect
+var fuel_bar_bg_width := 0.0:
+	set(value):
+		fuel_bar_bg_width = value
+		if fuel_bar_bg:
+			fuel_bar_bg.size.x = fuel_bar_bg_width * fuel_bar_scale
+			fuel_bar_bg.position.x = (
+				(fuel_bar_center_x - fuel_bar_bg.size.x) / 2
+				)
+@export var fuel_bar_scale := 2.0
+@export var fuel_bar_trans_speed := 3.5
+var fuel_bar_center_x := 0.0
 
 func lightup(intensity: float = -1.0):
 	light.is_lit = true
@@ -86,15 +97,13 @@ func _update_ui(delta: float):
 	fuel_bar_width = lerp(fuel_bar_width,
 		(fuel / fuel_limit) * fuel_limit, fuel_bar_trans_speed * delta)
 	
-	if fuel_bar_bg:
-		fuel_bar_bg.size.x = fuel_limit * fuel_bar_scale
-		fuel_bar_bg.position.x = (
-			(fuel_bar_center_x - fuel_bar_bg.size.x) / 2
-			)
+	fuel_bar_bg_width = lerp(fuel_bar_bg_width,
+		fuel_limit, fuel_bar_trans_speed * delta)
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed('light'):
 		light.is_lit = not light.is_lit
+		fuel_limit -= 15
 	
 	elif event.is_action_pressed('light_up'):
 		change_intensity(1)
