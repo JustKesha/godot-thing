@@ -8,36 +8,41 @@ extends Node
 var update_timer := 0.0
 
 @export_group("Fuel")
-@export var fuel := 75.0:
+@export var fuel := 100.0:
 	set(value):
 		fuel = clampf(value, 0, fuel_limit)
 		if fuel == 0: extinguish()
 		
 		elif fuel < 20:
-			light.flicker_intensity = 0.6
-			light.flicker_min_duration = 0.05
-			light.flicker_max_duration = 0.15
+			light.flicker_intensity = 0.5
+			light.flicker_min_duration = 0.01
+			light.flicker_max_duration = 0.075
 		elif fuel < 50:
-			light.flicker_intensity = 0.3
+			light.flicker_intensity = 0.25
 			light.flicker_min_duration = 0.05
-			light.flicker_max_duration = 0.25
+			light.flicker_max_duration = 0.2
 		else:
 			light.flicker_intensity = 0.1
-			light.flicker_min_duration = 0.2
-			light.flicker_max_duration = 0.4
+			light.flicker_min_duration = 0.1
+			light.flicker_max_duration = 0.25
 @export var fuel_limit := 100.0
 @export var fuel_depletion_rate_min := 0.15
-@export var fuel_depletion_rate_max := 0.75
+@export var fuel_depletion_rate_max := 10.75
 
 @export_group("UI")
-@export var fuel_bar: ColorRect
-@export var fuel_bar_width_limit := 400
-@export var fuel_bar_trans_speed := 2.5
+@export var fuel_bar: ColorRect:
+	set(value):
+		fuel_bar = value
+		fuel_bar_width_limit = fuel_bar.size.x
+@export var fuel_bar_width_limit := 100
+@export var fuel_bar_trans_speed := 3.5
+var fuel_bar_center_x := 0.0
 var fuel_bar_width := 0.0:
 	set(value):
 		fuel_bar_width = value
 		if fuel_bar:
 			fuel_bar.size.x = fuel_bar_width
+			fuel_bar.position.x = (fuel_bar_center_x - fuel_bar.size.x) / 2
 
 func lightup(intensity: float = -1.0):
 	light.is_lit = true
