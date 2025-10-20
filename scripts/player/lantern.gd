@@ -116,6 +116,7 @@ func _update_ui(delta: float):
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed('light'):
+		if not fuel: return
 		light.is_lit = not light.is_lit
 	
 	elif event.is_action_pressed('light_up'):
