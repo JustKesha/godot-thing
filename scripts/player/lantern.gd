@@ -29,6 +29,16 @@ var update_timer := 0.0
 @export var fuel_depletion_rate_min := 0.15
 @export var fuel_depletion_rate_max := 0.75
 
+@export_group("UI")
+@export var fuel_bar: ColorRect
+@export var fuel_bar_width_limit := 400
+@export var fuel_bar_trans_speed := 2.5
+var fuel_bar_width := 0.0:
+	set(value):
+		fuel_bar_width = value
+		if fuel_bar:
+			fuel_bar.size.x = fuel_bar_width
+
 func lightup(intensity: float = -1.0):
 	light.is_lit = true
 	if intensity > 0: light.intensity = intensity
@@ -42,13 +52,12 @@ func change_intensity(dir: float,
 	return light.intensity
 
 func deplete(how_much: float = -1.0):
-	if how_much < 0:
-		how_much = get_depletion_rate()
+	if how_much < 0: how_much = _get_depletion_rate()
 	
 	fuel -= how_much
 	print('LANTERN F: ',fuel,'%, I: ',light.intensity,' DR: ',how_much)
 
-func get_depletion_rate() -> float:
+func _get_depletion_rate() -> float:
 	var normalized_intensity = (
 		( light.intensity - light.min_intensity )
 		/ ( light.max_intensity - light.min_intensity )
@@ -60,8 +69,14 @@ func get_depletion_rate() -> float:
 	)
 	return depletion_rate
 
-func update():
+func _update():
 	if light.is_lit: deplete()
+
+func _update_ui(delta: float):
+	if not fuel_bar: return
+
+	fuel_bar_width = lerp(fuel_bar_width,
+		(fuel / fuel_limit) * fuel_bar_width_limit, fuel_bar_trans_speed * delta)
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed('light'):
@@ -76,5 +91,6 @@ func _process(delta: float):
 	if update_timer > 0:
 		update_timer -= delta
 	else:
-		update()
+		_update()
 		update_timer = update_rate
+	_update_ui(delta)
