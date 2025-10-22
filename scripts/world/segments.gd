@@ -1,9 +1,9 @@
 class_name WorldSegments extends Resource
 
 static var path := "res://scenes/segments/"
-static var list := _load_names()
+static var list := _load_names(path)
 
-static func _load_names() -> Array:
+static func _load_names(path: String) -> Array:
 	var result := []
 	var dir = DirAccess.open(path)
 	if dir:

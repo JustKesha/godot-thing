@@ -4,7 +4,7 @@ signal move(speed: float, delta: float)
 signal stop(distance_traveled: float)
 
 @export var world: WorldGenerator
-@export var speed := 4.0
+@export var speed := 2.5
 @export var distance_traveled := 0.0
 var is_moving := false
 

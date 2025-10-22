@@ -14,7 +14,7 @@ var update_timer := 0.0
 		if fuel == 0: extinguish()
 		
 		elif fuel < 20:
-			light.flicker_intensity = 0.5
+			light.flicker_intensity = 0.3
 			light.flicker_min_duration = 0.01
 			light.flicker_max_duration = 0.075
 		elif fuel < 50:
@@ -68,7 +68,7 @@ var fuel_under_bar_width := 0.0:
 @export var fuel_under_bar_trans_speed := 8
 var fuel_bar_center_x := 0.0
 
-func lightup(intensity: float = -1.0):
+func reignite(intensity: float = -1.0):
 	light.is_lit = true
 	if intensity > 0: light.intensity = intensity
 
@@ -115,9 +115,8 @@ func _update_ui(delta: float):
 		fuel_trg, fuel_under_bar_trans_speed * delta)
 
 func _unhandled_input(event: InputEvent):
-	if event.is_action_pressed('light'):
-		if not fuel: return
-		light.is_lit = not light.is_lit
+	if event.is_action_pressed('extinguish'):
+		light.is_lit = false
 	
 	elif event.is_action_pressed('light_up'):
 		change_intensity(1)
