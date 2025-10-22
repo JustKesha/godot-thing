@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://43r0nnev0kv8"]
+
+[ext_resource type="PackedScene" uid="uid://ddbnnkfv7j6kv" path="res://scenes/segment.tscn" id="1_gpx17"]
+[ext_resource type="PackedScene" uid="uid://co2cmgkm58g2n" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/path_D.fbx" id="2_8qtq0"]
+[ext_resource type="PackedScene" uid="uid://chafeebqvfp1m" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/grave_A.fbx" id="3_8dmij"]
+[ext_resource type="PackedScene" uid="uid://dnpgkj5v053kf" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/grave_A_destroyed.fbx" id="4_ladsj"]
+[ext_resource type="PackedScene" uid="uid://d4d4rc5mnt7l2" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/gravestone.fbx" id="5_32tkp"]
+
+[node name="Segment" instance=ExtResource("1_gpx17")]
+
+[node name="path_D" parent="." index="1" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(0.420814, 0.0174782, -0.906978, -4.97283e-10, 0.999814, 0.0192672, 0.907147, -0.00810792, 0.420736, -6.55153, -0.0776452, 0.341319)
+
+[node name="path_D3" parent="." index="2" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, -6.3819, -0.0501655, 0.99479)
+
+[node name="path_D8" parent="." index="3" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, 6.6038, -0.0782403, 3.49611)
+
+[node name="path_D7" parent="." index="4" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(-0.64252, -0.0147639, 0.766126, 3.47563e-10, 0.999814, 0.0192672, -0.766269, 0.0123796, -0.642401, 6.03953, -0.0310608, -2.68224)
+
+[node name="path_D4" parent="." index="5" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, -3.549, -0.0501655, 3.66062)
+
+[node name="path_D6" parent="." index="6" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, 2.7721, -0.0501655, 1.24845)
+
+[node name="path_D2" parent="." index="7" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(0.0241941, 0.0234616, 0.999432, -0.0167004, 0.999595, -0.0230611, -0.999567, -0.016133, 0.0245764, -3.39907, -0.0723675, 2.89281)
+
+[node name="path_D5" parent="." index="8" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(0.614096, 0.0255365, 0.788818, -0.00574491, 0.999595, -0.0278875, -0.78921, 0.0125939, 0.613994, -3.41967, -0.0688558, -1.50996)
+
+[node name="grave_A" parent="." index="9" instance=ExtResource("3_8dmij")]
+transform = Transform3D(0.9967, 0.032126, -0.0745399, -0.0353305, 0.998489, -0.0420781, 0.0730755, 0.0445728, 0.99633, -3.33726, -0.0674404, -3)
+
+[node name="grave_A2" parent="." index="10" instance=ExtResource("3_8dmij")]
+transform = Transform3D(0.995838, -0.0750504, -0.0517187, 0.0722256, 0.995899, -0.0544796, 0.0555954, 0.0505175, 0.997175, 7.01013, -0.0901382, 2)
+
+[node name="grave_A_destroyed" parent="." index="11" instance=ExtResource("4_ladsj")]
+transform = Transform3D(0.997704, -0.0455847, -0.0500874, 0.045642, 0.998958, 0, 0.0500352, -0.00228609, 0.998745, 3.01013, -0.0457222, 0)
+
+[node name="grave_A_destroyed2" parent="." index="12" instance=ExtResource("4_ladsj")]
+transform = Transform3D(0.923857, -0.357413, 0.136909, 0.360811, 0.932639, 0, -0.127686, 0.0493981, 0.990584, -6.33726, -0.642357, -1)
+
+[node name="gravestone" parent="." index="13" instance=ExtResource("5_32tkp")]
+transform = Transform3D(0.997666, -0.0681008, 0.00489467, 0.0682765, 0.995099, -0.0715216, 0, 0.0716889, 0.997427, -3.33726, -0.114891, 2)
+
+[node name="gravestone2" parent="." index="14" instance=ExtResource("5_32tkp")]
+transform = Transform3D(0.961459, -0.0362449, 0.27255, 0, 0.991273, 0.131824, -0.274949, -0.126743, 0.953068, 6.01013, 0, -3)

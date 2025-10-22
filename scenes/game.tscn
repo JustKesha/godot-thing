@@ -1,0 +1,256 @@
+[gd_scene load_steps=24 format=3 uid="uid://b7owo051mahdu"]
+
+[ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
+[ext_resource type="Script" uid="uid://cfcy0l63lmkbv" path="res://scripts/player/hands.gd" id="6_0tnpc"]
+[ext_resource type="Script" uid="uid://dax72mr3u4mak" path="res://scripts/light.gd" id="6_p57ef"]
+[ext_resource type="Script" uid="uid://blcuhiqwtfdl5" path="res://scripts/player/lantern.gd" id="6_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://b8mxrvh7c55n7" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_standing.fbx" id="7_gee14"]
+[ext_resource type="Script" uid="uid://nogdh47dnwq2" path="res://scripts/player/api.gd" id="10_vtaks"]
+[ext_resource type="Script" uid="uid://dflx3x0d23ff1" path="res://scripts/player/inventory.gd" id="11_kvpfn"]
+[ext_resource type="Script" uid="uid://utcd1g44dmpc" path="res://scripts/player/movement.gd" id="14_suyxu"]
+[ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera_shake.gd" id="15_rysoc"]
+[ext_resource type="Script" uid="uid://y0hxp8wo0eyv" path="res://scripts/player/camera.gd" id="15_sgl2t"]
+[ext_resource type="Shader" uid="uid://bsjuon6lgj8fe" path="res://shaders/pixelation.gdshader" id="16_qouja"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rysoc"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 500.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ssvqc"]
+material = SubResource("StandardMaterial3D_rysoc")
+radius = 5.0
+height = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gee14"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_gee14"]
+material = SubResource("StandardMaterial3D_gee14")
+radius = 5.0
+height = 10.0
+
+[sub_resource type="Environment" id="Environment_s0gvp"]
+background_mode = 1
+ambient_light_source = 1
+reflected_light_source = 1
+fog_light_color = Color(0.0119747, 0.0144936, 0.0190329, 1)
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.2
+volumetric_fog_albedo = Color(0.269937, 0.0749075, 2.40654e-08, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_80cx4"]
+render_priority = 0
+shader = ExtResource("16_qouja")
+shader_parameter/TwixelAngle = 15.0
+shader_parameter/PixelSize = 4.0
+shader_parameter/Posterize = true
+shader_parameter/ColorSteps = 64
+shader_parameter/UsePalette = true
+shader_parameter/PaletteSize = 8
+shader_parameter/PaletteColor0 = Color(0.05, 0.05, 0.05, 1)
+shader_parameter/PaletteColor1 = Color(0.25, 0.15, 0.12, 1)
+shader_parameter/PaletteColor2 = Color(0.5, 0.35, 0.25, 1)
+shader_parameter/PaletteColor3 = Color(0.9, 0.85, 0.7, 1)
+shader_parameter/Brightness = 1.0
+shader_parameter/Saturation = 1.0
+shader_parameter/Contrast = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_imku0"]
+material = SubResource("ShaderMaterial_80cx4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
+albedo_color = Color(0.714661, 0.558355, 0.424573, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_80nbo"]
+material = SubResource("StandardMaterial3D_u5sy4")
+size = Vector2(250, 250)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80cx4"]
+albedo_color = Color(0.129307, 0.00678502, 0, 1)
+emission_enabled = true
+emission = Color(0.476807, 0.114438, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e8heu"]
+material = SubResource("StandardMaterial3D_80cx4")
+flip_faces = true
+size = Vector2(100, 100)
+
+[sub_resource type="QuadMesh" id="QuadMesh_iywne"]
+size = Vector2(100, 5)
+
+[node name="Game" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.127099, 0.99189, 0, -0.99189, 0.127099, 0, 0, 0)
+visible = false
+
+[node name="Moon" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -20, 20, -15)
+mesh = SubResource("SphereMesh_ssvqc")
+
+[node name="Shadow" type="MeshInstance3D" parent="Moon"]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 1.31693, -1.11521, 1.95184)
+mesh = SubResource("SphereMesh_gee14")
+
+[node name="Env" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s0gvp")
+
+[node name="World" type="Node3D" parent="." node_paths=PackedStringArray("world", "player")]
+script = ExtResource("1_iywne")
+world = NodePath(".")
+player = NodePath("../Player")
+
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("world")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+script = ExtResource("14_suyxu")
+world = NodePath("../World")
+
+[node name="Trypod" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+
+[node name="Head" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("head")]
+script = ExtResource("15_rysoc")
+head = NodePath(".")
+
+[node name="Camera" type="Camera3D" parent="Player/Trypod/Head" node_paths=PackedStringArray("camera", "trypod")]
+script = ExtResource("15_sgl2t")
+camera = NodePath(".")
+trypod = NodePath("../..")
+
+[node name="Shader" type="MeshInstance3D" parent="Player/Trypod/Head/Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
+mesh = SubResource("QuadMesh_imku0")
+
+[node name="Hands" type="RayCast3D" parent="Player/Trypod/Head/Camera" node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 2
+script = ExtResource("6_0tnpc")
+player = NodePath("../../../../API")
+
+[node name="Inventory" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.397555, -0.578114, -0.366036)
+script = ExtResource("11_kvpfn")
+player = NodePath("../../API")
+
+[node name="Lantern" type="Node3D" parent="Player" node_paths=PackedStringArray("light", "fuel_bar", "fuel_bar_bg", "fuel_under_bar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.435032, 1, 0.0177174)
+script = ExtResource("6_u5sy4")
+light = NodePath("Light")
+fuel_bar = NodePath("../UI/FuelBar/Meter")
+fuel_bar_bg = NodePath("../UI/FuelBar/Background")
+fuel_under_bar = NodePath("../UI/FuelBar/UnderMeter")
+
+[node name="Model" parent="Player/Lantern" instance=ExtResource("7_gee14")]
+transform = Transform3D(-0.0981683, 0, -0.335951, 0, 0.35, 0, 0.335951, 0, -0.0981683, 0.3374, -0.287671, 0.286241)
+
+[node name="Light" type="OmniLight3D" parent="Player/Lantern"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.323396, -0.104553, 0.086298)
+light_color = Color(1, 0.686275, 0.588235, 1)
+light_volumetric_fog_energy = 0.0
+script = ExtResource("6_p57ef")
+energy_multiplier = 0.2
+radius_multiplier = 3.5
+
+[node name="UI" type="CanvasLayer" parent="Player"]
+
+[node name="DialogueWindow" type="ColorRect" parent="Player/UI"]
+visible = false
+offset_left = 278.0
+offset_top = 563.0
+offset_right = 778.0
+offset_bottom = 663.0
+color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+
+[node name="Message" type="Label" parent="Player/UI/DialogueWindow"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 490.0
+offset_bottom = 90.0
+text = "HELLO"
+autowrap_mode = 2
+
+[node name="FuelBar" type="Control" parent="Player/UI"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+
+[node name="Background" type="ColorRect" parent="Player/UI/FuelBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -5.0
+offset_right = 225.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.231373, 0.137255, 0.109804, 1)
+
+[node name="UnderMeter" type="ColorRect" parent="Player/UI/FuelBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -5.0
+offset_right = 225.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.580392, 0.462745, 0.356863, 1)
+
+[node name="Meter" type="ColorRect" parent="Player/UI/FuelBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -5.0
+offset_right = 225.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.752941, 0.686275, 0.556863, 1)
+
+[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("lantern", "inventory")]
+script = ExtResource("10_vtaks")
+lantern = NodePath("../Lantern")
+inventory = NodePath("../Trypod/Inventory")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("PlaneMesh_80nbo")
+
+[node name="Sky" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
+visible = false
+mesh = SubResource("PlaneMesh_e8heu")
+
+[node name="ForestLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -15, 2.5, -15)
+visible = false
+mesh = SubResource("QuadMesh_iywne")
+
+[node name="ForestRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 15, 2.5, -15)
+visible = false
+mesh = SubResource("QuadMesh_iywne")
+
+[connection signal="move" from="Player" to="World" method="_on_player_move"]
+[connection signal="move" from="Player" to="Player/Trypod/Head" method="_on_player_move"]
+[connection signal="stop" from="Player" to="Player/Trypod/Head" method="_on_player_stop"]

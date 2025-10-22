@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqsberxr7n7i5"]
+
+[ext_resource type="PackedScene" uid="uid://c6es15ua1qp67" path="res://scenes/objects/interactable.tscn" id="1_ehort"]
+[ext_resource type="Script" uid="uid://c7cxppxn2hr1n" path="res://scripts/pickup.gd" id="2_ug66n"]
+
+[node name="Pickup" instance=ExtResource("1_ehort")]
+script = ExtResource("2_ug66n")
+item_name = "matches"
+quantity = 1

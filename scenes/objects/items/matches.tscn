@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://nlw61bm7s5iy"]
+
+[ext_resource type="PackedScene" uid="uid://sne3g4v5nffb" path="res://scenes/objects/item.tscn" id="1_xn01e"]
+[ext_resource type="Script" uid="uid://bm1cp0xlp5nit" path="res://scripts/items/matches.gd" id="2_kk5yu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xn01e"]
+
+[node name="Item" instance=ExtResource("1_xn01e")]
+script = ExtResource("2_kk5yu")
+
+[node name="Model" type="MeshInstance3D" parent="Display" index="0"]
+transform = Transform3D(0.230709, -0.0779558, 0.056534, 0.0842525, 0.234481, -0.0204949, -0.0466339, 0.037966, 0.24266, 0, 0, 0)
+mesh = SubResource("BoxMesh_xn01e")
+skeleton = NodePath("../../..")

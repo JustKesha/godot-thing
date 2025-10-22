@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddbnnkfv7j6kv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o07ah"]
+albedo_color = Color(1, 0.584314, 0.611765, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yccht"]
+material = SubResource("StandardMaterial3D_o07ah")
+size = Vector2(20, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yccht"]
+albedo_color = Color(0.800517, 0.60608, 0.49721, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_th87o"]
+material = SubResource("StandardMaterial3D_yccht")
+size = Vector2(100, 10.5)
+
+[node name="Segment" type="Node3D"]
+metadata/hewwo = false
+
+[node name="Borders" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("PlaneMesh_yccht")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_th87o")

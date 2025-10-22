@@ -1,0 +1,40 @@
+[gd_scene load_steps=9 format=3 uid="uid://bffv7hu8ttq1b"]
+
+[ext_resource type="PackedScene" uid="uid://ddbnnkfv7j6kv" path="res://scenes/segment.tscn" id="1_pptmn"]
+[ext_resource type="PackedScene" uid="uid://d01f1706bvnp5" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/post.fbx" id="4_8bo0q"]
+[ext_resource type="PackedScene" uid="uid://co2cmgkm58g2n" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/path_D.fbx" id="4_abcin"]
+[ext_resource type="PackedScene" uid="uid://c7kponlvjrj85" path="res://scenes/objects/generic/light.tscn" id="4_gkopc"]
+[ext_resource type="PackedScene" uid="uid://d23mglv7gh3jg" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/bench.fbx" id="5_pptmn"]
+[ext_resource type="PackedScene" uid="uid://b0eklsk7miusi" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_hanging.fbx" id="5_qifxr"]
+[ext_resource type="PackedScene" uid="uid://bdvfjcjblrmem" path="res://scenes/objects/interactables/rest_point.tscn" id="7_48l4m"]
+[ext_resource type="PackedScene" uid="uid://brnu0hk6cuceg" path="res://scenes/objects/pickups/pumpkin.tscn" id="8_abcin"]
+
+[node name="Segment" instance=ExtResource("1_pptmn")]
+
+[node name="path_D" parent="." index="1" instance=ExtResource("4_abcin")]
+transform = Transform3D(-0.328812, 0.0222358, -1.15386, 2.9102e-10, 1.19978, 0.0231207, 1.15407, 0.0063353, -0.328751, 1.76102, -0.032434, -1.80192)
+
+[node name="path_D2" parent="." index="2" instance=ExtResource("4_abcin")]
+transform = Transform3D(-0.0902907, 0.0156647, 0.744381, -0.0125253, 0.749696, -0.0172958, -0.74444, -0.0145137, -0.0899925, 2.56029, -0.0342855, -1.90963)
+
+[node name="path_D3" parent="." index="3" instance=ExtResource("4_abcin")]
+transform = Transform3D(0.935675, 0.0152129, 0.352534, -0.00574491, 0.999595, -0.0278875, -0.352815, 0.0240684, 0.935384, 2.41862, -0.0911751, 2.14088)
+
+[node name="post" parent="." index="4" instance=ExtResource("4_8bo0q")]
+transform = Transform3D(0.880874, 0, 0.47335, 0, 1, 0, -0.47335, 0, 0.880874, 2.0712, 0, -1.74743)
+
+[node name="lantern_hanging" parent="post" index="1" instance=ExtResource("5_qifxr")]
+transform = Transform3D(0.555456, 0, 0.575734, 0, 0.8, 0, -0.575734, 0, 0.555456, 0.0136204, 3.08986, 1.10724)
+
+[node name="Light" parent="post/lantern_hanging" index="1" instance=ExtResource("4_gkopc")]
+transform = Transform3D(1, 0, 7.15256e-08, 0, 1, 0, -7.15256e-08, 0, 1, -0.25, -1, -0.25)
+intensity = 4.0
+
+[node name="bench" parent="." index="5" instance=ExtResource("5_pptmn")]
+transform = Transform3D(-0.268863, 0.0673647, -0.96082, 0.0621477, 0.996685, 0.0524887, 0.961171, -0.0456004, -0.272159, 2.61383, -0.0549339, 0.812384)
+
+[node name="Interactable" parent="bench" index="1" instance=ExtResource("7_48l4m")]
+transform = Transform3D(1, -3.72529e-09, 0, -3.72529e-09, 1, -4.37722e-08, -2.38419e-07, 4.56348e-08, 1, -0.188676, 0.759781, 0.0977411)
+
+[node name="Pickup" parent="." index="7" instance=ExtResource("8_abcin")]
+transform = Transform3D(1, 0, 0, -3.72529e-09, 1, -1.39698e-08, -5.96046e-08, 1.30385e-08, 1, 1.77247, 0, 1.40902)

@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bn54xj0kolyvt"]
+
+[ext_resource type="PackedScene" uid="uid://sne3g4v5nffb" path="res://scenes/objects/item.tscn" id="1_aqa6j"]
+[ext_resource type="Script" uid="uid://bcdf828quphud" path="res://scripts/items/pumpkin.gd" id="2_v31hw"]
+[ext_resource type="PackedScene" uid="uid://djy8fdnty7y20" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/pumpkin_yellow_small.fbx" id="3_v31hw"]
+
+[node name="Item" instance=ExtResource("1_aqa6j")]
+script = ExtResource("2_v31hw")
+quantity = 3
+stack = 10
+
+[node name="Model" parent="Display" index="0" instance=ExtResource("3_v31hw")]
+transform = Transform3D(0.482963, 0, 0.12941, 0, 0.5, 0, -0.12941, 0, 0.482963, 0, 0, 0)

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://sne3g4v5nffb"]
+
+[ext_resource type="Script" uid="uid://ymteaqrngt48" path="res://scripts/item.gd" id="1_keydj"]
+
+[node name="Item" type="Node3D"]
+script = ExtResource("1_keydj")
+
+[node name="Display" type="Node3D" parent="."]

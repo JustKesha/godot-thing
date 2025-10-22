@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdvfjcjblrmem"]
+
+[ext_resource type="PackedScene" uid="uid://c6es15ua1qp67" path="res://scenes/objects/interactable.tscn" id="1_jjvy6"]
+[ext_resource type="Script" uid="uid://cs3dq2oe02j8v" path="res://scripts/interactables/rest_point.gd" id="2_twb8b"]
+[ext_resource type="PackedScene" uid="uid://c7kponlvjrj85" path="res://scenes/objects/generic/light.tscn" id="3_mx0nq"]
+
+[node name="Interactable" instance=ExtResource("1_jjvy6")]
+script = ExtResource("2_twb8b")
+fuel_gain = 25.0
+
+[node name="Light" parent="." index="1" instance=ExtResource("3_mx0nq")]
+intensity = 1.0
+energy_multiplier = 1.0
+radius_multiplier = 1.0
+flicker_intensity = 0.025
+flicker_min_duration = 0.25
+flicker_max_duration = 0.5

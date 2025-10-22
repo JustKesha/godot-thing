@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6es15ua1qp67"]
+
+[ext_resource type="Script" uid="uid://nnkrxkrtutyc" path="res://scripts/interactable.gd" id="1_khwtm"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gkopc"]
+
+[node name="Interactable" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, -3.72529e-09, 1, -1.39698e-08, -5.96046e-08, 1.30385e-08, 1, 0, 0, 0)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_khwtm")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_gkopc")

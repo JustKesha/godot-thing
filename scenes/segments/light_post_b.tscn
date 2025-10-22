@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://d05tgf5c8kmay"]
+
+[ext_resource type="PackedScene" uid="uid://ddbnnkfv7j6kv" path="res://scenes/segment.tscn" id="1_432jj"]
+[ext_resource type="PackedScene" uid="uid://co2cmgkm58g2n" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/path_D.fbx" id="2_ycbic"]
+[ext_resource type="PackedScene" uid="uid://b0eklsk7miusi" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_hanging.fbx" id="3_n1b37"]
+[ext_resource type="PackedScene" uid="uid://c7kponlvjrj85" path="res://scenes/objects/generic/light.tscn" id="4_432jj"]
+[ext_resource type="PackedScene" uid="uid://d01f1706bvnp5" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/post.fbx" id="4_ubgoq"]
+
+[node name="Segment" instance=ExtResource("1_432jj")]
+
+[node name="path_D" parent="." index="1" instance=ExtResource("2_ycbic")]
+transform = Transform3D(0.435295, 0.0744008, -1.11579, -0.0839997, 1.19614, 0.0469877, 1.1151, 0.0610605, 0.439103, -3.50485, -0.0376251, -1.05401)
+
+[node name="path_D2" parent="." index="2" instance=ExtResource("2_ycbic")]
+transform = Transform3D(-0.521993, 0.0367432, 0.537284, 0.0416925, 0.748764, -0.0106998, -0.536922, 0.0224206, -0.523175, -2.9339, -0.0316319, -1.62359)
+
+[node name="lantern_hanging" parent="." index="3" instance=ExtResource("3_n1b37")]
+transform = Transform3D(-0.791523, 0.0535658, -0.103066, 0.0560503, 0.797878, -0.0157772, 0.101737, -0.0228312, -0.793176, -2.22919, 2.98568, -2.26008)
+
+[node name="Light" parent="lantern_hanging" index="0" instance=ExtResource("4_432jj")]
+transform = Transform3D(1, 0, 7.15256e-08, 0, 1, 0, -7.15256e-08, 0, 1, -0.25, -1, -0.25)
+
+[node name="post" parent="." index="4" instance=ExtResource("4_ubgoq")]
+transform = Transform3D(-0.779678, 0.0669573, 0.622589, 0.0344531, 0.997348, -0.064115, -0.625231, -0.028539, -0.779917, -3.11481, -0.0254676, -1.29983)
