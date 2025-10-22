@@ -2,13 +2,21 @@ class_name PlayerInventory extends Node3D
 
 @export var player: PlayerAPI
 @export var slots := 3
+var is_open := false:
+	set(value):
+		is_open = value
+		
+		if is_open:
+			_show_item()
+		else:
+			_hide_item()
 var items: Array[Item] = []
 var active_slot := 0:
 	set(value):
 		if value == active_slot: return
-		hide_item()
+		_hide_item()
 		active_slot = clamp(value, 0, len(items)-1)
-		show_item()
+		_show_item()
 var slot_input_prefix := 'inventory_slot_'
 
 func add(item_id: String, quantity: int = 1) -> Item:
@@ -17,6 +25,7 @@ func add(item_id: String, quantity: int = 1) -> Item:
 	var item_in_inv = find_item(item_id)
 	if item_in_inv:
 		item_in_inv.quantity += quantity
+		open()
 		logme()
 		return item_in_inv
 	
@@ -27,6 +36,8 @@ func add(item_id: String, quantity: int = 1) -> Item:
 	new_item.quantity = quantity
 	items.append(new_item)
 	self.add_child(new_item)
+	
+	open()
 	active_slot += 1
 	
 	logme()
@@ -49,12 +60,18 @@ func remove(item: Item) -> bool:
 			return true
 	return false
 
-func show_item(item: Item = null):
+func close():
+	is_open = false
+
+func open():
+	is_open = true
+
+func _show_item(item: Item = null):
 	if not item: item = get_active()
 	if not item: return
 	item.is_selected = true
 
-func hide_item(item: Item = null):
+func _hide_item(item: Item = null):
 	if not item: item = get_active()
 	if not item: return
 	item.is_selected = false
@@ -82,11 +99,15 @@ func logme():
 	print(str)
 
 func _unhandled_input(event: InputEvent):
-	if event.is_action_pressed('use'):
-		use()
-		return
+	if is_open:
+		if event.is_action_pressed('use'):
+			use()
+			return
 	
 	for i in range(len(items)):
 		if event.is_action_pressed(slot_input_prefix + str(i+1)):
+			if i == active_slot:
+				is_open = not is_open
+			
 			active_slot = i
 			break
