@@ -1,4 +1,4 @@
 extends Item
 
 func _use():
-	player.lantern.fuel += 5
+	player.lantern.fuel += 15

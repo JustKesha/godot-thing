@@ -23,7 +23,8 @@ var id: String
 		
 		elif quantity > stack:
 			quantity = stack
-@export var stack := 1
+enum StackSize { NONE = 1, SMALL = 3, MEDIUM = 5, BIG = 10, HUGE = 16 }
+@export var stack := StackSize.NONE
 
 @export_group("Consumable")
 @export var is_consumable := true
