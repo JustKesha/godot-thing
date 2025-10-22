@@ -6,6 +6,7 @@
 [node name="Pickup" instance=ExtResource("1_avb0b")]
 item_name = "pumpkin"
 quantity = 4
+allow_overflow = false
 
 [node name="Model" parent="." index="1" instance=ExtResource("2_avb0b")]
 transform = Transform3D(0.996749, 0.0803256, -0.00618644, -0.0805631, 0.99356, -0.0796778, -0.00025357, 0.0799173, 0.996802, 0, -0.0726742, 9.47562e-10)

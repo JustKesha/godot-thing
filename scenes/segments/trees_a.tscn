@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bucfb1ts31nfu"]
+[gd_scene load_steps=12 format=3 uid="uid://bucfb1ts31nfu"]
 
 [ext_resource type="PackedScene" uid="uid://ddbnnkfv7j6kv" path="res://scenes/segment.tscn" id="1_h2jbh"]
 [ext_resource type="PackedScene" uid="uid://co2cmgkm58g2n" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/path_D.fbx" id="2_33l38"]
 [ext_resource type="PackedScene" uid="uid://3xqmtr24erpl" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/tree_dead_medium.fbx" id="3_fsh4d"]
 [ext_resource type="PackedScene" uid="uid://bgyhr8tiyjs1w" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/tree_dead_large.fbx" id="4_3rj8b"]
 [ext_resource type="PackedScene" uid="uid://d05r31nxdpnlv" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/tree_dead_small.fbx" id="5_l2ypx"]
+[ext_resource type="PackedScene" uid="uid://ukmd5em17n3f" path="res://scenes/objects/pickup_spawner.tscn" id="6_ei1qb"]
 
 [sub_resource type="Curve" id="Curve_ki22m"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.316151, 1), 0.0, 0.0, 0, 0, Vector2(0.890034, 0.698736), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -71,3 +72,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 lifetime = 2.0
 process_material = SubResource("ParticleProcessMaterial_ki22m")
 draw_pass_1 = SubResource("SphereMesh_ei1qb")
+
+[node name="PickupSpawner" parent="." index="13" instance=ExtResource("6_ei1qb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+pool = 1
+chances = 4
+
+[node name="PickupSpawner2" parent="." index="14" instance=ExtResource("6_ei1qb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2.25)
+pool = 1
+chances = 4
+
+[node name="PickupSpawner3" parent="." index="15" instance=ExtResource("6_ei1qb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2.25)
+pool = 1
+chances = 4

@@ -5,6 +5,7 @@
 
 [node name="Pickup" instance=ExtResource("1_rxqpx")]
 quantity = 3
+allow_overflow = false
 
 [node name="Model" parent="." index="1" instance=ExtResource("2_rxqpx")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.0245314, 0)

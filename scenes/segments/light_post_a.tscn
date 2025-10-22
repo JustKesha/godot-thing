@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d23mglv7gh3jg" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/bench.fbx" id="5_pptmn"]
 [ext_resource type="PackedScene" uid="uid://b0eklsk7miusi" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_hanging.fbx" id="5_qifxr"]
 [ext_resource type="PackedScene" uid="uid://bdvfjcjblrmem" path="res://scenes/objects/interactables/rest_point.tscn" id="7_48l4m"]
-[ext_resource type="PackedScene" uid="uid://brnu0hk6cuceg" path="res://scenes/objects/pickups/rare_pumpkin_small.tscn" id="8_abcin"]
+[ext_resource type="PackedScene" uid="uid://brnu0hk6cuceg" path="res://scenes/objects/pickups/rare_pumpkin.tscn" id="8_abcin"]
 [ext_resource type="PackedScene" uid="uid://t641p716hpon" path="res://scenes/objects/pickups/epic_pumpkin.tscn" id="9_qifxr"]
 [ext_resource type="PackedScene" uid="uid://ukmd5em17n3f" path="res://scenes/objects/pickup_spawner.tscn" id="10_3b0q4"]
 
@@ -46,3 +46,4 @@ transform = Transform3D(1, 0, 0, -3.72529e-09, 1, -1.39698e-08, -5.96046e-08, 1.
 
 [node name="PickupSpawner" parent="." index="9" instance=ExtResource("10_3b0q4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.49317, 0.479453, 1.37014)
+pool = 2
