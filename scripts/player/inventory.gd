@@ -44,13 +44,13 @@ func add(item_id: String, quantity: int = 1) -> Item:
 		active_slot += 1
 	
 	open()
+	logme()
 	return item
 
 func use(slot: int = active_slot) -> bool:
 	var item = get_active()
 	if not item: return false
 	item.use()
-	logme()
 	return true
 
 func remove(item: Item) -> bool:
