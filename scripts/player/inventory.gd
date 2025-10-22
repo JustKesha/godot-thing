@@ -14,7 +14,6 @@ var is_open := false:
 var items: Array[Item] = []
 var active_slot := 0:
 	set(value):
-		if value == active_slot: return
 		_hide_item()
 		active_slot = clamp(value, 0, len(items)-1)
 		_show_item()
@@ -62,6 +61,8 @@ func remove(item: Item) -> bool:
 			item.queue_free()
 			active_slot = active_slot
 			logme()
+			if not items:
+				close()
 			return true
 	return false
 
