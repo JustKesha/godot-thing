@@ -25,6 +25,10 @@ var id: String
 			quantity = stack
 @export var stack := 1
 
+@export_group("Consumable")
+@export var is_consumable := true
+@export var consume_quantity := 1
+
 # These should be rewritten in inherited scripts
 func _init(): pass
 func _use(): pass
@@ -42,7 +46,7 @@ func init(item_id: String, player_api: PlayerAPI):
 func use():
 	if not is_initiated: return
 	_use()
-	quantity -= 1
+	if is_consumable: quantity -= consume_quantity
 
 func destroy():
 	if not is_initiated: return

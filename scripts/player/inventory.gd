@@ -4,6 +4,7 @@ class_name PlayerInventory extends Node3D
 @export var slots := 3
 var is_open := false:
 	set(value):
+		if value == is_open: return
 		is_open = value
 		
 		if is_open:
@@ -17,6 +18,7 @@ var active_slot := 0:
 		_hide_item()
 		active_slot = clamp(value, 0, len(items)-1)
 		_show_item()
+		is_open = true
 var slot_input_prefix := 'inventory_slot_'
 
 func add(item_id: String, quantity: int = 1) -> Item:
@@ -99,6 +101,10 @@ func logme():
 	print(str)
 
 func _unhandled_input(event: InputEvent):
+	if event.is_action_pressed('inventory'):
+		is_open = not is_open
+		return
+	
 	if is_open:
 		if event.is_action_pressed('use'):
 			use()
@@ -108,6 +114,7 @@ func _unhandled_input(event: InputEvent):
 		if event.is_action_pressed(slot_input_prefix + str(i+1)):
 			if i == active_slot:
 				is_open = not is_open
+				return
 			
 			active_slot = i
-			break
+			return
