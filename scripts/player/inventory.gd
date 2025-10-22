@@ -21,20 +21,23 @@ var active_slot := 0:
 		is_open = true
 var slot_input_prefix := 'inventory_slot_'
 
-func add(item_id: String, quantity: int = 1) -> Item:
-	if len(items) == slots: return null
+func add(item_id: String, quantity: int = 1) -> int:
+	if len(items) == slots: return quantity
 	
 	var item
 	var item_in_inv := find_item(item_id)
+	var quantity_overflow := 0
+	var quantity_before := 0
 	
 	if item_in_inv and item_in_inv.stack > 1:
 		item = item_in_inv
 		
+		quantity_before = item.quantity
 		item.quantity += quantity
 		active_slot = get_item_slot(item_id)
 	else:
 		item = Items.get_by_id(item_id)
-		if not item: return null
+		if not item: return -1
 		
 		item.init(item_id, player)
 		items.append(item)
@@ -43,9 +46,10 @@ func add(item_id: String, quantity: int = 1) -> Item:
 		item.quantity = quantity
 		active_slot += 1
 	
+	quantity_overflow = quantity_before + quantity - item.quantity
 	open()
 	logme()
-	return item
+	return quantity_overflow
 
 func use(slot: int = active_slot) -> bool:
 	var item = get_active()
