@@ -80,7 +80,7 @@ func get_next_segment() -> Node3D:
 func is_segment_unload_time(segment: Node3D) -> bool:
 	return segment.position.z > segment_unload_z
 
-func _on_player_move():
+func _on_player_move(speed: float, delta: float):
 	update()
 
 func _ready():

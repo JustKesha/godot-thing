@@ -1,4 +1,4 @@
-extends Node
+class_name PlayerLantern extends Node
 
 @export var light: InteractiveLight
 
