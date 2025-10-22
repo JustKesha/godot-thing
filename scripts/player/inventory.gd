@@ -24,26 +24,29 @@ var slot_input_prefix := 'inventory_slot_'
 func add(item_id: String, quantity: int = 1) -> Item:
 	if len(items) == slots: return null
 	
-	var item_in_inv = find_item(item_id)
-	if item_in_inv:
-		item_in_inv.quantity += quantity
-		open()
-		logme()
-		return item_in_inv
+	var item
+	var item_in_inv := find_item(item_id)
 	
-	var new_item = Items.get_by_id(item_id)
-	if not new_item: return null
-	
-	new_item.init(item_id, player)
-	new_item.quantity = quantity
-	items.append(new_item)
-	self.add_child(new_item)
+	if item_in_inv and item_in_inv.stack > 1:
+		item = item_in_inv
+		
+		item.quantity += quantity
+		active_slot = get_item_slot(item_id)
+	else:
+		item = Items.get_by_id(item_id)
+		if not item: return null
+		
+		item.init(item_id, player)
+		items.append(item)
+		self.add_child(item)
+		
+		item.quantity = quantity
+		active_slot += 1
 	
 	open()
-	active_slot += 1
-	
 	logme()
-	return new_item
+	
+	return item
 
 func use(slot: int = active_slot) -> bool:
 	var item = get_active()
@@ -81,6 +84,12 @@ func _hide_item(item: Item = null):
 func get_item(slot: int) -> Item:
 	if not items or slot >= len(items): return null
 	return items[slot]
+
+func get_item_slot(id: String) -> int:
+	for i in range(len(items)):
+		if items[i].id == id:
+			return i
+	return -1
 
 func get_active() -> Item:
 	return get_item(active_slot)
