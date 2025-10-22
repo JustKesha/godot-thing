@@ -12,6 +12,8 @@ var active_slot := 0:
 var slot_input_prefix := 'inventory_slot_'
 
 func add(item_id: String, quantity: int = 1) -> Item:
+	if len(items) == slots: return null
+	
 	var item_in_inv = find_item(item_id)
 	if item_in_inv:
 		item_in_inv.quantity += quantity
@@ -19,12 +21,10 @@ func add(item_id: String, quantity: int = 1) -> Item:
 		return item_in_inv
 	
 	var new_item = Items.get_by_id(item_id)
-	if not new_item:
-		return null
+	if not new_item: return null
 	
 	new_item.init(item_id, player)
 	new_item.quantity = quantity
-	new_item.visible = false
 	items.append(new_item)
 	self.add_child(new_item)
 	active_slot += 1
@@ -52,12 +52,12 @@ func remove(item: Item) -> bool:
 func show_item(item: Item = null):
 	if not item: item = get_active()
 	if not item: return
-	item.visible = true
+	item.is_selected = true
 
 func hide_item(item: Item = null):
 	if not item: item = get_active()
 	if not item: return
-	item.visible = false
+	item.is_selected = false
 
 func get_item(slot: int) -> Item:
 	if not items or slot >= len(items): return null
@@ -86,7 +86,7 @@ func _unhandled_input(event: InputEvent):
 		use()
 		return
 	
-	for i in range(slots):
+	for i in range(len(items)):
 		if event.is_action_pressed(slot_input_prefix + str(i+1)):
 			active_slot = i
 			break
