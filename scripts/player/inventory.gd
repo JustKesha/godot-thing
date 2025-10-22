@@ -9,6 +9,7 @@ var is_open := false:
 		
 		if is_open:
 			_show_item()
+			logme()
 		else:
 			_hide_item()
 var items: Array[Item] = []
@@ -43,8 +44,6 @@ func add(item_id: String, quantity: int = 1) -> Item:
 		active_slot += 1
 	
 	open()
-	logme()
-	
 	return item
 
 func use(slot: int = active_slot) -> bool:

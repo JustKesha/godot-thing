@@ -75,7 +75,7 @@ func get_next_segment_index() -> int:
 	return len(loaded_segments) - 1
 
 func get_next_segment() -> Node3D:
-	return WorldSegments.get_by_name('light_post_a')
+	return WorldSegments.get_random()
 
 func is_segment_unload_time(segment: Node3D) -> bool:
 	return segment.position.z > segment_unload_z
