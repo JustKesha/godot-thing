@@ -58,10 +58,10 @@ func apply_bob(delta: float):
 	
 	head.position = base_position + bob_pos
 
-func _on_player_move():
-	target_bob_intensity = Stats.speed * bob_amplitude
+func _on_player_move(speed: float, delta: float):
+	target_bob_intensity = speed * bob_amplitude
 
-func _on_player_stop():
+func _on_player_stop(distance_traveled: float):
 	target_bob_intensity = 0.0
 
 func _ready():
