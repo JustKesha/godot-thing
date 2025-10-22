@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ukmd5em17n3f"]
+
+[ext_resource type="Script" uid="uid://2b66g77lkrc4" path="res://scripts/pickup_spawner.gd" id="1_ioee6"]
+
+[node name="PickupSpawner" type="Node3D"]
+script = ExtResource("1_ioee6")
+comm_chance = 15.0
+rare_chance = 7.5
+epic_chance = 2.5

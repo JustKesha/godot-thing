@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://t641p716hpon"]
+
+[ext_resource type="PackedScene" uid="uid://dqsberxr7n7i5" path="res://scenes/objects/pickup.tscn" id="1_avb0b"]
+[ext_resource type="PackedScene" uid="uid://b4mtxfoplhdou" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/pumpkin_yellow.fbx" id="2_avb0b"]
+
+[node name="Pickup" instance=ExtResource("1_avb0b")]
+item_name = "pumpkin"
+quantity = 4
+
+[node name="Model" parent="." index="1" instance=ExtResource("2_avb0b")]
+transform = Transform3D(0.996749, 0.0803256, -0.00618644, -0.0805631, 0.99356, -0.0796778, -0.00025357, 0.0799173, 0.996802, 0, -0.0726742, 9.47562e-10)

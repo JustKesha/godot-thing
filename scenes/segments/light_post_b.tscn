@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://d05tgf5c8kmay"]
+[gd_scene load_steps=7 format=3 uid="uid://d05tgf5c8kmay"]
 
 [ext_resource type="PackedScene" uid="uid://ddbnnkfv7j6kv" path="res://scenes/segment.tscn" id="1_432jj"]
 [ext_resource type="PackedScene" uid="uid://co2cmgkm58g2n" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/path_D.fbx" id="2_ycbic"]
 [ext_resource type="PackedScene" uid="uid://b0eklsk7miusi" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_hanging.fbx" id="3_n1b37"]
 [ext_resource type="PackedScene" uid="uid://c7kponlvjrj85" path="res://scenes/objects/generic/light.tscn" id="4_432jj"]
 [ext_resource type="PackedScene" uid="uid://d01f1706bvnp5" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/post.fbx" id="4_ubgoq"]
+[ext_resource type="PackedScene" uid="uid://ukmd5em17n3f" path="res://scenes/objects/pickup_spawner.tscn" id="6_ycbic"]
 
 [node name="Segment" instance=ExtResource("1_432jj")]
 
@@ -22,3 +23,6 @@ transform = Transform3D(1, 0, 7.15256e-08, 0, 1, 0, -7.15256e-08, 0, 1, -0.25, -
 
 [node name="post" parent="." index="4" instance=ExtResource("4_ubgoq")]
 transform = Transform3D(-0.779678, 0.0669573, 0.622589, 0.0344531, 0.997348, -0.064115, -0.625231, -0.028539, -0.779917, -3.11481, -0.0254676, -1.29983)
+
+[node name="PickupSpawner" parent="." index="6" instance=ExtResource("6_ycbic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c7kponlvjrj85"]
 
-[ext_resource type="Script" uid="uid://dax72mr3u4mak" path="res://scripts/light.gd" id="1_yvhfm"]
+[ext_resource type="Script" uid="uid://dax72mr3u4mak" path="res://scripts/generic/light.gd" id="1_yvhfm"]
 
 [node name="Light" type="OmniLight3D"]
 transform = Transform3D(1, 0, 7.15256e-08, 0, 1, 0, -7.15256e-08, 0, 1, 0, 0, 0)

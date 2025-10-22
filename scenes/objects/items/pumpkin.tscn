@@ -6,8 +6,7 @@
 
 [node name="Item" instance=ExtResource("1_aqa6j")]
 script = ExtResource("2_v31hw")
-quantity = 3
-stack = 10
+stack = 5
 
 [node name="Model" parent="Display" index="0" instance=ExtResource("3_v31hw")]
 transform = Transform3D(0.482963, 0, 0.12941, 0, 0.5, 0, -0.12941, 0, 0.482963, 0, 0, 0)
