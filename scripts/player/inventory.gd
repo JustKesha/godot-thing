@@ -5,29 +5,38 @@ class_name PlayerInventory extends Node3D
 var items: Array[Item] = []
 var active_slot := 0:
 	set(value):
+		if value == active_slot: return
 		hide_item()
 		active_slot = clamp(value, 0, len(items)-1)
 		show_item()
 var slot_input_prefix := 'inventory_slot_'
 
-func add(item_name: String, quantity: int = 1) -> Item:
-	# TODO Item currently dont stack (make use of quantity)
-	var item = Items.get_by_name(item_name)
+func add(item_id: String, quantity: int = 1) -> Item:
+	var item_in_inv = find_item(item_id)
+	if item_in_inv:
+		item_in_inv.quantity += quantity
+		logme()
+		return item_in_inv
 	
-	if not item: return null
+	var new_item = Items.get_by_id(item_id)
+	if not new_item:
+		return null
 	
-	items.append(item)
-	self.add_child(item)
-	item.visible = false
-	
+	new_item.init(item_id, player)
+	new_item.quantity = quantity
+	new_item.visible = false
+	items.append(new_item)
+	self.add_child(new_item)
 	active_slot += 1
 	
-	return item
+	logme()
+	return new_item
 
 func use(slot: int = active_slot) -> bool:
 	var item = get_active()
 	if not item: return false
-	item.use(player)
+	item.use()
+	logme()
 	return true
 
 func remove(item: Item) -> bool:
@@ -35,7 +44,8 @@ func remove(item: Item) -> bool:
 		if i == item:
 			items.erase(item)
 			item.queue_free()
-			update()
+			active_slot = active_slot
+			logme()
 			return true
 	return false
 
@@ -56,8 +66,20 @@ func get_item(slot: int) -> Item:
 func get_active() -> Item:
 	return get_item(active_slot)
 
-func update():
-	active_slot = active_slot
+func find_item(id: String) -> Item:
+	for item in items:
+		if item.id == id:
+			return item
+	return null
+
+func logme():
+	if not items: return
+	var str := 'INV: '
+	for i in range(len(items)):
+		var item = items[i]
+		if i != 0: str += ',\n     '
+		str += item.id.to_upper()+' x'+str(item.quantity)+'/'+str(item.stack)
+	print(str)
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed('use'):

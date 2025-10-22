@@ -25,6 +25,7 @@ var update_timer := 0.0
 			light.flicker_intensity = 0.1
 			light.flicker_min_duration = 0.1
 			light.flicker_max_duration = 0.25
+		logme()
 @export var fuel_limit := 100.0:
 	set(value):
 		if value < 0:
@@ -84,7 +85,13 @@ func deplete(how_much: float = -1.0):
 	if how_much < 0: how_much = _get_depletion_rate()
 	
 	fuel -= how_much
-	print('LANTERN F: ',fuel,'%, I: ',light.intensity,' DR: ',how_much)
+
+func logme():
+	print('LANTERN: '+', '.join([
+		'F: '+str(fuel)+'/'+str(fuel_limit),
+		'I: '+str(light.intensity),
+		'DR: '+str(_get_depletion_rate())
+	]))
 
 func _get_depletion_rate() -> float:
 	var normalized_intensity = (

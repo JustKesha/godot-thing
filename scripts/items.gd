@@ -13,9 +13,9 @@ static func _load_names(path: String) -> Array:
 	return result
 
 static func get_random() -> Node3D:
-	var random_name = list[randi() % list.size()]
-	return get_by_name(random_name)
+	var random_id = list[randi() % list.size()]
+	return get_by_id(random_id)
 
-static func get_by_name(segment_name: String) -> Node3D:
-	var scene = load(path + segment_name + ".tscn")
+static func get_by_id(item_id: String) -> Node3D:
+	var scene = load(path + item_id + ".tscn")
 	return scene.instantiate()
