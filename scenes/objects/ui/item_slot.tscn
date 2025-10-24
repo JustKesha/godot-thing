@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2b7l04dmthar"]
+
+[ext_resource type="Texture2D" uid="uid://cgpwom001gk0q" path="res://sprites/matches.png" id="1_fvwiw"]
+
+[node name="ItemSlot" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 59.0
+
+[node name="Icon" type="TextureRect" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_fvwiw")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "X1"
+horizontal_alignment = 2

@@ -1,6 +1,8 @@
 class_name PlayerInventory extends Node3D
 
 @export var player: PlayerAPI
+
+@export_group("General")
 @export var slots := 3
 var is_open := false:
 	set(value):
@@ -21,6 +23,10 @@ var active_slot := 0:
 		is_open = true
 var slot_input_prefix := 'inventory_slot_'
 
+@export_group("UI")
+@export var inventory_ui: HBoxContainer
+@export var slot_ui: PackedScene
+
 func add(item_id: String, quantity: int = 1) -> int:
 	if len(items) == slots: return quantity
 	
@@ -39,7 +45,10 @@ func add(item_id: String, quantity: int = 1) -> int:
 		item = Items.get_by_id(item_id)
 		if not item: return -1
 		
-		item.init(item_id, player)
+		var item_ui = slot_ui.instantiate()
+		inventory_ui.add_child(item_ui)
+		
+		item.init(item_id, player, item_ui)
 		items.append(item)
 		self.add_child(item)
 		

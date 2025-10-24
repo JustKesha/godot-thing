@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b7owo051mahdu"]
+[gd_scene load_steps=25 format=3 uid="uid://b7owo051mahdu"]
 
 [ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://cfcy0l63lmkbv" path="res://scripts/player/hands.gd" id="6_0tnpc"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://blcuhiqwtfdl5" path="res://scripts/player/lantern.gd" id="6_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://b8mxrvh7c55n7" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_standing.fbx" id="7_gee14"]
 [ext_resource type="Script" uid="uid://nogdh47dnwq2" path="res://scripts/player/api.gd" id="10_vtaks"]
+[ext_resource type="PackedScene" uid="uid://b2b7l04dmthar" path="res://scenes/objects/ui/item_slot.tscn" id="11_dinhu"]
 [ext_resource type="Script" uid="uid://dflx3x0d23ff1" path="res://scripts/player/inventory.gd" id="11_kvpfn"]
 [ext_resource type="Script" uid="uid://utcd1g44dmpc" path="res://scripts/player/movement.gd" id="14_suyxu"]
 [ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera_shake.gd" id="15_rysoc"]
@@ -130,10 +131,12 @@ collision_mask = 2
 script = ExtResource("6_0tnpc")
 player = NodePath("../../../../API")
 
-[node name="Inventory" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("player")]
+[node name="Inventory" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("player", "inventory_ui")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.397555, -0.578114, -0.366036)
 script = ExtResource("11_kvpfn")
 player = NodePath("../../API")
+inventory_ui = NodePath("../../UI/Inventory")
+slot_ui = ExtResource("11_dinhu")
 
 [node name="Lantern" type="Node3D" parent="Player" node_paths=PackedStringArray("light", "fuel_bar", "fuel_bar_bg", "fuel_under_bar")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.6, 0.35)
@@ -178,8 +181,7 @@ layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_top = 20.0
-offset_bottom = 20.0
+offset_bottom = 35.0
 grow_horizontal = 2
 
 [node name="Background" type="ColorRect" parent="Player/UI/FuelBar"]
@@ -226,6 +228,14 @@ offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.752941, 0.686275, 0.556863, 1)
+
+[node name="Inventory" type="HBoxContainer" parent="Player/UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
 
 [node name="API" type="Node" parent="Player" node_paths=PackedStringArray("lantern", "inventory")]
 script = ExtResource("10_vtaks")
