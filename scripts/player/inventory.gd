@@ -34,6 +34,7 @@ func add(item_id: String, quantity: int = 1) -> int:
 	var item_in_inv := find_item(item_id)
 	var quantity_overflow := 0
 	var quantity_before := 0
+	var quantity_added := 0
 	
 	if item_in_inv and item_in_inv.stack > 1:
 		item = item_in_inv
@@ -56,8 +57,13 @@ func add(item_id: String, quantity: int = 1) -> int:
 		active_slot += 1
 	
 	quantity_overflow = quantity_before + quantity - item.quantity
-	open()
-	logme()
+	quantity_added = quantity - quantity_overflow
+	
+	if quantity_added > 0:
+		player.dialogue_window.display("Got +"+str(quantity_added)+" "+item_id)
+		logme()
+		open()
+	
 	return quantity_overflow
 
 func use(slot: int = active_slot) -> bool:
