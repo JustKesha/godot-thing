@@ -38,7 +38,7 @@ enum StackSize { NONE = 1, SMALL = 3, MEDIUM = 5, BIG = 10, HUGE = 16 }
 
 # These should be rewritten in inherited scripts
 func _init(): pass
-func _use(): pass
+func _use() -> bool: return true
 func _destroy(): pass
 func _select(): pass
 func _deselect(): pass
@@ -58,7 +58,7 @@ func init(item_id: String, player_api: PlayerAPI, slot_ui: VBoxContainer):
 
 func use():
 	if not is_initiated: return
-	_use()
+	if not _use(): return
 	if is_consumable: quantity -= consume_quantity
 
 func destroy():
