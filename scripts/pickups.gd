@@ -2,17 +2,17 @@ class_name Pickups extends Resource
 
 static var comm_chance := -1.0
 static var comm: Array[Resource] = [
-	preload("res://scenes/objects/pickups/comm_matches.tscn"),
+	preload("res://scenes/objects/pickups/candle.tscn"),
 ]
 static var rare_prefix := "rare_"
 static var rare_chance := 30.0
 static var rare: Array[Resource] = [
-	preload("res://scenes/objects/pickups/rare_pumpkin.tscn"),
+	preload("res://scenes/objects/pickups/pumpkin_small.tscn"),
 ]
 static var epic_prefix := "epic_"
 static var epic_chance := 10.0
 static var epic: Array[Resource] = [
-	preload("res://scenes/objects/pickups/epic_pumpkin.tscn"),
+	preload("res://scenes/objects/pickups/pumpkin.tscn"),
 ]
 static var all: Array[Resource] = comm + rare + epic
 
@@ -57,12 +57,12 @@ static func get_random(pool: PickupPool = PickupPool.ALL,
 			pass
 		PickupPool.FOREST:
 			comm_pool = []
-			rare_pool = [preload("res://scenes/objects/pickups/rare_pumpkin.tscn")]
-			epic_pool = [preload("res://scenes/objects/pickups/comm_matches.tscn")]
+			rare_pool = [preload("res://scenes/objects/pickups/pumpkin.tscn")]
+			epic_pool = [preload("res://scenes/objects/pickups/candle.tscn")]
 		PickupPool.BENCH:
-			comm_pool = [preload("res://scenes/objects/pickups/comm_matches.tscn")]
-			rare_pool = [preload("res://scenes/objects/pickups/rare_pumpkin.tscn")]
-			epic_pool = [preload("res://scenes/objects/pickups/epic_pumpkin.tscn")]
+			comm_pool = [preload("res://scenes/objects/pickups/candle.tscn")]
+			rare_pool = [preload("res://scenes/objects/pickups/pumpkin_small.tscn")]
+			epic_pool = [preload("res://scenes/objects/pickups/pumpkin.tscn")]
 	
 	var chance_comm := -1
 	var chance_rare := -1

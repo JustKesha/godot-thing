@@ -28,7 +28,6 @@ var slot_input_prefix := 'inventory_slot_'
 
 @export_group("UI")
 @export var inventory_ui: HBoxContainer
-@export var slot_ui: PackedScene
 
 func add(item_id: String, quantity: int = 1) -> int:
 	if len(items) == slots: return quantity
@@ -49,10 +48,7 @@ func add(item_id: String, quantity: int = 1) -> int:
 		item = Items.get_by_id(item_id)
 		if not item: return -1
 		
-		var item_ui = slot_ui.instantiate()
-		inventory_ui.add_child(item_ui)
-		
-		item.init(item_id, player, item_ui)
+		item.init(item_id, player)
 		items.append(item)
 		self.add_child(item)
 		
@@ -79,7 +75,7 @@ func remove(item: Item) -> bool:
 	for i in items:
 		if i == item:
 			items.erase(item)
-			item.queue_free()
+			item.destroy()
 			active_slot = active_slot
 			logme()
 			if not items:

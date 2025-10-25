@@ -7,3 +7,7 @@
 script = ExtResource("2_ug66n")
 item_name = "matches"
 quantity = 1
+allow_overflow = false
+
+[node name="Hitbox" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

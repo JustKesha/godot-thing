@@ -11,19 +11,14 @@ var is_selected := true:
 var player: PlayerAPI
 var id: String
 var tag: String
-var ui: CanvasItem
+var ui: ItemInventoryUI
 
 @export_group("Stack")
 @export var quantity := 1:
 	set(value):
 		quantity = value
-		
-		if quantity <= 0:
-			destroy()
-		
-		elif quantity > stack:
-			quantity = stack
-		
+		if quantity <= 0: destroy()
+		elif quantity > stack: quantity = stack
 		update_ui()
 enum StackSize { NONE = 1, SMALL = 3, MEDIUM = 5, BIG = 10, HUGE = 16 }
 @export var stack := StackSize.NONE
@@ -33,27 +28,22 @@ enum StackSize { NONE = 1, SMALL = 3, MEDIUM = 5, BIG = 10, HUGE = 16 }
 @export var consume_quantity := 1
 
 @export_group("UI")
-@export_file("*.png") var texture: String
+@export_file("*.png") var icon_path: String
+@export var inventory_slot_ui: PackedScene
 
 # These should be rewritten in inherited scripts
 func _init(): pass
 func _use() -> bool: return true
-func _destroy(): pass
+func _destroy() -> bool: return true
 func _select(): pass
 func _deselect(): pass
 
-func init(item_id: String, player_api: PlayerAPI, slot_ui: CanvasItem):
+func init(item_id: String, player_api: PlayerAPI):
 	id = item_id
 	player = player_api
-	ui = slot_ui
+	ui = inventory_slot_ui.instantiate()
+	ui.init(self)
 	_init()
-	
-	var ui_texture_rect := ui.get_node("Icon") as TextureRect
-	ui_texture_rect.texture = load(texture)
-	
-	var ui_tag_label := ui.get_node("SelectionB").get_node("Name") as Label
-	ui_tag_label.text = tag
-	
 	is_selected = true
 	is_initiated = true
 
@@ -64,18 +54,12 @@ func use():
 
 func destroy():
 	if not is_initiated: return
-	_destroy()
-	player.inventory.remove(self)
+	if not is_instance_valid(self): return
+	if not _destroy(): return
 	
-	ui.queue_free()
+	player.inventory.remove(self)
+	ui.destroy()
+	queue_free()
 
 func update_ui():
-	if not ui: return
-	
-	var ui_text_label := ui.get_node("Label") as Label
-	ui_text_label.text = "x" + str(quantity)
-	
-	var ui_selection_a := ui.get_node("SelectionA") as Control
-	var ui_selection_b := ui.get_node("SelectionB") as Control
-	ui_selection_a.visible = is_selected
-	ui_selection_b.visible = is_selected
+	if ui: ui.update()

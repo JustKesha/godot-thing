@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2b7l04dmthar"]
+[gd_scene load_steps=5 format=3 uid="uid://b2b7l04dmthar"]
 
+[ext_resource type="Script" uid="uid://dw1tn8to3jcf1" path="res://scripts/item_slot.gd" id="1_7ayvj"]
 [ext_resource type="Texture2D" uid="uid://bswfo6wahvvpj" path="res://sprites/pumpkin.png" id="1_j5jp7"]
 [ext_resource type="FontFile" uid="uid://bdhjbd58rv1aa" path="res://fonts/tiny5/Tiny5-Regular.ttf" id="2_j5jp7"]
 
@@ -8,15 +9,21 @@ font = ExtResource("2_j5jp7")
 font_size = 25
 font_color = Color(0.890196, 0.843137, 0.694118, 1)
 
-[node name="ItemSlot" type="VBoxContainer"]
+[node name="ItemSlot" type="VBoxContainer" node_paths=PackedStringArray("icon", "nametag", "quantity", "selection_background", "selection_foreground")]
 offset_right = 40.0
 offset_bottom = 59.0
+script = ExtResource("1_7ayvj")
+icon = NodePath("Icon")
+nametag = NodePath("SelectionForeground/Name")
+quantity = NodePath("Quantity")
+selection_background = NodePath("SelectionBackground")
+selection_foreground = NodePath("SelectionForeground")
 
-[node name="SelectionA" type="Control" parent="."]
+[node name="SelectionBackground" type="Control" parent="."]
 visible = false
 layout_mode = 2
 
-[node name="Background" type="ColorRect" parent="SelectionA"]
+[node name="Background" type="ColorRect" parent="SelectionBackground"]
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 105.0
@@ -30,28 +37,28 @@ layout_mode = 2
 texture = ExtResource("1_j5jp7")
 expand_mode = 1
 
-[node name="SelectionB" type="Control" parent="."]
+[node name="SelectionForeground" type="Control" parent="."]
 visible = false
 layout_mode = 2
 
-[node name="Background" type="ColorRect" parent="SelectionB"]
+[node name="Background" type="ColorRect" parent="SelectionForeground"]
 layout_mode = 0
 offset_top = -20.0
 offset_right = 64.0
 offset_bottom = 33.0
 color = Color(0.231373, 0.137255, 0.109804, 1)
 
-[node name="Name" type="Label" parent="SelectionB"]
+[node name="Name" type="Label" parent="SelectionForeground"]
 layout_mode = 2
 offset_left = 1.0
 offset_top = -19.0
 offset_right = 65.0
 offset_bottom = 10.0
-text = "FOOD"
+text = "Name"
 label_settings = SubResource("LabelSettings_7ayvj")
 horizontal_alignment = 2
 
-[node name="Label" type="Label" parent="."]
+[node name="Quantity" type="Label" parent="."]
 layout_mode = 2
 text = "x99"
 label_settings = SubResource("LabelSettings_7ayvj")
