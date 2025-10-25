@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://d23mglv7gh3jg" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/bench.fbx" id="5_pptmn"]
 [ext_resource type="PackedScene" uid="uid://b0eklsk7miusi" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_hanging.fbx" id="5_qifxr"]
 [ext_resource type="PackedScene" uid="uid://bdvfjcjblrmem" path="res://scenes/objects/interactables/rest_point.tscn" id="7_48l4m"]
-[ext_resource type="PackedScene" uid="uid://brnu0hk6cuceg" path="res://scenes/objects/pickups/rare_pumpkin.tscn" id="8_abcin"]
-[ext_resource type="PackedScene" uid="uid://t641p716hpon" path="res://scenes/objects/pickups/epic_pumpkin.tscn" id="9_qifxr"]
+[ext_resource type="PackedScene" uid="uid://brnu0hk6cuceg" path="res://scenes/objects/pickups/pumpkin_small.tscn" id="8_abcin"]
+[ext_resource type="PackedScene" uid="uid://t641p716hpon" path="res://scenes/objects/pickups/pumpkin.tscn" id="9_qifxr"]
 [ext_resource type="PackedScene" uid="uid://ukmd5em17n3f" path="res://scenes/objects/pickup_spawner.tscn" id="10_3b0q4"]
 
 [node name="Segment" instance=ExtResource("1_pptmn")]
