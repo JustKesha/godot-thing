@@ -5,7 +5,6 @@
 
 [node name="Pickup" instance=ExtResource("1_6aomt")]
 item_name = "pumpkin"
-pickup_rate = 99
 
 [node name="Model" parent="." index="1" instance=ExtResource("2_vlect")]
 transform = Transform3D(0.904342, -0.0721112, 0.420673, 0.0347388, 0.99479, 0.0958458, -0.425392, -0.0720637, 0.902135, 0, -0.0539728, 7.03724e-10)

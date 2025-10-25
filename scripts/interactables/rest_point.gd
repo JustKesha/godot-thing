@@ -8,7 +8,11 @@ func interact(player: PlayerAPI):
 	if is_used: return
 	
 	player.lantern.fuel += fuel_gain
-	player.dialogue_window.display("You finally feel refreshed.")
+	player.dialogue_window.display([
+		"Sweet rest.",
+		"Finally, I can catch my breath.",
+		"I can rest for a bit.",
+	].pick_random())
 	$Light.is_lit = false
 	
 	is_used = true

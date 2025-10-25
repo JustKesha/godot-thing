@@ -185,9 +185,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -225.0
-offset_top = -7.5
+offset_top = -6.0
 offset_right = 225.0
-offset_bottom = 7.5
+offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.231373, 0.137255, 0.109804, 1)
@@ -200,9 +200,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -225.0
-offset_top = -7.5
+offset_top = -6.0
 offset_right = 225.0
-offset_bottom = 7.5
+offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.580392, 0.462745, 0.356863, 1)
@@ -215,12 +215,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -225.0
-offset_top = -7.5
+offset_top = -6.0
 offset_right = 225.0
-offset_bottom = 7.5
+offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.752941, 0.686275, 0.556863, 1)
+color = Color(0.890196, 0.843137, 0.694118, 1)
 
 [node name="Inventory" type="HBoxContainer" parent="Player/UI"]
 anchors_preset = 5
@@ -231,6 +231,7 @@ offset_bottom = 35.0
 grow_horizontal = 2
 
 [node name="DialogueWindow" type="Control" parent="Player/UI" node_paths=PackedStringArray("label", "timer")]
+visible = false
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5

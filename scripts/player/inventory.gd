@@ -59,9 +59,16 @@ func add(item_id: String, quantity: int = 1) -> int:
 	quantity_added = quantity - quantity_overflow
 	
 	if quantity_added > 0:
-		player.dialogue_window.display("Got +"+str(quantity_added)+" "+item_id)
+		player.dialogue_window.display("Got +"+str(quantity_added)+" "+item_id+"!")
 		logme()
 		open()
+	elif quantity == quantity_overflow:
+		player.dialogue_window.display([
+			"I'm full.",
+			"Can't carry anymore.",
+			"My hands are full.",
+		].pick_random())
+		
 	
 	return quantity_overflow
 

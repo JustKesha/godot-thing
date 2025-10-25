@@ -11,5 +11,5 @@ collision_mask = 0
 script = ExtResource("1_khwtm")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.15, 0)
+transform = Transform3D(1.35, 0, 0, 0, 1.35, 0, 0, 0, 1.35, 0, 0.15, 0)
 shape = SubResource("SphereShape3D_gkopc")
