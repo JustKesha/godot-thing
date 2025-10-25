@@ -12,6 +12,16 @@ font_color = Color(0.890196, 0.843137, 0.694118, 1)
 offset_right = 40.0
 offset_bottom = 59.0
 
+[node name="SelectionA" type="Control" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Background" type="ColorRect" parent="SelectionA"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 105.0
+color = Color(0.164706, 0.101961, 0.0862745, 1)
+
 [node name="Icon" type="TextureRect" parent="."]
 texture_filter = 1
 clip_contents = true
@@ -20,8 +30,29 @@ layout_mode = 2
 texture = ExtResource("1_j5jp7")
 expand_mode = 1
 
+[node name="SelectionB" type="Control" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Background" type="ColorRect" parent="SelectionB"]
+layout_mode = 0
+offset_top = -20.0
+offset_right = 64.0
+offset_bottom = 33.0
+color = Color(0.231373, 0.137255, 0.109804, 1)
+
+[node name="Name" type="Label" parent="SelectionB"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = -19.0
+offset_right = 65.0
+offset_bottom = 10.0
+text = "FOOD"
+label_settings = SubResource("LabelSettings_7ayvj")
+horizontal_alignment = 2
+
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
-text = "x 1"
+text = "x99"
 label_settings = SubResource("LabelSettings_7ayvj")
 horizontal_alignment = 2

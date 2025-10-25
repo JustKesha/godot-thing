@@ -4,15 +4,14 @@ var is_initiated := false
 var is_selected := true:
 	set(value):
 		if value == is_selected: return
-		
 		is_selected = value
-		
 		$Display.visible = is_selected
 		if is_selected: _select()
 		else: _deselect()
 var player: PlayerAPI
 var id: String
-var ui: VBoxContainer
+var tag: String
+var ui: CanvasItem
 
 @export_group("Stack")
 @export var quantity := 1:
@@ -43,18 +42,20 @@ func _destroy(): pass
 func _select(): pass
 func _deselect(): pass
 
-func init(item_id: String, player_api: PlayerAPI, slot_ui: VBoxContainer):
+func init(item_id: String, player_api: PlayerAPI, slot_ui: CanvasItem):
 	id = item_id
 	player = player_api
 	ui = slot_ui
+	_init()
 	
 	var ui_texture_rect := ui.get_node("Icon") as TextureRect
 	ui_texture_rect.texture = load(texture)
-	update_ui()
 	
-	_init()
-	is_initiated = true
+	var ui_tag_label := ui.get_node("SelectionB").get_node("Name") as Label
+	ui_tag_label.text = tag
+	
 	is_selected = true
+	is_initiated = true
 
 func use():
 	if not is_initiated: return
@@ -72,5 +73,9 @@ func update_ui():
 	if not ui: return
 	
 	var ui_text_label := ui.get_node("Label") as Label
-	
 	ui_text_label.text = "x" + str(quantity)
+	
+	var ui_selection_a := ui.get_node("SelectionA") as Control
+	var ui_selection_b := ui.get_node("SelectionB") as Control
+	ui_selection_a.visible = is_selected
+	ui_selection_b.visible = is_selected
