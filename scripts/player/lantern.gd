@@ -41,7 +41,7 @@ var update_timer := 0.0
 			fuel_limit = value
 		fuel = fuel
 @export var fuel_depletion_rate_min := 0.25
-@export var fuel_depletion_rate_max := 2.75
+@export var fuel_depletion_rate_max := 1.75
 
 @export_group("UI")
 @export var fuel_bar: ColorRect
