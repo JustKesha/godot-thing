@@ -22,12 +22,17 @@ var message := "":
 @export_group("Typing")
 enum TypeDelay {
 	NONE = 0,
-	DRAMATIC = 1000, SLOW = 500,
+	EXTRA_DRAMATIC = 3000, DRAMATIC = 1000, SLOW = 500,
 	NORMAL = 200,
 	FAST = 150, FASTEST = 75
 	}
 @export var default_type_delay := TypeDelay.FAST
 var _type_delay_multiplier := 0.0001
+@export var type_slow_characters := {
+	".": TypeDelay.EXTRA_DRAMATIC,
+	"!": TypeDelay.EXTRA_DRAMATIC,
+	",": TypeDelay.DRAMATIC,
+}
 var is_typing := false
 var _type_message := "":
 	set(value):
@@ -55,12 +60,19 @@ func type(delta: float):
 		_type_timer -= delta
 		return
 	
-	message += _type_message[len(message)]
+	var new_char := _type_message[len(message)]
+	message += new_char
 	
-	if message == _type_message:
+	if len(message) == len(_type_message):
 		is_typing = false
 		start_timeout(_type_timeout)
-	_type_timer = _type_delay
+		return
+	
+	if type_slow_characters.keys().has(new_char):
+		print('It does!')
+		_type_timer = type_slow_characters[new_char] * _type_delay_multiplier
+	else:
+		_type_timer = _type_delay
 
 func start_timeout(timeout: float = default_timeout):
 	if timeout > 0: timer.start(timeout)
