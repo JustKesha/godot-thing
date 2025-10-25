@@ -1,5 +1,8 @@
 class_name PlayerInventory extends Node3D
 
+signal item_selected(item: Item)
+signal item_unselected()
+
 @export var player: PlayerAPI
 
 @export_group("General")
@@ -94,11 +97,15 @@ func _show_item(item: Item = null):
 	if not item: item = get_active()
 	if not item: return
 	item.is_selected = true
+	item.update_ui()
+	item_selected.emit(item)
 
 func _hide_item(item: Item = null):
 	if not item: item = get_active()
 	if not item: return
 	item.is_selected = false
+	item.update_ui()
+	item_unselected.emit(item)
 
 func get_item(slot: int) -> Item:
 	if not items or slot >= len(items): return null

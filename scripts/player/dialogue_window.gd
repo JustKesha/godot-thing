@@ -20,7 +20,7 @@ var message := "":
 @export var default_timeout := 2.5
 
 @export_group("Typing")
-enum TypeDelay { NONE = 0, DRAMATIC = 12, SLOW = 8, NORMAL = 4, FAST = 2, FASTEST = 1 }
+enum TypeDelay { NONE = 0, DRAMATIC = 12, SLOW = 6, NORMAL = 2, FAST = 1 }
 @export var default_type_delay := TypeDelay.NORMAL
 var is_typing := false
 var _type_message := "":
