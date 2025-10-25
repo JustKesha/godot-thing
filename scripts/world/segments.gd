@@ -1,21 +1,30 @@
 class_name WorldSegments extends Resource
 
-static var path := "res://scenes/segments/"
-static var list := _load_names(path)
-
-static func _load_names(path: String) -> Array:
-	var result := []
-	var dir = DirAccess.open(path)
-	if dir:
-		for file in dir.get_files():
-			if file.ends_with(".tscn"):
-				result.append(file.get_basename())
-	return result
+static var list := [
+	preload("res://scenes/segments/fence_a.tscn"),
+	preload("res://scenes/segments/fence_b.tscn"),
+	preload("res://scenes/segments/fence_c.tscn"),
+	preload("res://scenes/segments/gates_a.tscn"),
+	preload("res://scenes/segments/gates_b.tscn"),
+	preload("res://scenes/segments/graves_a.tscn"),
+	
+	preload("res://scenes/segments/light_post_a.tscn"),
+	preload("res://scenes/segments/light_post_a.tscn"),
+	preload("res://scenes/segments/light_post_a.tscn"),
+	
+	preload("res://scenes/segments/light_post_b.tscn"),
+	preload("res://scenes/segments/light_post_c.tscn"),
+	
+	preload("res://scenes/segments/trees_a.tscn"),
+	preload("res://scenes/segments/trees_a.tscn"),
+	preload("res://scenes/segments/trees_a.tscn")
+]
 
 static func get_random() -> Node3D:
-	var random_name = list[randi() % list.size()]
-	return get_by_name(random_name)
+	return list[randi() % list.size()].instantiate()
 
 static func get_by_name(segment_name: String) -> Node3D:
-	var scene = load(path + segment_name + ".tscn")
-	return scene.instantiate()
+	for scene in list:
+		if scene.resource_path.get_file().get_basename() == segment_name:
+			return scene.instantiate()
+	return null
