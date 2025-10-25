@@ -69,3 +69,10 @@ func _process(delta: float):
 
 func _on_timer_timeout():
 	stop_timeout()
+
+func _unhandled_input(event: InputEvent):
+	if is_active and event.is_action_pressed('skip'):
+		if is_typing:
+			display(_type_message, 0)
+		else:
+			stop_timeout()
