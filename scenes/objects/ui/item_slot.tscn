@@ -1,26 +1,27 @@
 [gd_scene load_steps=4 format=3 uid="uid://b2b7l04dmthar"]
 
-[ext_resource type="Texture2D" uid="uid://cgpwom001gk0q" path="res://sprites/matches.png" id="1_fvwiw"]
+[ext_resource type="Texture2D" uid="uid://bswfo6wahvvpj" path="res://sprites/pumpkin.png" id="1_j5jp7"]
 [ext_resource type="FontFile" uid="uid://bdhjbd58rv1aa" path="res://fonts/tiny5/Tiny5-Regular.ttf" id="2_j5jp7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7ayvj"]
 font = ExtResource("2_j5jp7")
 font_size = 25
 font_color = Color(0.890196, 0.843137, 0.694118, 1)
-outline_color = Color(0.890196, 0.843137, 0.694118, 1)
 
 [node name="ItemSlot" type="VBoxContainer"]
 offset_right = 40.0
 offset_bottom = 59.0
 
 [node name="Icon" type="TextureRect" parent="."]
+texture_filter = 1
 clip_contents = true
-custom_minimum_size = Vector2(40, 40)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-texture = ExtResource("1_fvwiw")
+texture = ExtResource("1_j5jp7")
+expand_mode = 1
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
-text = "x1"
+text = "x 1"
 label_settings = SubResource("LabelSettings_7ayvj")
 horizontal_alignment = 2

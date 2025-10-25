@@ -8,7 +8,7 @@
 script = ExtResource("2_kk5yu")
 quantity = 3
 stack = 16
-texture = "uid://cgpwom001gk0q"
+texture = "uid://d2n4bc325brgi"
 
 [node name="Model" parent="Display" index="0" instance=ExtResource("3_kxv3p")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.0245314, 0)
