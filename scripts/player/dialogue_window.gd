@@ -31,7 +31,11 @@ var _type_delay_multiplier := 0.0001
 @export var type_slow_characters := {
 	".": TypeDelay.EXTRA_DRAMATIC,
 	"!": TypeDelay.EXTRA_DRAMATIC,
+	"?": TypeDelay.EXTRA_DRAMATIC,
 	",": TypeDelay.DRAMATIC,
+	"-": TypeDelay.DRAMATIC,
+	":": TypeDelay.DRAMATIC,
+	";": TypeDelay.DRAMATIC,
 }
 var is_typing := false
 var _type_message := "":
@@ -69,7 +73,6 @@ func type(delta: float):
 		return
 	
 	if type_slow_characters.keys().has(new_char):
-		print('It does!')
 		_type_timer = type_slow_characters[new_char] * _type_delay_multiplier
 	else:
 		_type_timer = _type_delay
