@@ -4,6 +4,8 @@ project.godot
 .gitattributes
 /fonts/
 /sprites/
+/export/
+export_presets.cfg
 
 # Project specific
 /assets/
