@@ -1,5 +1,6 @@
 class_name Pickups extends Resource
 
+# NOTE When exporting make sure resources from path below are included
 static var path := "res://scenes/objects/pickups/"
 static var comm_prefix := "comm_"
 static var comm_chance := -1.0
@@ -71,13 +72,13 @@ static func get_random(pool: PickupPool = PickupPool.ALL,
 			rare_pool = ['rare_pumpkin']
 			epic_pool = ['epic_pumpkin']
 		PickupPool.BENCH:
-			comm_pool = ['comm_matches']
+			comm_pool = ['comm_candle']
 			rare_pool = ['rare_pumpkin']
 			epic_pool = ['epic_pumpkin']
 	
-	var chance_comm := -1
-	var chance_rare := -1
-	var chance_epic := -1
+	var chance_comm := -1.0
+	var chance_rare := -1.0
+	var chance_epic := -1.0
 
 	match chances:
 		Chances.NONE:
@@ -121,10 +122,9 @@ static func get_epic(pool: Array[String] = epic) -> Node3D:
 	return get_by_id(pool.pick_random() if pool else '')
 
 static func get_by_id(pickup_id: String) -> Node3D:
-	var scene_path = path + pickup_id + ".tscn"
-	if not FileAccess.file_exists(scene_path):
-		push_error("Pickup not found: ", pickup_id)
+	var pickup_path = path + pickup_id + ".tscn"
+	if not ResourceLoader.exists(pickup_path):
+		push_error("Segment not found at: " + pickup_path)
 		return null
-	
-	var scene = load(scene_path)
-	return scene.instantiate()
+	var pickup_scene = load(pickup_path)
+	return pickup_scene.instantiate()
