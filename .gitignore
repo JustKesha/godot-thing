@@ -2,8 +2,8 @@
 project.godot
 .editorconfig
 .gitattributes
-/fonts/
-/sprites/
+
+# Custom Exports
 /export/
 export_presets.cfg
 *.rar
