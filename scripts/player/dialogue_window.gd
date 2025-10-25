@@ -34,8 +34,8 @@ var _type_timeout := 0
 
 func display(text: String = default_message, delay: int = default_type_delay,
 	timeout: float = default_timeout):
+	stop_timeout()
 	if delay > 0:
-		message = ""
 		_type_message = text
 		_type_delay = delay
 		_type_timeout = timeout
@@ -56,7 +56,7 @@ func type(delta: float):
 		start_timeout(_type_timeout)
 	_type_timer = _type_delay
 
-func start_timeout(timeout: float = 2.5):
+func start_timeout(timeout: float = default_timeout):
 	if timeout > 0: timer.start(timeout)
 
 func stop_timeout():
