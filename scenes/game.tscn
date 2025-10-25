@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b8mxrvh7c55n7" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_standing.fbx" id="7_gee14"]
 [ext_resource type="Script" uid="uid://nogdh47dnwq2" path="res://scripts/player/api.gd" id="10_vtaks"]
 [ext_resource type="Script" uid="uid://dflx3x0d23ff1" path="res://scripts/player/inventory.gd" id="11_kvpfn"]
-[ext_resource type="FontFile" uid="uid://bdhjbd58rv1aa" path="res://fonts/tiny5/Tiny5-Regular.ttf" id="12_kvuet"]
+[ext_resource type="FontFile" uid="uid://bdhjbd58rv1aa" path="res://assets/fonts/tiny5/Tiny5-Regular.ttf" id="12_kvuet"]
 [ext_resource type="Script" uid="uid://73uqankf26ly" path="res://scripts/player/dialogue_window.gd" id="12_trtic"]
 [ext_resource type="Script" uid="uid://utcd1g44dmpc" path="res://scripts/player/movement.gd" id="14_suyxu"]
 [ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera_shake.gd" id="15_rysoc"]

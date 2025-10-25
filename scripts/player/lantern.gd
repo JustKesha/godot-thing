@@ -13,6 +13,7 @@ var update_timer := 0.0
 		var old_fuel := fuel
 		fuel = clampf(value, 0, fuel_limit)
 		var fuel_diff = fuel - old_fuel
+		# NOTE Not using abs on purpose
 		
 		if fuel == 0: extinguish()
 		
@@ -40,7 +41,7 @@ var update_timer := 0.0
 			fuel_limit = value
 		fuel = fuel
 @export var fuel_depletion_rate_min := 0.25
-@export var fuel_depletion_rate_max := 15.75
+@export var fuel_depletion_rate_max := 2.75
 
 @export_group("UI")
 @export var fuel_bar: ColorRect

@@ -1,6 +1,6 @@
 class_name PlayerMovementController extends Node
 
-signal move(speed: float, delta: float)
+signal move(speed: float)
 signal stop(distance_traveled: float)
 
 @export var world: WorldGenerator
@@ -12,7 +12,7 @@ func _physics_process(delta: float):
 	if Input.is_action_pressed('move'):
 		is_moving = true
 		world.move(speed * delta)
-		move.emit(speed, delta)
+		move.emit(speed)
 		distance_traveled += speed
 	elif is_moving:
 		is_moving = false

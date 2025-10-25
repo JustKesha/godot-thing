@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://jvi4yqen8kvb"]
+
+[ext_resource type="PackedScene" uid="uid://dqsberxr7n7i5" path="res://scenes/objects/pickup.tscn" id="1_fcoxx"]
+[ext_resource type="PackedScene" uid="uid://b1b2xn2lnrlph" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/candle_triple.fbx" id="2_dxtli"]
+
+[node name="Pickup" instance=ExtResource("1_fcoxx")]
+
+[node name="Model" parent="." index="1" instance=ExtResource("2_dxtli")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, -0.0245314, 0)

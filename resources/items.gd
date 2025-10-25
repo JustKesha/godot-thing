@@ -1,9 +1,10 @@
 class_name Items extends Resource
 
+# NOTE When exporting make sure resources from path below are included
 static var path := "res://scenes/objects/items/"
-static var list := _load_names(path)
+static var list := _load_names()
 
-static func _load_names(path: String) -> Array:
+static func _load_names() -> Array:
 	var result := []
 	var dir = DirAccess.open(path)
 	if dir:

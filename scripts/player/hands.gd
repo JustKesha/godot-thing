@@ -13,7 +13,7 @@ var hovered: Interactable = null:
 		else:
 			hovered = null
 
-func _process(delta: float):
+func _process(_delta: float):
 	hovered = get_collider()
 
 func _unhandled_input(event: InputEvent):

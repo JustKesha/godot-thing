@@ -73,7 +73,7 @@ func add(item_id: String, quantity: int = 1) -> int:
 	return quantity_overflow
 
 func use(slot: int = active_slot) -> bool:
-	var item = get_active()
+	var item = get_item(slot)
 	if not item: return false
 	item.use()
 	return true
@@ -131,12 +131,12 @@ func find_item(id: String) -> Item:
 
 func logme():
 	if not items: return
-	var str := 'INV: '
+	var log_str := 'INV: '
 	for i in range(len(items)):
 		var item = items[i]
-		if i != 0: str += ',\n     '
-		str += item.id.to_upper()+' x'+str(item.quantity)+'/'+str(item.stack)
-	print(str)
+		if i != 0: log_str += ',\n     '
+		log_str += item.id.to_upper()+' x'+str(item.quantity)+'/'+str(item.stack)
+	print(log_str)
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed('inventory'):
