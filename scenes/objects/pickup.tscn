@@ -5,8 +5,9 @@
 
 [node name="Pickup" instance=ExtResource("1_ehort")]
 script = ExtResource("2_ug66n")
-item_name = "matches"
+item_name = "candle"
 quantity = 1
+pickup_quantity = 99
 allow_overflow = false
 
 [node name="Hitbox" parent="." index="0"]

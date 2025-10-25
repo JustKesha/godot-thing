@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://b1b2xn2lnrlph" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/candle_triple.fbx" id="2_au3n7"]
 
 [node name="Pickup" instance=ExtResource("1_20set")]
-item_name = "candle"
 
 [node name="Model" parent="." index="1" instance=ExtResource("2_au3n7")]
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, -0.0245314, 0)
