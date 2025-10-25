@@ -20,24 +20,30 @@ var message := "":
 @export var default_timeout := 2.5
 
 @export_group("Typing")
-enum TypeDelay { NONE = 0, DRAMATIC = 12, SLOW = 6, NORMAL = 2, FAST = 1 }
-@export var default_type_delay := TypeDelay.NORMAL
+enum TypeDelay {
+	NONE = 0,
+	DRAMATIC = 1000, SLOW = 500,
+	NORMAL = 200,
+	FAST = 150, FASTEST = 75
+	}
+@export var default_type_delay := TypeDelay.FAST
+var _type_delay_multiplier := 0.0001
 var is_typing := false
 var _type_message := "":
 	set(value):
 		_type_message = value
 		is_typing = len(_type_message) > 0
 		is_active = is_typing
-var _type_delay := 0
-var _type_timer := 0
-var _type_timeout := 0
+var _type_delay := 0.0
+var _type_timer := 0.0
+var _type_timeout := 0.0
 
-func display(text: String = default_message, delay: int = default_type_delay,
+func display(text: String = default_message, delay: float = default_type_delay,
 	timeout: float = default_timeout):
 	stop_timeout()
 	if delay > 0:
 		_type_message = text
-		_type_delay = delay
+		_type_delay = delay * _type_delay_multiplier
 		_type_timeout = timeout
 	else:
 		message = text
