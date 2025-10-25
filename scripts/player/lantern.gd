@@ -10,7 +10,10 @@ var update_timer := 0.0
 @export_group("Fuel")
 @export var fuel := 75.0:
 	set(value):
+		var old_fuel := fuel
 		fuel = clampf(value, 0, fuel_limit)
+		var fuel_diff = fuel - old_fuel
+		
 		if fuel == 0: extinguish()
 		
 		elif fuel < 20:
@@ -25,6 +28,9 @@ var update_timer := 0.0
 			light.flicker_intensity = 0.1
 			light.flicker_min_duration = 0.1
 			light.flicker_max_duration = 0.25
+		
+		if fuel_bar_delay_timer and fuel_diff > fuel_bar_delay_fuel_threshold:
+			fuel_bar_delay_timer.start(fuel_bar_delay_multiplier * fuel_diff)
 		logme()
 @export var fuel_limit := 100.0:
 	set(value):
@@ -34,7 +40,7 @@ var update_timer := 0.0
 			fuel_limit = value
 		fuel = fuel
 @export var fuel_depletion_rate_min := 0.25
-@export var fuel_depletion_rate_max := 1.75
+@export var fuel_depletion_rate_max := 15.75
 
 @export_group("UI")
 @export var fuel_bar: ColorRect
@@ -68,6 +74,12 @@ var fuel_under_bar_width := 0.0:
 @export var fuel_bar_trans_speed := 1.75
 @export var fuel_under_bar_trans_speed := 8
 var fuel_bar_center_x := 0.0
+
+@export_group("UI Delay")
+@export var fuel_bar_delay_timer: Timer
+@export var fuel_bar_delay_multiplier := .035
+@export var fuel_bar_delay_fuel_threshold := 10
+# Might be a good idea to move this part onto the FuelBar control node instead
 
 func reignite(intensity: float = -1.0):
 	light.is_lit = true
@@ -112,8 +124,9 @@ func _update_ui(delta: float):
 	if not fuel_bar: return
 	var fuel_trg := (fuel / fuel_limit) * fuel_limit
 
-	fuel_bar_width = lerp(fuel_bar_width,
-		fuel_trg, fuel_bar_trans_speed * delta)
+	if fuel_bar_delay_timer.is_stopped():
+		fuel_bar_width = lerp(fuel_bar_width,
+			fuel_trg, fuel_bar_trans_speed * delta)
 	
 	fuel_bar_bg_width = lerp(fuel_bar_bg_width,
 		fuel_limit, fuel_bar_trans_speed * delta)

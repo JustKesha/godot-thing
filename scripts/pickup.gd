@@ -21,6 +21,3 @@ func interact(player: PlayerAPI):
 		remove()
 	else:
 		quantity = overflow
-
-func remove():
-	queue_free()
