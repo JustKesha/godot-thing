@@ -6,6 +6,7 @@ project.godot
 /sprites/
 /export/
 export_presets.cfg
+*.rar
 
 # Project specific
 /assets/
