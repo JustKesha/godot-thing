@@ -122,6 +122,7 @@ static func get_epic(pool: Array[String] = epic) -> Node3D:
 	return get_by_id(pool.pick_random() if pool else '')
 
 static func get_by_id(pickup_id: String) -> Node3D:
+	if not pickup_id: return null
 	var pickup_path = path + pickup_id + ".tscn"
 	if not ResourceLoader.exists(pickup_path):
 		push_error("Segment not found at: " + pickup_path)
