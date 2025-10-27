@@ -53,6 +53,9 @@ func clean() -> int:
 	return len(segments_to_remove)
 
 func load_segment(segment: Node3D):
+	if not segment is WorldSegment:
+		push_error("Trying to load a null segment.")
+		return
 	world.add_child(segment)
 	segment.position = get_next_segment_position()
 	loaded_segments.append(segment)
@@ -74,7 +77,7 @@ func get_next_segment_position() -> Vector3:
 func get_next_segment_index() -> int:
 	return len(loaded_segments) - 1
 
-func get_next_segment() -> Node3D:
+func get_next_segment() -> WorldSegment:
 	return WorldSegments.get_random()
 
 func is_segment_unload_time(segment: Node3D) -> bool:
