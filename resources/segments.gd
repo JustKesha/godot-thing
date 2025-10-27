@@ -1,32 +1,31 @@
 class_name WorldSegments extends Resource
 
-static var path := "res://scenes/segments/"
-static var list := _load_names()
+enum Rarity { COMMON = 0, EPIC = 1, RARE = 2 }
 
-static func _load_names() -> Array:
-	var result := []
-	var dir = DirAccess.open(path)
-	if not dir: return []
-	
-	for file in dir.get_files():
-		var resource_name = file.get_basename().trim_suffix(".remap")
-		var resource_path = path + resource_name + ".tscn"
-		
-		if ResourceLoader.exists(resource_path):
-			result.append(resource_name)
-	return result
+const path := "res://scenes/segments/"
+const extn := ".tscn"
+const data := {
+	"fence_a": { "rarity": Rarity.COMMON },
+	"fence_b": { "rarity": Rarity.RARE },
+	"fence_c": { "rarity": Rarity.RARE },
+}
 
-static func get_random() -> Node3D:
-	if list.is_empty():
-		push_error("Segments list is empty")
+static var scenes: Dictionary[String, PackedScene] = {}
+static var ids: Array[Array]
+
+static func _static_init():
+	for id in data.keys():
+		var scene: PackedScene = load(path + id + extn)
+		scenes[id] = scene
+		var rarity = data[id]["rarity"] as int
+		while len(ids) <= rarity: ids.append([])
+		ids[rarity].append(id)
+
+static func get_random() -> WorldSegment:
+	return scenes.values().pick_random().instantiate()
+
+static func get_segment(id: String) -> WorldSegment:
+	if not id in scenes:
+		push_error("Segment '" + id + "' not found.")
 		return null
-	var random_name = list[randi() % list.size()]
-	return get_by_name(random_name)
-
-static func get_by_name(segment_name: String) -> Node3D:
-	var segment_path = path + segment_name + ".tscn"
-	if ResourceLoader.exists(segment_path):
-		var scene = load(segment_path)
-		return scene.instantiate()
-	push_error("Segment not found: " + segment_path)
-	return null
+	return scenes[id].instantiate()

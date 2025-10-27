@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddbnnkfv7j6kv"]
+[gd_scene load_steps=6 format=3 uid="uid://ddbnnkfv7j6kv"]
+
+[ext_resource type="Script" uid="uid://bw4r8a77500lb" path="res://scripts/world/segment.gd" id="1_th87o"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o07ah"]
 albedo_color = Color(1, 0.584314, 0.611765, 1)
@@ -15,6 +17,7 @@ material = SubResource("StandardMaterial3D_yccht")
 size = Vector2(100, 10.5)
 
 [node name="Segment" type="Node3D"]
+script = ExtResource("1_th87o")
 metadata/hewwo = false
 
 [node name="Borders" type="MeshInstance3D" parent="."]

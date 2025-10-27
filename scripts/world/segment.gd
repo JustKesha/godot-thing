@@ -1,0 +1,1 @@
+class_name WorldSegment extends Node3D
