@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://b7owo051mahdu"]
+[gd_scene load_steps=41 format=3 uid="uid://b7owo051mahdu"]
 
 [ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://cfcy0l63lmkbv" path="res://scripts/player/hands.gd" id="6_0tnpc"]
@@ -9,11 +9,13 @@
 [ext_resource type="Script" uid="uid://dflx3x0d23ff1" path="res://scripts/player/inventory.gd" id="11_kvpfn"]
 [ext_resource type="FontFile" uid="uid://bdhjbd58rv1aa" path="res://assets/fonts/tiny5/Tiny5-Regular.ttf" id="12_kvuet"]
 [ext_resource type="Script" uid="uid://73uqankf26ly" path="res://scripts/player/dialogue_window.gd" id="12_trtic"]
+[ext_resource type="Script" uid="uid://c26pbg35u3ubc" path="res://scripts/ui/cursor.gd" id="13_ca42v"]
+[ext_resource type="Texture2D" uid="uid://1x0dqgjaimb1" path="res://assets/sprites/cursor/inspect.png" id="13_ir15t"]
 [ext_resource type="Script" uid="uid://utcd1g44dmpc" path="res://scripts/player/movement.gd" id="14_suyxu"]
 [ext_resource type="Script" uid="uid://be3bpi6vm5va5" path="res://scripts/world/event_system.gd" id="14_trtic"]
-[ext_resource type="PackedScene" uid="uid://mevbykugctat" path="res://scenes/objects/event.tscn" id="15_ir15t"]
 [ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera_shake.gd" id="15_rysoc"]
 [ext_resource type="Script" uid="uid://y0hxp8wo0eyv" path="res://scripts/player/camera.gd" id="15_sgl2t"]
+[ext_resource type="Texture2D" uid="uid://vclibtl54q3f" path="res://assets/sprites/cursor/inspect_2.png" id="15_ssvqc"]
 [ext_resource type="Shader" uid="uid://bsjuon6lgj8fe" path="res://shaders/pixelation.gdshader" id="16_qouja"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rysoc"]
@@ -55,13 +57,13 @@ height = 3.0
 radial_segments = 12
 rings = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir15t"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_264po"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 10.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_ir15t"]
-material = SubResource("StandardMaterial3D_ir15t")
+material = SubResource("StandardMaterial3D_264po")
 radial_segments = 6
 rings = 3
 
@@ -69,22 +71,22 @@ rings = 3
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.655527, 0.489563), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_ir15t"]
+[sub_resource type="CurveTexture" id="CurveTexture_1kice"]
 curve = SubResource("Curve_ir15t")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ir15t"]
 direction = Vector3(0, 1, 0)
 initial_velocity_max = 1.0
 gravity = Vector3(0, 0.25, 0)
-scale_curve = SubResource("CurveTexture_ir15t")
+scale_curve = SubResource("CurveTexture_1kice")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ca42v"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5newe"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 8.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_ca42v"]
-material = SubResource("StandardMaterial3D_ca42v")
+material = SubResource("StandardMaterial3D_5newe")
 radius = 0.025
 height = 0.05
 radial_segments = 6
@@ -114,6 +116,20 @@ material = SubResource("ShaderMaterial_kvpfn")
 font = ExtResource("12_kvuet")
 font_size = 25
 font_color = Color(0.890196, 0.843137, 0.694118, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_264po"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_ir15t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ssvqc")
+}],
+"loop": true,
+"name": &"INSPECT",
+"speed": 5.0
+}]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
 albedo_color = Color(0.714661, 0.558355, 0.424573, 1)
@@ -360,13 +376,36 @@ autowrap_mode = 2
 [node name="Timeout" type="Timer" parent="Player/UI/DialogueWindow"]
 one_shot = true
 
-[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("inventory", "lantern", "camera", "camera_effects", "dialogue_window", "moon")]
+[node name="Cursor" type="Control" parent="Player/UI" node_paths=PackedStringArray("sprite")]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("13_ca42v")
+sprite = NodePath("Sprite")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Player/UI/Cursor"]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_264po")
+animation = &"INSPECT"
+frame_progress = 0.661117
+speed_scale = 0.5
+
+[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("lantern", "inventory", "camera", "camera_effects", "dialogue_window", "cursor", "moon")]
 script = ExtResource("10_vtaks")
-inventory = NodePath("../Trypod/Inventory")
 lantern = NodePath("../Lantern")
+inventory = NodePath("../Trypod/Inventory")
 camera = NodePath("../Trypod/Head/Camera")
 camera_effects = NodePath("../Trypod/Head")
 dialogue_window = NodePath("../UI/DialogueWindow")
+cursor = NodePath("../UI/Cursor")
 moon = NodePath("../../Moon")
 
 [node name="Events" type="Node" parent="." node_paths=PackedStringArray("player_api", "random_event_timer")]
@@ -375,8 +414,6 @@ player_api = NodePath("../Player/API")
 random_event_timer = NodePath("RandomEvent")
 
 [node name="RandomEvent" type="Timer" parent="Events"]
-
-[node name="Event" parent="Events" instance=ExtResource("15_ir15t")]
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 visible = false
