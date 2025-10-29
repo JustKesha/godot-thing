@@ -1,6 +1,14 @@
 class_name WorldSegments extends Resource
 
 enum Rarity { ANY = -1, COMMON = 0, RARE = 1, EPIC = 2 }
+enum Chances { GRIM = 0, SLIM = 1, OKAY = 2, GOOD = 3, NICE = 4 }
+const rarity_chances := [
+	[30.0, 10.0,  2.5],
+	[40.0, 15.0,  5.0],
+	[60.0, 20.0, 10.0],
+	[50.0, 30.0, 15.0],
+	[40.0, 40.0, 20.0],
+]
 
 const path := "res://scenes/segments/"
 const extn := ".tscn"
@@ -31,7 +39,18 @@ static func _static_init():
 		if rarity < 0: rarity = Rarity.values()[randi() % Rarity.size()]
 		while len(ids) <= rarity: ids.append([])
 		ids[rarity].append(id)
-	print(ids)
+
+static func roll(percent: float = -1,
+	chances: Chances = Chances.NICE) -> WorldSegment:
+	if percent < 0: randf_range(0.0, 100.0)
+	
+	var rarity := 0
+	var chance := 0.0
+	for rarity_chance in rarity_chances[chances]:
+		chance += rarity_chance
+		if percent <= chance: return get_random(rarity)
+		rarity += 1
+	return null
 
 static func get_random(rarity: Rarity = Rarity.ANY) -> WorldSegment:
 	match rarity:
