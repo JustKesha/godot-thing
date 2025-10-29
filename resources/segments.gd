@@ -42,8 +42,8 @@ static func _static_init():
 		ids[rarity].append(id)
 
 static func roll(percent: float = -1,
-	chances: Chances = Chances.OKAY) -> WorldSegment:
-	if percent < 0: randf_range(0.0, 100.0)
+	chances: Chances = Chances.GOOD) -> WorldSegment:
+	if percent < 0: percent = randf_range(0.0, 100.0)
 	
 	var rarity := 0
 	var chance := 0.0
