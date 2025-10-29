@@ -3,17 +3,21 @@ class_name PlayerLantern extends Node
 @export var light: InteractiveLight
 
 @export_group("General")
-@export var intensity_change_rate := 0.65
 @export var update_rate := 1.0
 var update_timer := 0.0
 
 @export_group("Fuel")
-@export var fuel := 75.0:
+@export var fuel := 25.0:
 	set(value):
-		var old_fuel := fuel
+		var fuel_before := fuel
+		
 		fuel = clampf(value, 0, fuel_limit)
-		var fuel_diff = fuel - old_fuel
-		# NOTE Not using abs on purpose
+		
+		light.intensity = (
+			fuel / fuel_limit * (light.max_intensity - light.min_intensity)
+			+ light.min_intensity )
+		
+		var fuel_diff = fuel - fuel_before # Not using abs on purpose
 		
 		if fuel == 0: extinguish()
 		
@@ -80,7 +84,7 @@ var fuel_bar_center_x := 0.0
 @export var fuel_bar_delay_timer: Timer
 @export var fuel_bar_delay_multiplier := .035
 @export var fuel_bar_delay_fuel_threshold := 10
-# Might be a good idea to move this part onto the FuelBar control node instead
+# TODO Should move to FuelBar control node instead
 
 func reignite(intensity: float = -1.0):
 	light.is_lit = true
@@ -88,11 +92,6 @@ func reignite(intensity: float = -1.0):
 
 func extinguish():
 	light.is_lit = false
-
-func change_intensity(dir: float,
-	strength: float = intensity_change_rate) -> float:
-	light.intensity += dir * strength
-	return light.intensity
 
 func deplete(how_much: float = -1.0):
 	if how_much < 0: how_much = _get_depletion_rate()
@@ -138,11 +137,6 @@ func _update_ui(delta: float):
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed('extinguish'):
 		light.is_lit = false
-	
-	elif event.is_action_pressed('light_up'):
-		change_intensity(1)
-	elif event.is_action_pressed('light_down'):
-		change_intensity(-1)
 
 func _ready():
 	fuel_limit = fuel_limit
