@@ -77,8 +77,8 @@ func face(where: Variant):
 ## not how long the player will face the target.
 func look(
 	at: Variant,
-	reset_after: bool = true,
-	duration: float = 1.75
+	duration: float = 1.75,
+	reset_after: bool = true
 	):
 	lock(at, duration, false, false)
 	if reset_after: lock_start_angle = Vector2.ZERO

@@ -10,13 +10,10 @@ var update_timer := 0.0
 @export var fuel := 25.0:
 	set(value):
 		var fuel_before := fuel
-		
 		fuel = clampf(value, 0, fuel_limit)
-		
 		light.intensity = (
 			fuel / fuel_limit * (light.max_intensity - light.min_intensity)
 			+ light.min_intensity )
-		
 		var fuel_diff = fuel - fuel_before # Not using abs on purpose
 		
 		if fuel == 0: extinguish()

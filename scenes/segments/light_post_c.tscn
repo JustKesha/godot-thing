@@ -26,3 +26,4 @@ transform = Transform3D(0.126594, -0.108227, -0.986032, 0.0395945, 0.99379, -0.1
 
 [node name="PickupSpawner" parent="." index="6" instance=ExtResource("6_c4wn8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4733, 0, 0.0853792)
+script = null

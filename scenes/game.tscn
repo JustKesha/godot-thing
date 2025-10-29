@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b7owo051mahdu"]
+[gd_scene load_steps=38 format=3 uid="uid://b7owo051mahdu"]
 
 [ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://cfcy0l63lmkbv" path="res://scripts/player/hands.gd" id="6_0tnpc"]
@@ -10,6 +10,8 @@
 [ext_resource type="FontFile" uid="uid://bdhjbd58rv1aa" path="res://assets/fonts/tiny5/Tiny5-Regular.ttf" id="12_kvuet"]
 [ext_resource type="Script" uid="uid://73uqankf26ly" path="res://scripts/player/dialogue_window.gd" id="12_trtic"]
 [ext_resource type="Script" uid="uid://utcd1g44dmpc" path="res://scripts/player/movement.gd" id="14_suyxu"]
+[ext_resource type="Script" uid="uid://be3bpi6vm5va5" path="res://scripts/world/event_system.gd" id="14_trtic"]
+[ext_resource type="PackedScene" uid="uid://mevbykugctat" path="res://scenes/objects/event.tscn" id="15_ir15t"]
 [ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera_shake.gd" id="15_rysoc"]
 [ext_resource type="Script" uid="uid://y0hxp8wo0eyv" path="res://scripts/player/camera.gd" id="15_sgl2t"]
 [ext_resource type="Shader" uid="uid://bsjuon6lgj8fe" path="res://shaders/pixelation.gdshader" id="16_qouja"]
@@ -41,6 +43,52 @@ fog_light_color = Color(0.0119747, 0.0144936, 0.0190329, 1)
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.2
 volumetric_fog_albedo = Color(0.269937, 0.0749075, 2.40654e-08, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssvqc"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_264po"]
+material = SubResource("StandardMaterial3D_ssvqc")
+radius = 1.0
+height = 3.0
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir15t"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 10.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ir15t"]
+material = SubResource("StandardMaterial3D_ir15t")
+radial_segments = 6
+rings = 3
+
+[sub_resource type="Curve" id="Curve_ir15t"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.655527, 0.489563), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ir15t"]
+curve = SubResource("Curve_ir15t")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ir15t"]
+direction = Vector3(0, 1, 0)
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0.25, 0)
+scale_curve = SubResource("CurveTexture_ir15t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ca42v"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 8.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ca42v"]
+material = SubResource("StandardMaterial3D_ca42v")
+radius = 0.025
+height = 0.05
+radial_segments = 6
+rings = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]
 render_priority = 0
@@ -108,6 +156,37 @@ environment = SubResource("Environment_s0gvp")
 script = ExtResource("1_iywne")
 world = NodePath(".")
 player = NodePath("../Player")
+
+[node name="Beast" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+visible = false
+
+[node name="Body" type="MeshInstance3D" parent="Beast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1)
+visible = false
+mesh = SubResource("CapsuleMesh_264po")
+skeleton = NodePath("")
+
+[node name="Head" type="Node3D" parent="Beast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="EyeLeft" type="MeshInstance3D" parent="Beast/Head"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, -0.15, 0, 0)
+mesh = SubResource("SphereMesh_ir15t")
+
+[node name="Fire" type="GPUParticles3D" parent="Beast/Head/EyeLeft"]
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ir15t")
+draw_pass_1 = SubResource("SphereMesh_ca42v")
+
+[node name="EyeRight" type="MeshInstance3D" parent="Beast/Head"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0.15, 0, 0)
+mesh = SubResource("SphereMesh_ir15t")
+
+[node name="Fire" type="GPUParticles3D" parent="Beast/Head/EyeRight"]
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ir15t")
+draw_pass_1 = SubResource("SphereMesh_ca42v")
 
 [node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("world")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
@@ -281,11 +360,23 @@ autowrap_mode = 2
 [node name="Timeout" type="Timer" parent="Player/UI/DialogueWindow"]
 one_shot = true
 
-[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("lantern", "inventory", "dialogue_window")]
+[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("inventory", "lantern", "camera", "camera_effects", "dialogue_window", "moon")]
 script = ExtResource("10_vtaks")
-lantern = NodePath("../Lantern")
 inventory = NodePath("../Trypod/Inventory")
+lantern = NodePath("../Lantern")
+camera = NodePath("../Trypod/Head/Camera")
+camera_effects = NodePath("../Trypod/Head")
 dialogue_window = NodePath("../UI/DialogueWindow")
+moon = NodePath("../../Moon")
+
+[node name="Events" type="Node" parent="." node_paths=PackedStringArray("player_api", "random_event_timer")]
+script = ExtResource("14_trtic")
+player_api = NodePath("../Player/API")
+random_event_timer = NodePath("RandomEvent")
+
+[node name="RandomEvent" type="Timer" parent="Events"]
+
+[node name="Event" parent="Events" instance=ExtResource("15_ir15t")]
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 visible = false
@@ -310,3 +401,4 @@ mesh = SubResource("QuadMesh_iywne")
 [connection signal="move" from="Player" to="Player/Trypod/Head" method="_on_player_move"]
 [connection signal="stop" from="Player" to="Player/Trypod/Head" method="_on_player_stop"]
 [connection signal="timeout" from="Player/UI/DialogueWindow/Timeout" to="Player/UI/DialogueWindow" method="_on_timer_timeout"]
+[connection signal="timeout" from="Events/RandomEvent" to="Events" method="_on_random_event_timeout"]

@@ -17,9 +17,10 @@ const data := {
 	"fence_b": { "rarity": Rarity.COMMON },
 	"fence_c": { "rarity": Rarity.RARE },
 	
-	"gates_a": { "rarity": Rarity.COMMON },
-	"gates_b": { "rarity": Rarity.RARE },
+	"gates_a": { "rarity": Rarity.RARE },
+	"gates_b": { "rarity": Rarity.EPIC },
 	
+	"trees_a": { "rarity": Rarity.COMMON },
 	"graves_a": { "rarity": Rarity.EPIC },
 	
 	"light_post_a": { "rarity": Rarity.EPIC },
@@ -41,7 +42,7 @@ static func _static_init():
 		ids[rarity].append(id)
 
 static func roll(percent: float = -1,
-	chances: Chances = Chances.NICE) -> WorldSegment:
+	chances: Chances = Chances.OKAY) -> WorldSegment:
 	if percent < 0: randf_range(0.0, 100.0)
 	
 	var rarity := 0
