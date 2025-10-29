@@ -6,8 +6,17 @@ const path := "res://scenes/segments/"
 const extn := ".tscn"
 const data := {
 	"fence_a": { "rarity": Rarity.COMMON },
-	"fence_b": { "rarity": Rarity.RARE },
-	"fence_c": { "rarity": Rarity.EPIC },
+	"fence_b": { "rarity": Rarity.COMMON },
+	"fence_c": { "rarity": Rarity.RARE },
+	
+	"gates_a": { "rarity": Rarity.COMMON },
+	"gates_b": { "rarity": Rarity.RARE },
+	
+	"graves_a": { "rarity": Rarity.EPIC },
+	
+	"light_post_a": { "rarity": Rarity.EPIC },
+	"light_post_b": { "rarity": Rarity.RARE },
+	"light_post_c": { "rarity": Rarity.RARE },
 }
 
 static var scenes: Dictionary[String, PackedScene] = {}
