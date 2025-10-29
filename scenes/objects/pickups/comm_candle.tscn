@@ -1,9 +1,62 @@
-[gd_scene load_steps=3 format=3 uid="uid://jvi4yqen8kvb"]
+[gd_scene load_steps=9 format=3 uid="uid://jvi4yqen8kvb"]
 
 [ext_resource type="PackedScene" uid="uid://dqsberxr7n7i5" path="res://scenes/objects/pickup.tscn" id="1_fcoxx"]
 [ext_resource type="PackedScene" uid="uid://b1b2xn2lnrlph" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/candle_triple.fbx" id="2_dxtli"]
+[ext_resource type="PackedScene" uid="uid://c7kponlvjrj85" path="res://scenes/objects/generic/light.tscn" id="3_dxtli"]
+
+[sub_resource type="Curve" id="Curve_fcoxx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.655527, 0.489563), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ca42v"]
+curve = SubResource("Curve_fcoxx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dxtli"]
+direction = Vector3(0, 1, 0)
+spread = 15.0
+initial_velocity_max = 0.25
+gravity = Vector3(0, 0.1, 0)
+scale_curve = SubResource("CurveTexture_ca42v")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ca42v"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 8.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_oble1"]
+material = SubResource("StandardMaterial3D_ca42v")
+radius = 0.05
+height = 0.1
+radial_segments = 6
+rings = 3
 
 [node name="Pickup" instance=ExtResource("1_fcoxx")]
 
 [node name="Model" parent="." index="1" instance=ExtResource("2_dxtli")]
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, -0.0245314, 0)
+
+[node name="Fire1" type="GPUParticles3D" parent="Model" index="1"]
+transform = Transform3D(1, 0, 0, 5.55141e-17, 1, 1.77636e-15, 7.10543e-15, -7.99361e-15, 1, -0.00434561, 0.645123, 0.00413669)
+randomness = 0.25
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_dxtli")
+draw_pass_1 = SubResource("SphereMesh_oble1")
+
+[node name="Fire2" type="GPUParticles3D" parent="Model" index="2"]
+transform = Transform3D(1, 0, 0, 5.55141e-17, 1, 1.77636e-15, 7.10543e-15, -7.99361e-15, 1, 0.215572, 0.808993, -0.0406909)
+randomness = 0.25
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_dxtli")
+draw_pass_1 = SubResource("SphereMesh_oble1")
+
+[node name="Fire3" type="GPUParticles3D" parent="Model" index="3"]
+transform = Transform3D(1, 0, 0, 5.55141e-17, 1, 1.77636e-15, 7.10543e-15, -1.68754e-14, 1, 0.179754, 0.534222, 0.138338)
+randomness = 0.25
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_dxtli")
+draw_pass_1 = SubResource("SphereMesh_oble1")
+
+[node name="Light" parent="Model" index="4" instance=ExtResource("3_dxtli")]
+transform = Transform3D(1.53846, 5.73122e-09, 2.01739e-07, 2.90374e-16, 1.53846, 1.43281e-09, -1.10039e-07, -4.26326e-14, 1.53846, 0.1, 0.9, 0)
+intensity = 0.1
+create_halo = false

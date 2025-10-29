@@ -1,7 +1,7 @@
 extends Item
 
 func _init():
-	tag = "Yuck"
+	tag = "Fuel"
 
 func _use():
 	player.lantern.fuel += 15

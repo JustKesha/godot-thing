@@ -31,7 +31,7 @@ signal reignited
 		if min_intensity > max_intensity:
 			min_intensity = max_intensity
 		_awake()
-@export var max_intensity := 6.0:
+@export var max_intensity := 8.0:
 	set(value):
 		max_intensity = value
 		if max_intensity < min_intensity:
