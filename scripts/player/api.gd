@@ -1,11 +1,15 @@
 class_name PlayerAPI extends Node
 
-# Player related references
-@export var inventory: PlayerInventory
+@export_group("General")
 @export var lantern: PlayerLantern
+@export var inventory: PlayerInventory
 @export var camera: PlayerCameraController
 @export var camera_effects: PlayerCameraEffects
-@export var dialogue_window: PlayerDialogueWindow
 
-# General references
+@export_group("UI")
+@export var dialogue_window: PlayerDialogueWindow
+@export var cursor: PlayerCursor
+@export var info_popup: PlayerInfoPopup
+
+@export_group("World")
 @export var moon: Node3D

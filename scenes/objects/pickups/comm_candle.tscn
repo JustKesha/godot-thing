@@ -31,6 +31,8 @@ radial_segments = 6
 rings = 3
 
 [node name="Pickup" instance=ExtResource("1_fcoxx")]
+info_titles = Array[String](["Candles"])
+info_descs = Array[String](["I could use them to reignite the lantern", "I could use them for the lantern", "Could use these to reignite the lantern"])
 
 [node name="Model" parent="." index="1" instance=ExtResource("2_dxtli")]
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, -0.0245314, 0)

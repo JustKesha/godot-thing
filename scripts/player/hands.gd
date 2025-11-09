@@ -14,6 +14,7 @@ var hovered: Interactable = null:
 			hovered = value
 			hovered.hover()
 			player.cursor.state = player.cursor.States.INSPECT
+			player.info_popup.set_info(hovered.info_title, hovered.info_desc)
 			is_hovered = true
 		else:
 			hovered = null
