@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://b7owo051mahdu"]
+[gd_scene load_steps=44 format=3 uid="uid://b7owo051mahdu"]
 
 [ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://cfcy0l63lmkbv" path="res://scripts/player/hands.gd" id="6_0tnpc"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://y0hxp8wo0eyv" path="res://scripts/player/camera.gd" id="15_sgl2t"]
 [ext_resource type="Texture2D" uid="uid://vclibtl54q3f" path="res://assets/sprites/cursor/inspect_2.png" id="15_ssvqc"]
 [ext_resource type="Shader" uid="uid://bsjuon6lgj8fe" path="res://shaders/pixelation.gdshader" id="16_qouja"]
+[ext_resource type="Script" uid="uid://cou6n441nnfq4" path="res://scripts/player/info_popup.gd" id="16_ssvqc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rysoc"]
 emission_enabled = true
@@ -131,6 +132,15 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_rysoc"]
+font = ExtResource("12_kvuet")
+font_size = 24
+font_color = Color(0.890196, 0.843137, 0.694118, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ssvqc"]
+font = ExtResource("12_kvuet")
+font_color = Color(0.890196, 0.843137, 0.694118, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
 albedo_color = Color(0.714661, 0.558355, 0.424573, 1)
 
@@ -233,10 +243,16 @@ script = ExtResource("6_0tnpc")
 player = NodePath("../../../../API")
 
 [node name="Inventory" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("player", "inventory_ui")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.5, -0.35)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.4, -0.35)
 script = ExtResource("11_kvpfn")
 player = NodePath("../../API")
 inventory_ui = NodePath("../../UI/Inventory")
+
+[node name="ItemHighlighter" type="SpotLight3D" parent="Player/Trypod/Inventory"]
+transform = Transform3D(0.695913, 0.4119, -0.588255, 0, 0.819152, 0.573576, 0.718126, -0.399159, 0.570058, -0.3, 0.35, 0.35)
+light_energy = 0.1
+spot_range = 1.0
+spot_angle = 35.0
 
 [node name="Lantern" type="Node3D" parent="Player" node_paths=PackedStringArray("light", "fuel_bar", "fuel_bar_bg", "fuel_under_bar", "fuel_bar_delay_timer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.6, 0.35)
@@ -256,7 +272,7 @@ light_color = Color(1, 0.686275, 0.588235, 1)
 light_volumetric_fog_energy = 0.0
 script = ExtResource("6_p57ef")
 energy_multiplier = 0.2
-radius_multiplier = 3.5
+radius_multiplier = 3.0
 
 [node name="BarDelay" type="Timer" parent="Player/Lantern"]
 one_shot = true
@@ -398,7 +414,36 @@ animation = &"INSPECT"
 frame_progress = 0.661117
 speed_scale = 0.5
 
-[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("lantern", "inventory", "camera", "camera_effects", "dialogue_window", "cursor", "moon")]
+[node name="Info" type="Control" parent="Player/UI/Cursor" node_paths=PackedStringArray("title", "desc")]
+anchors_preset = 0
+offset_top = 75.0
+offset_bottom = 75.0
+script = ExtResource("16_ssvqc")
+title = NodePath("Title")
+desc = NodePath("Desc")
+
+[node name="Title" type="Label" parent="Player/UI/Cursor/Info"]
+layout_mode = 0
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = -27.0
+text = "Candles"
+label_settings = SubResource("LabelSettings_rysoc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Desc" type="Label" parent="Player/UI/Cursor/Info"]
+layout_mode = 0
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 75.0
+text = "Desc"
+label_settings = SubResource("LabelSettings_ssvqc")
+horizontal_alignment = 1
+
+[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("lantern", "inventory", "camera", "camera_effects", "dialogue_window", "cursor", "info_popup", "moon")]
 script = ExtResource("10_vtaks")
 lantern = NodePath("../Lantern")
 inventory = NodePath("../Trypod/Inventory")
@@ -406,6 +451,7 @@ camera = NodePath("../Trypod/Head/Camera")
 camera_effects = NodePath("../Trypod/Head")
 dialogue_window = NodePath("../UI/DialogueWindow")
 cursor = NodePath("../UI/Cursor")
+info_popup = NodePath("../UI/Cursor/Info")
 moon = NodePath("../../Moon")
 
 [node name="Events" type="Node" parent="." node_paths=PackedStringArray("player_api", "random_event_timer")]

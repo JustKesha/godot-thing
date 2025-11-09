@@ -5,7 +5,7 @@ var is_event_ungoing := false
 
 @export_group("Random Events")
 @export var random_event_timer: Timer
-@export var random_events_min_interval := 10.0
+@export var random_events_min_interval := 15.0
 @export var random_events_max_interval := 30.0
 
 enum Events {
@@ -26,7 +26,7 @@ func play_event(event_id: Events = Events.RANDOM) -> bool:
 				"The moon feels off...",
 				"You feel like you're being watched...",
 			].pick_random())
-			player_api.camera.look(player_api.moon, 2.75)
+			player_api.camera.look(player_api.moon, 1.75, false)
 			player_api.lantern.fuel -= 25
 		Events.RANDOM:
 			return play_event(RandomEventsPool.pick_random())

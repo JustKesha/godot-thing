@@ -7,7 +7,6 @@ static var list := []
 static func init_list():
 	if len(list) == 0:
 		list = _load_names()
-	print("Loaded segments: ", list)
 
 static func _static_init():
 	init_list()
@@ -23,7 +22,6 @@ static func _load_names() -> Array:
 	for file in dir.get_files():
 		if file.ends_with(".tscn.remap") or file.ends_with(".tscn"):
 			result.append(file.trim_suffix(".remap").get_basename())
-	print(result)
 	return result
 
 static func get_random() -> Node3D:

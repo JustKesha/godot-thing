@@ -13,7 +13,7 @@ func _use():
 		].pick_random())
 		return false
 	
-	player.lantern.fuel += 10
+	if player.lantern.fuel < 5: player.lantern.fuel = 5
 	player.lantern.reignite()
 	player.dialogue_window.display([
 		"Back in the light!",

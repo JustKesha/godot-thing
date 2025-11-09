@@ -7,7 +7,7 @@ class_name PlayerLantern extends Node
 var update_timer := 0.0
 
 @export_group("Fuel")
-@export var fuel := 25.0:
+@export var fuel := 40.0:
 	set(value):
 		var fuel_before := fuel
 		fuel = clampf(value, 0, fuel_limit)
