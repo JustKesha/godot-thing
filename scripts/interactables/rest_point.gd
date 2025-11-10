@@ -2,7 +2,7 @@ class_name InteractableRestPoint extends Interactable
 
 @export var fuel_gain := 100.0
 
-func interact(player: PlayerAPI):
+func _on_interact(player: PlayerAPI):
 	player.lantern.fuel += fuel_gain
 	player.dialogue_window.display([
 		"Sweet rest.",

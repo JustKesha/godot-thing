@@ -31,8 +31,16 @@ var update_timer := 0.0
 			light.flicker_min_duration = 0.1
 			light.flicker_max_duration = 0.25
 		
-		if fuel_bar_delay_timer and fuel_diff > fuel_bar_delay_fuel_threshold:
-			fuel_bar_delay_timer.start(fuel_bar_delay_multiplier * fuel_diff)
+		if fuel_bar_delay_timer and fuel_diff > fuel_bar_delay_threshold:
+			# TODO Add a remap util remap(a,a_min,a_max,b_min,b_max) -> b
+			var fuel_bar_delay = (
+				(fuel_bar_delay_multiplier * fuel_diff
+					- fuel_bar_delay_threshold)
+				/ (fuel_bar_delay_multiplier * fuel_limit
+					- fuel_bar_delay_threshold)
+				* fuel_bar_delay_max
+			)
+			fuel_bar_delay_timer.start(fuel_bar_delay)
 		logme()
 @export var fuel_limit := 100.0:
 	set(value):
@@ -79,8 +87,9 @@ var fuel_bar_center_x := 0.0
 
 @export_group("UI Delay")
 @export var fuel_bar_delay_timer: Timer
+@export var fuel_bar_delay_threshold := 10
 @export var fuel_bar_delay_multiplier := .035
-@export var fuel_bar_delay_fuel_threshold := 10
+@export var fuel_bar_delay_max := 0.5
 # TODO Should move to FuelBar control node instead
 
 func reignite(intensity: float = -1.0):
