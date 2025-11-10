@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4u5rlfmcvmwy"]
+[gd_scene load_steps=7 format=3 uid="uid://b4u5rlfmcvmwy"]
 
 [ext_resource type="PackedScene" uid="uid://cq15mh70luvld" path="res://assets/models/Dasha_CustomBits/dice_center.fbx" id="1_iibli"]
+[ext_resource type="Script" uid="uid://jtg3bm2sbi8k" path="res://scripts/dice.gd" id="1_p7ajc"]
 [ext_resource type="PackedScene" uid="uid://bewn6ut3hs1dm" path="res://scenes/objects/interactables/dice_roll.tscn" id="2_p7ajc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2jvvc"]
@@ -11,11 +12,13 @@ bounce = 0.25
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xpujh"]
 
-[node name="Dice" type="RigidBody3D"]
+[node name="Dice" type="RigidBody3D" node_paths=PackedStringArray("body")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 collision_layer = 2
 physics_material_override = SubResource("PhysicsMaterial_2jvvc")
 angular_damp = 1.0
+script = ExtResource("1_p7ajc")
+body = NodePath(".")
 
 [node name="PlaceholderMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
@@ -29,6 +32,6 @@ transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, -0.005, -0.014, 0
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 shape = SubResource("BoxShape3D_xpujh")
 
-[node name="Interactable" parent="." node_paths=PackedStringArray("body") instance=ExtResource("2_p7ajc")]
+[node name="Interactable" parent="." node_paths=PackedStringArray("dice") instance=ExtResource("2_p7ajc")]
 transform = Transform3D(1, 3.72528e-09, 5.96046e-08, -3.72528e-09, 1, -1.30385e-08, -5.96046e-08, 1.30385e-08, 1, 0, 0, 0)
-body = NodePath("..")
+dice = NodePath("..")

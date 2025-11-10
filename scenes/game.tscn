@@ -139,6 +139,7 @@ font_color = Color(0.890196, 0.843137, 0.694118, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ssvqc"]
 font = ExtResource("12_kvuet")
+font_size = 18
 font_color = Color(0.890196, 0.843137, 0.694118, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
@@ -430,7 +431,7 @@ offset_left = -100.0
 offset_top = -50.0
 offset_right = 100.0
 offset_bottom = -27.0
-text = "Candles"
+text = "Title"
 label_settings = SubResource("LabelSettings_rysoc")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -438,12 +439,13 @@ vertical_alignment = 1
 [node name="Desc" type="Label" parent="Player/UI/Cursor/Info"]
 layout_mode = 0
 offset_left = -100.0
-offset_top = -25.0
+offset_top = -15.0
 offset_right = 100.0
-offset_bottom = 75.0
-text = "Desc"
+offset_bottom = 85.0
+text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt."
 label_settings = SubResource("LabelSettings_ssvqc")
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="API" type="Node" parent="Player" node_paths=PackedStringArray("lantern", "inventory", "camera", "camera_effects", "dialogue_window", "cursor", "info_popup", "moon")]
 script = ExtResource("10_vtaks")
