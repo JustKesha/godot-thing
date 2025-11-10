@@ -1,6 +1,6 @@
 class_name InteractableRestPoint extends Interactable
 
-@export var fuel_gain := 25.0
+@export var fuel_gain := 100.0
 
 func interact(player: PlayerAPI):
 	player.lantern.fuel += fuel_gain
@@ -13,6 +13,6 @@ func interact(player: PlayerAPI):
 	
 	remove()
 
-func _interactable_ready():
+func _on_interactable_ready():
 	info_title = "Resting Place"
 	info_desc = "Save energy for the road"

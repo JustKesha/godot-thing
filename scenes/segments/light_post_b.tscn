@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d05tgf5c8kmay"]
+[gd_scene load_steps=23 format=3 uid="uid://d05tgf5c8kmay"]
 
 [ext_resource type="PackedScene" uid="uid://ddbnnkfv7j6kv" path="res://scenes/segment.tscn" id="1_432jj"]
 [ext_resource type="PackedScene" uid="uid://co2cmgkm58g2n" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/path_D.fbx" id="2_ycbic"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c7kponlvjrj85" path="res://scenes/objects/generic/light.tscn" id="4_432jj"]
 [ext_resource type="PackedScene" uid="uid://d01f1706bvnp5" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/post.fbx" id="4_ubgoq"]
 [ext_resource type="PackedScene" uid="uid://ukmd5em17n3f" path="res://scenes/objects/pickup_spawner.tscn" id="6_ycbic"]
+[ext_resource type="PackedScene" uid="uid://b4u5rlfmcvmwy" path="res://scenes/objects/dice.tscn" id="7_n1b37"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssvqc"]
 shading_mode = 0
@@ -54,6 +55,32 @@ height = 1.35
 radial_segments = 6
 rings = 3
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2jvvc"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xpujh"]
+material = SubResource("StandardMaterial3D_2jvvc")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubgoq"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 10.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_2yo8d"]
+material = SubResource("StandardMaterial3D_ubgoq")
+radial_segments = 8
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2yo8d"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_b7eb1"]
+material = SubResource("StandardMaterial3D_2yo8d")
+radial_segments = 6
+rings = 3
+
 [node name="Segment" instance=ExtResource("1_432jj")]
 
 [node name="path_D" parent="." index="1" instance=ExtResource("2_ycbic")]
@@ -74,34 +101,71 @@ transform = Transform3D(-0.779678, 0.0669573, 0.622589, 0.0344531, 0.997348, -0.
 [node name="PickupSpawner" parent="." index="6" instance=ExtResource("6_ycbic")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88222, 0, -0.421171)
 
-[node name="Beast" type="Node3D" parent="." index="7"]
-transform = Transform3D(0.728574, 0, -0.684967, 0, 1, 0, 0.684967, 0, 0.728574, 4.68014, 0, -3.63334)
+[node name="DiceGame" type="Node3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 0)
 
-[node name="Body" type="MeshInstance3D" parent="Beast" index="0"]
+[node name="Beast" type="Node3D" parent="DiceGame" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0, 0)
+
+[node name="Body" type="MeshInstance3D" parent="DiceGame/Beast" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1)
 visible = false
 mesh = SubResource("CapsuleMesh_ycbic")
 skeleton = NodePath("")
 
-[node name="Head" type="Node3D" parent="Beast" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.156017, 1.33349, 0.0826559)
+[node name="Head" type="Node3D" parent="DiceGame/Beast" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 
-[node name="EyeLeft" type="MeshInstance3D" parent="Beast/Head" index="0"]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.5, -0.372798, 0)
+[node name="EyeLeft" type="MeshInstance3D" parent="DiceGame/Beast/Head" index="0"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0.65)
 mesh = SubResource("SphereMesh_n1b37")
 
-[node name="Fire" type="GPUParticles3D" parent="Beast/Head/EyeLeft" index="0"]
+[node name="Fire" type="GPUParticles3D" parent="DiceGame/Beast/Head/EyeLeft" index="0"]
+visible = false
 randomness = 1.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_2yo8d")
 draw_pass_1 = SubResource("SphereMesh_2jvvc")
 
-[node name="EyeRight" type="MeshInstance3D" parent="Beast/Head" index="1"]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0.5, 0, 0)
+[node name="EyeSocket" type="MeshInstance3D" parent="DiceGame/Beast/Head/EyeLeft" index="1"]
+transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0.74666, 0, 0)
+mesh = SubResource("BoxMesh_xpujh")
+
+[node name="Eyeball" type="MeshInstance3D" parent="DiceGame/Beast/Head/EyeLeft" index="2"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+mesh = SubResource("SphereMesh_2yo8d")
+
+[node name="Pupil" type="MeshInstance3D" parent="DiceGame/Beast/Head/EyeLeft" index="3"]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -0.5, -0.2, -0.25)
+mesh = SubResource("SphereMesh_b7eb1")
+
+[node name="EyeRight" type="MeshInstance3D" parent="DiceGame/Beast/Head" index="1"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, -0.15, -0.65)
 mesh = SubResource("SphereMesh_n1b37")
 
-[node name="Fire" type="GPUParticles3D" parent="Beast/Head/EyeRight" index="0"]
+[node name="Fire" type="GPUParticles3D" parent="DiceGame/Beast/Head/EyeRight" index="0"]
+visible = false
 randomness = 1.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_2yo8d")
 draw_pass_1 = SubResource("SphereMesh_2jvvc")
+
+[node name="Eyeball" type="MeshInstance3D" parent="DiceGame/Beast/Head/EyeRight" index="1"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+mesh = SubResource("SphereMesh_2yo8d")
+
+[node name="Pupil" type="MeshInstance3D" parent="DiceGame/Beast/Head/EyeRight" index="2"]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -0.5, -0.2, 0.25)
+mesh = SubResource("SphereMesh_b7eb1")
+
+[node name="EyeSocket" type="MeshInstance3D" parent="DiceGame/Beast/Head/EyeRight" index="3"]
+transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0.74666, 0, 0)
+mesh = SubResource("BoxMesh_xpujh")
+
+[node name="Dice" parent="DiceGame" index="1" instance=ExtResource("7_n1b37")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.25, 0.25, 0)
+
+[node name="Light" type="SpotLight3D" parent="DiceGame" index="2"]
+transform = Transform3D(0.965926, -1.48943e-09, 0.258819, -0.258819, -1.13133e-08, 0.965926, 1.48943e-09, -1, -1.13133e-08, -1.5, 3, 0)
+spot_range = 10.0
+spot_angle = 20.0

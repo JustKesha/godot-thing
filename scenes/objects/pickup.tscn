@@ -9,6 +9,7 @@ item_name = "candle"
 quantity = 1
 pickup_rate = 99
 allow_overflow = false
+cooldown_enabled = false
 
 [node name="Hitbox" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)

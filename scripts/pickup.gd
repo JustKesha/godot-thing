@@ -5,7 +5,7 @@ class_name Pickup extends Interactable
 @export var pickup_rate := 99
 @export var allow_overflow := false
 
-func interact(player: PlayerAPI):
+func _on_interact(player: PlayerAPI):
 	var overflow := 0
 	var pickup_amount := 0
 	

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bewn6ut3hs1dm"]
+
+[ext_resource type="PackedScene" uid="uid://c6es15ua1qp67" path="res://scenes/objects/interactable.tscn" id="1_do22e"]
+[ext_resource type="Script" uid="uid://c1sswll0k52pc" path="res://scripts/interactables/dice_roll.gd" id="2_ydf4m"]
+
+[node name="Interactable" instance=ExtResource("1_do22e")]
+transform = Transform3D(0.5, 1.86265e-09, 2.98023e-08, -1.86265e-09, 0.5, -6.51925e-09, -2.98023e-08, 6.51925e-09, 0.5, 0, 0, 0)
+script = ExtResource("2_ydf4m")
+roll_dir = Vector3(0, 1, 0)
+roll_speed = 5.0
+roll_rotation_speed = 2.5
+info_titles = Array[String](["Nice Dice"])
+info_descs = Array[String](["Rolled 1"])

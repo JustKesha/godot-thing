@@ -24,7 +24,7 @@ const data := {
 	"graves_a": { "rarity": Rarity.EPIC },
 	
 	"light_post_a": { "rarity": Rarity.EPIC },
-	"light_post_b": { "rarity": Rarity.RARE },
+	"light_post_b": { "rarity": Rarity.COMMON },
 	"light_post_c": { "rarity": Rarity.RARE },
 }
 

@@ -6,7 +6,7 @@
 
 [node name="Interactable" instance=ExtResource("1_jjvy6")]
 script = ExtResource("2_twb8b")
-fuel_gain = 25.0
+fuel_gain = 100.0
 
 [node name="Light" parent="." index="1" instance=ExtResource("3_mx0nq")]
 intensity = 1.0

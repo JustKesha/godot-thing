@@ -11,7 +11,7 @@ class_name PlayerCameraController extends Node
 @export var h_min := -2.0
 @export var h_max := 2.0
 @export var v_sensitivity := 1.0
-@export var v_min := -0.7
+@export var v_min := -0.95
 @export var v_max := 0.85
 var sensitivity_divider := 100000.0
 
