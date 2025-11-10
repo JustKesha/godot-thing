@@ -1,8 +1,5 @@
 extends Item
 
-func _init():
-	tag = "Spark"
-
 func _use():
 	if player.lantern.light.is_lit:
 		player.dialogue_window.display([

@@ -10,7 +10,6 @@ var is_selected := true:
 		else: _deselect()
 var player: PlayerAPI
 var id: String
-var tag: String
 var ui: ItemInventoryUI
 
 @export_group("Stack")
@@ -30,6 +29,7 @@ enum StackSize { NONE = 1, SMALL = 3, MEDIUM = 5, BIG = 10, HUGE = 16 }
 @export_group("UI")
 @export_file("*.png") var icon_path: String
 @export var inventory_slot_ui: PackedScene
+@export var tag: String
 
 # These should be rewritten in inherited scripts
 func _init(): pass

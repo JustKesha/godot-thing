@@ -45,6 +45,7 @@ script = ExtResource("2_kb1g5")
 quantity = 3
 stack = 10
 icon_path = "uid://d2n4bc325brgi"
+tag = "Spark"
 
 [node name="Model" parent="Display" index="0" instance=ExtResource("3_05dos")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, -0.0245314, 0)
