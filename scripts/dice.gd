@@ -4,6 +4,7 @@ class_name Dice extends Node
 @export var interactable: Interactable
 
 @export_group("Roll")
+@export var roll_limit: int = 1
 @export var roll_direction: Vector3 = Vector3.UP
 @export var roll_speed: float = -1.0:
 	get(): return (
@@ -29,6 +30,11 @@ class_name Dice extends Node
 @export var roll_angular_speed_min: float = 7.5
 @export var roll_angular_speed_max: float = 10.0
 
+@export_group("Destroy")
+@export var destroy_timer: Timer
+@export var destroy_on_roll_limit: bool = true
+@export var destroy_delay: float = 1.0
+
 @export_group("Values")
 @export var faces = [
 	[Vector3.UP, 1],
@@ -39,29 +45,44 @@ class_name Dice extends Node
 	[Vector3.BACK, 5]
 ]
 
-var score: int = 5:
-	set(value):
-		score = value
-		interactable.info_desc = "Rolled " + str(score)
 var is_rolling: bool = false:
 	set(value):
 		is_rolling = value
 		interactable.is_enabled = not is_rolling
+var roll_count: int = 0
+var score: int = 5:
+	set(value):
+		score = value
+		score_total += score
+		interactable.info_desc = "Rolled " + str(score)
+var score_total: int = 0
 
-func _on_roll_finished(score: int): pass
+func _on_roll_finished(): pass
+func _on_roll_limit(): pass
 
 func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
 	if is_rolling: return
+	if roll_count >= roll_limit: return
 	# NOTE Not using apply impulse bc slow
 	# ^ Will stop the roll same frame in _physics_process bc linear_velocity ~= 0
 	body.linear_velocity = roll_direction * speed
 	body.angular_velocity = roll_angular_direction * angular_speed
 	is_rolling = true
+	roll_count += 1
 
 func stop():
 	score = get_score()
 	is_rolling = false
-	_on_roll_finished(score)
+	_on_roll_finished()
+	if roll_count >= roll_limit:
+		_on_roll_limit()
+		if destroy_on_roll_limit: destroy()
+
+func destroy(delay: float = destroy_delay):
+	destroy_timer.start(delay)
+
+func remove():
+	queue_free()
 
 func get_score() -> int:
 	var best_score = 0
@@ -81,3 +102,6 @@ func _physics_process(delta: float):
 	if( body.linear_velocity.length() < 0.1
 		and body.angular_velocity.length() < 0.1 ):
 		stop()
+
+func _on_destroy_timer_timeout():
+	remove()

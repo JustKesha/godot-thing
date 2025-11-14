@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4u5rlfmcvmwy"]
+[gd_scene load_steps=6 format=3 uid="uid://b4u5rlfmcvmwy"]
 
 [ext_resource type="PackedScene" uid="uid://cq15mh70luvld" path="res://assets/models/Dasha_CustomBits/dice_center.fbx" id="1_iibli"]
 [ext_resource type="Script" uid="uid://jtg3bm2sbi8k" path="res://scripts/dice.gd" id="1_p7ajc"]
@@ -8,22 +8,17 @@
 rough = true
 bounce = 0.25
 
-[sub_resource type="BoxMesh" id="BoxMesh_b7eb1"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_xpujh"]
 
-[node name="Dice" type="RigidBody3D" node_paths=PackedStringArray("body")]
+[node name="Dice" type="RigidBody3D" node_paths=PackedStringArray("body", "interactable", "destroy_timer")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 collision_layer = 2
 physics_material_override = SubResource("PhysicsMaterial_2jvvc")
 angular_damp = 1.0
 script = ExtResource("1_p7ajc")
 body = NodePath(".")
-
-[node name="PlaceholderMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-visible = false
-mesh = SubResource("BoxMesh_b7eb1")
+interactable = NodePath("Interactable")
+destroy_timer = NodePath("DestroyTimer")
 
 [node name="Model" parent="." instance=ExtResource("1_iibli")]
 transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, -0.005, -0.014, 0)
@@ -35,3 +30,10 @@ shape = SubResource("BoxShape3D_xpujh")
 [node name="Interactable" parent="." node_paths=PackedStringArray("dice") instance=ExtResource("2_p7ajc")]
 transform = Transform3D(1, 3.72528e-09, 5.96046e-08, -3.72528e-09, 1, -1.30385e-08, -5.96046e-08, 1.30385e-08, 1, 0, 0, 0)
 dice = NodePath("..")
+info_title = "Dice"
+info_desc = "Press E to roll"
+
+[node name="DestroyTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="DestroyTimer" to="." method="_on_destroy_timer_timeout"]
