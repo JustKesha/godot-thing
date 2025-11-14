@@ -38,6 +38,14 @@ var is_queued_for_destroy: bool = false
 
 @export_group("Other")
 @export var lock_camera_on_roll: bool = false
+@export var spawn_projector: bool = false
+@export var projector_scene: PackedScene
+@export var projector_offset: Vector3 = Vector3.UP * 2.5
+var projector: Projector:
+	set(value):
+		if projector != null: projector.queue_free()
+		projector = value
+		body.get_parent().add_child(projector)
 
 @export_group("Values")
 @export var faces = [
@@ -75,6 +83,12 @@ func _on_roll_finished(): pass
 func _on_roll_limit(): pass
 func _on_remove(): pass
 
+func init():
+	if spawn_projector:
+		if not projector: projector = projector_scene.instantiate()
+		projector.spectating = body
+		projector.global_position = body.global_position + projector_offset
+
 func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
 	if not is_ready_to_roll: return
 	# NOTE Not using apply impulse bc slow
@@ -92,6 +106,9 @@ func stop():
 	if roll_count >= roll_limit:
 		_on_roll_limit()
 		if destroy_on_roll_limit: destroy()
+
+func move(to: Vector3):
+	body.global_position = to
 
 func destroy(delay: float = destroy_delay):
 	destroy_timer.start(delay)
@@ -113,6 +130,9 @@ func get_score() -> int:
 			best_score = face[1]
 
 	return best_score
+
+func _ready():
+	init()
 
 func _physics_process(delta: float):
 	if not is_rolling: return
