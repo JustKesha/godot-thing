@@ -89,7 +89,7 @@ var fuel_bar_center_x := 0.0
 @export var fuel_bar_delay_timer: Timer
 @export var fuel_bar_delay_threshold := 10
 @export var fuel_bar_delay_multiplier := .035
-@export var fuel_bar_delay_max := 0.5
+@export var fuel_bar_delay_max := 0.75
 # TODO Should move to FuelBar control node instead
 
 func reignite(intensity: float = -1.0):

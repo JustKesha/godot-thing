@@ -6,6 +6,7 @@
 [node name="Dice" instance=ExtResource("1_3s214")]
 script = ExtResource("2_xewt5")
 fuel_rewards = Array[float]([-100.0, -50.0, -10.0, 20.0, 30.0, 50.0])
+roll_react = true
 
 [node name="Interactable" parent="." index="2"]
 info_title = "Nice Dice"

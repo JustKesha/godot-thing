@@ -19,8 +19,8 @@ angular_damp = 1.0
 script = ExtResource("1_p7ajc")
 body = NodePath(".")
 interactable = NodePath("Interactable")
-destroy_timer = NodePath("DestroyTimer")
 lock_camera_on_roll = true
+destroy_timer = NodePath("DestroyTimer")
 spawn_projector = true
 projector_scene = ExtResource("2_jtpqc")
 
