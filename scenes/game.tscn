@@ -1,6 +1,7 @@
-[gd_scene load_steps=45 format=3 uid="uid://b7owo051mahdu"]
+[gd_scene load_steps=46 format=3 uid="uid://b7owo051mahdu"]
 
 [ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
+[ext_resource type="Script" uid="uid://bau8n7lhn1s68" path="res://scripts/world/api.gd" id="2_264po"]
 [ext_resource type="Script" uid="uid://cfcy0l63lmkbv" path="res://scripts/player/hands.gd" id="6_0tnpc"]
 [ext_resource type="Script" uid="uid://dax72mr3u4mak" path="res://scripts/generic/light.gd" id="6_p57ef"]
 [ext_resource type="Script" uid="uid://blcuhiqwtfdl5" path="res://scripts/player/lantern.gd" id="6_u5sy4"]
@@ -185,6 +186,11 @@ environment = SubResource("Environment_s0gvp")
 script = ExtResource("1_iywne")
 world = NodePath(".")
 player = NodePath("../Player")
+
+[node name="API" type="Node" parent="World" node_paths=PackedStringArray("generator", "moon")]
+script = ExtResource("2_264po")
+generator = NodePath("..")
+moon = NodePath("../../Moon")
 
 [node name="Beast" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
@@ -447,8 +453,9 @@ label_settings = SubResource("LabelSettings_ssvqc")
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("lantern", "inventory", "camera", "camera_effects", "dialogue_window", "cursor", "info_popup", "moon")]
+[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("body", "lantern", "inventory", "camera", "camera_effects", "dialogue_window", "cursor", "info_popup")]
 script = ExtResource("10_vtaks")
+body = NodePath("..")
 lantern = NodePath("../Lantern")
 inventory = NodePath("../Trypod/Inventory")
 camera = NodePath("../Trypod/Head/Camera")
@@ -456,7 +463,6 @@ camera_effects = NodePath("../Trypod/Head")
 dialogue_window = NodePath("../UI/DialogueWindow")
 cursor = NodePath("../UI/Cursor")
 info_popup = NodePath("../UI/Cursor/Info")
-moon = NodePath("../../Moon")
 
 [node name="Events" type="Node" parent="." node_paths=PackedStringArray("player_api", "random_event_timer")]
 script = ExtResource("14_trtic")

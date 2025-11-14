@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dc4flq44itola"]
+
+[ext_resource type="Script" uid="uid://bvjo06dikn76f" path="res://scripts/generic/projector.gd" id="1_7c8ld"]
+
+[node name="Projector" type="SpotLight3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+light_color = Color(1, 0.407843, 0.188235, 1)
+light_energy = 0.5
+spot_range = 25.0
+spot_angle = 10.0
+script = ExtResource("1_7c8ld")

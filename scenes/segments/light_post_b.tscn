@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d05tgf5c8kmay"]
+[gd_scene load_steps=24 format=3 uid="uid://d05tgf5c8kmay"]
 
 [ext_resource type="PackedScene" uid="uid://ddbnnkfv7j6kv" path="res://scenes/segment.tscn" id="1_432jj"]
 [ext_resource type="PackedScene" uid="uid://co2cmgkm58g2n" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/path_D.fbx" id="2_ycbic"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d01f1706bvnp5" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/post.fbx" id="4_ubgoq"]
 [ext_resource type="PackedScene" uid="uid://ukmd5em17n3f" path="res://scenes/objects/pickup_spawner.tscn" id="6_ycbic"]
 [ext_resource type="PackedScene" uid="uid://7qo00wv6l7mq" path="res://scenes/objects/dice/nice_dice.tscn" id="7_n1b37"]
+[ext_resource type="PackedScene" uid="uid://dc4flq44itola" path="res://scenes/objects/generic/projector.tscn" id="7_ubgoq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssvqc"]
 shading_mode = 0
@@ -162,11 +163,12 @@ mesh = SubResource("SphereMesh_b7eb1")
 transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0.74666, 0, 0)
 mesh = SubResource("BoxMesh_xpujh")
 
-[node name="Dice" parent="DiceGame" index="1" instance=ExtResource("7_n1b37")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.25, 0.25, 0)
-fuel_rewards = Array[float]([-100.0, -50.0, -10.0, 20.0, 30.0, 50.0])
+[node name="Projector" parent="DiceGame" index="1" node_paths=PackedStringArray("spectating") instance=ExtResource("7_ubgoq")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.5, 2.5, 0)
+spectating = NodePath("../Dice")
 
-[node name="Light" type="SpotLight3D" parent="DiceGame" index="2"]
-transform = Transform3D(0.965926, -1.48943e-09, 0.258819, -0.258819, -1.13133e-08, 0.965926, 1.48943e-09, -1, -1.13133e-08, -1.5, 3, 0)
-spot_range = 10.0
-spot_angle = 20.0
+[node name="Dice" parent="DiceGame" index="2" instance=ExtResource("7_n1b37")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.5, 0.25, 0)
+fuel_rewards = Array[float]([-100.0, -50.0, -15.0, 25.0, 50.0, 75.0])
+spawn_projector = false
+projector_scene = null

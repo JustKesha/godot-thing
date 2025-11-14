@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4u5rlfmcvmwy"]
+[gd_scene load_steps=7 format=3 uid="uid://b4u5rlfmcvmwy"]
 
 [ext_resource type="PackedScene" uid="uid://cq15mh70luvld" path="res://assets/models/Dasha_CustomBits/dice_center.fbx" id="1_iibli"]
 [ext_resource type="Script" uid="uid://jtg3bm2sbi8k" path="res://scripts/dice.gd" id="1_p7ajc"]
+[ext_resource type="PackedScene" uid="uid://dc4flq44itola" path="res://scenes/objects/generic/projector.tscn" id="2_jtpqc"]
 [ext_resource type="PackedScene" uid="uid://bewn6ut3hs1dm" path="res://scenes/objects/interactables/dice_roll.tscn" id="2_p7ajc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2jvvc"]
@@ -20,6 +21,8 @@ body = NodePath(".")
 interactable = NodePath("Interactable")
 destroy_timer = NodePath("DestroyTimer")
 lock_camera_on_roll = true
+spawn_projector = true
+projector_scene = ExtResource("2_jtpqc")
 
 [node name="Model" parent="." instance=ExtResource("1_iibli")]
 transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, -0.005, -0.014, 0)
