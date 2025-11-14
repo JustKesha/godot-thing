@@ -13,3 +13,5 @@ class_name PlayerAPI extends Node
 
 @export_group("World")
 @export var moon: Node3D
+
+func _ready() -> void: References.player_api = self
