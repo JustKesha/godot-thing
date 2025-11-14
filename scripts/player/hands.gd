@@ -6,11 +6,12 @@ var is_hovered := false
 var hovered: Interactable = null:
 	set(value):
 		if hovered == null and is_hovered: pass
+		elif hovered is Interactable and not hovered.is_enabled: pass
 		elif hovered == value: return
 		
 		if hovered != null: hovered.unhover()
 		
-		if value is Interactable:
+		if value is Interactable and value.is_enabled:
 			hovered = value
 			hovered.hover()
 			player.cursor.state = player.cursor.States.INSPECT

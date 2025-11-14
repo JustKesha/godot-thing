@@ -1,8 +1,10 @@
 class_name Interactable extends Node
 
 # GENERAL
+@export var is_enabled: bool = true
 func _on_interact(_player: PlayerAPI): pass
 func interact(_player: PlayerAPI):
+	if not is_enabled: return
 	if is_on_cooldown: return
 	_on_interact(_player)
 	if cooldown_seconds > 0: set_on_cooldown()
