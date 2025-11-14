@@ -8,6 +8,8 @@ class_name WorldGenerator extends Node
 @export var segment_spacing := 10.0
 @export var segment_unload_z := 20.0
 var loaded_segments: Array[Node3D] = []
+var active_segment: WorldSegment:
+	get(): return get_current_segment()
 
 @export_group("Horizon")
 @export var horizon_start_segment := 2
@@ -51,6 +53,14 @@ func clean() -> int:
 		unload_segment(segment)
 	
 	return len(segments_to_remove)
+
+func get_current_segment() -> WorldSegment:
+	var player_z := References.player_api.body.global_position.z
+	for segment in loaded_segments:
+		if( segment.position.z + segment_spacing/2 > player_z
+			and segment.position.z - segment_spacing/2 < player_z ):
+			return segment
+	return null
 
 func load_segment(segment: Node3D):
 	if not segment is WorldSegment:
