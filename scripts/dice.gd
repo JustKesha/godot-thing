@@ -1,7 +1,7 @@
-class_name Dice extends RigidBody3D
+class_name Dice extends Node
 
 @export var body: RigidBody3D
-var is_rolling: bool = false
+@export var interactable: Interactable
 
 @export_group("Roll")
 @export var roll_direction: Vector3 = Vector3.UP
@@ -10,7 +10,7 @@ var is_rolling: bool = false
 		roll_speed if roll_speed >= 0
 		else randf_range(roll_speed_min, roll_speed_max)
 	)
-@export var roll_speed_min: float = 3.5
+@export var roll_speed_min: float = 2.5
 @export var roll_speed_max: float = 5.0
 @export var roll_angular_direction: Vector3 = Vector3(2.6, 0.8, 2.3):
 	get(): return (
@@ -26,8 +26,8 @@ var is_rolling: bool = false
 		roll_angular_speed if roll_angular_speed >= 0
 		else randf_range(roll_angular_speed_min, roll_angular_speed_max)
 	)
-@export var roll_angular_speed_min: float = 9.5
-@export var roll_angular_speed_max: float = 9.5
+@export var roll_angular_speed_min: float = 7.5
+@export var roll_angular_speed_max: float = 10.0
 
 @export_group("Values")
 @export var faces = [
@@ -39,6 +39,16 @@ var is_rolling: bool = false
 	[Vector3.BACK, 5]
 ]
 
+var score: int = 5
+var is_rolling: bool = false:
+	set(value):
+		is_rolling = value
+		if is_rolling: score = -1
+		else: interactable.info_desc = "Rolled " + str(score)
+		interactable.is_enabled = not is_rolling
+
+func _on_roll_finished(score: int): pass
+
 func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
 	if is_rolling: return
 	# NOTE Not using apply impulse bc slow
@@ -48,10 +58,9 @@ func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
 	is_rolling = true
 
 func stop():
-	print('Dice stopped')
-	var score = get_score()
-	print('Rolled ', score)
+	score = get_score()
 	is_rolling = false
+	_on_roll_finished(score)
 
 func get_score() -> int:
 	var best_score = 0
