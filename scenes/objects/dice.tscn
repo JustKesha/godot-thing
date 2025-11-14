@@ -19,6 +19,7 @@ script = ExtResource("1_p7ajc")
 body = NodePath(".")
 interactable = NodePath("Interactable")
 destroy_timer = NodePath("DestroyTimer")
+lock_camera_on_roll = true
 
 [node name="Model" parent="." instance=ExtResource("1_iibli")]
 transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, -0.005, -0.014, 0)

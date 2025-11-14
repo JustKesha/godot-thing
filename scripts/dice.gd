@@ -33,8 +33,11 @@ class_name Dice extends Node
 @export_group("Destroy")
 @export var destroy_timer: Timer
 @export var destroy_on_roll_limit: bool = true
-@export var destroy_delay: float = 1.0
+@export var destroy_delay: float = 1.5
 var is_queued_for_destroy: bool = false
+
+@export_group("Other")
+@export var lock_camera_on_roll: bool = false
 
 @export_group("Values")
 @export var faces = [
@@ -53,6 +56,12 @@ var is_rolling: bool = false:
 	set(value):
 		is_rolling = value
 		interactable.is_enabled = not is_rolling
+		if is_rolling:
+			if lock_camera_on_roll:
+				References.player_api.camera.lock(body,-1,false,true)
+		else:
+			if lock_camera_on_roll:
+				References.player_api.camera.face(body)
 var roll_count: int = 0
 var score: int = 5:
 	set(value):
@@ -61,8 +70,10 @@ var score: int = 5:
 		interactable.info_desc = "Rolled " + str(score)
 var score_total: int = 0
 
+func _on_roll_started(): pass
 func _on_roll_finished(): pass
 func _on_roll_limit(): pass
+func _on_remove(): pass
 
 func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
 	if not is_ready_to_roll: return
@@ -72,6 +83,7 @@ func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
 	body.angular_velocity = roll_angular_direction * angular_speed
 	is_rolling = true
 	roll_count += 1
+	_on_roll_started()
 
 func stop():
 	score = get_score()
@@ -86,6 +98,7 @@ func destroy(delay: float = destroy_delay):
 	is_queued_for_destroy = true
 
 func remove():
+	_on_remove()
 	queue_free()
 
 func get_score() -> int:
