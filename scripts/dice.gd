@@ -39,12 +39,13 @@ class_name Dice extends Node
 	[Vector3.BACK, 5]
 ]
 
-var score: int = 5
+var score: int = 5:
+	set(value):
+		score = value
+		interactable.info_desc = "Rolled " + str(score)
 var is_rolling: bool = false:
 	set(value):
 		is_rolling = value
-		if is_rolling: score = -1
-		else: interactable.info_desc = "Rolled " + str(score)
 		interactable.is_enabled = not is_rolling
 
 func _on_roll_finished(score: int): pass

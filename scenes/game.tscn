@@ -274,8 +274,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035379, 0.209324, -0.19631)
 light_color = Color(1, 0.686275, 0.588235, 1)
 light_volumetric_fog_energy = 0.0
 script = ExtResource("6_p57ef")
-energy_multiplier = 0.2
-radius_multiplier = 3.0
+energy_multiplier = 0.1
+radius_multiplier = 1.0
 
 [node name="BarDelay" type="Timer" parent="Player/Lantern"]
 one_shot = true
@@ -439,9 +439,9 @@ vertical_alignment = 1
 [node name="Desc" type="Label" parent="Player/UI/Cursor/Info"]
 layout_mode = 0
 offset_left = -100.0
-offset_top = -15.0
+offset_top = -22.0
 offset_right = 100.0
-offset_bottom = 85.0
+offset_bottom = 95.0
 text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt."
 label_settings = SubResource("LabelSettings_ssvqc")
 horizontal_alignment = 1
