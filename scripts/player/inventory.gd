@@ -30,10 +30,11 @@ var slot_input_prefix := 'inventory_slot_'
 @export var inventory_ui: HBoxContainer
 
 func add(item_id: String, quantity: int = 1) -> int:
-	if len(items) == slots: return quantity
-	
 	var item
 	var item_in_inv := find_item(item_id)
+	
+	if not item_in_inv and len(items) == slots: return quantity
+	
 	var quantity_overflow := 0
 	var quantity_before := 0
 	var quantity_added := 0
