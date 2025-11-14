@@ -34,6 +34,7 @@ class_name Dice extends Node
 @export var destroy_timer: Timer
 @export var destroy_on_roll_limit: bool = true
 @export var destroy_delay: float = 1.0
+var is_queued_for_destroy: bool = false
 
 @export_group("Values")
 @export var faces = [
@@ -45,6 +46,9 @@ class_name Dice extends Node
 	[Vector3.BACK, 5]
 ]
 
+var is_ready_to_roll: bool = true:
+	get(): return ( not is_rolling and roll_count < roll_limit
+		and not is_queued_for_destroy )
 var is_rolling: bool = false:
 	set(value):
 		is_rolling = value
@@ -61,8 +65,7 @@ func _on_roll_finished(): pass
 func _on_roll_limit(): pass
 
 func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
-	if is_rolling: return
-	if roll_count >= roll_limit: return
+	if not is_ready_to_roll: return
 	# NOTE Not using apply impulse bc slow
 	# ^ Will stop the roll same frame in _physics_process bc linear_velocity ~= 0
 	body.linear_velocity = roll_direction * speed
@@ -80,6 +83,7 @@ func stop():
 
 func destroy(delay: float = destroy_delay):
 	destroy_timer.start(delay)
+	is_queued_for_destroy = true
 
 func remove():
 	queue_free()
