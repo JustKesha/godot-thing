@@ -1,11 +1,9 @@
 extends Item
 
-func _use():
-	player.lantern.fuel += 15
-	player.dialogue_window.display([
-		"Tastes gross...",
-		"That was not tasty...",
-		"Yuck!",
-		"Ew!"
-	].pick_random())
+@export var fuel_gain: float = 15.0
+
+func _on_use():
+	if player.lantern.fuel == player.lantern.fuel_limit:
+		return false
+	player.lantern.fuel += fuel_gain
 	return true

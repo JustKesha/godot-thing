@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://ymteaqrngt48" path="res://scripts/item.gd" id="1_keydj"]
 [ext_resource type="PackedScene" uid="uid://b2b7l04dmthar" path="res://scenes/objects/ui/item_slot.tscn" id="2_t8k3g"]
 
-[node name="Item" type="Node3D"]
+[node name="Item" type="Node3D" node_paths=PackedStringArray("on_selection_display")]
 script = ExtResource("1_keydj")
+on_selection_display = NodePath("Display")
 icon_path = "uid://bswfo6wahvvpj"
 inventory_slot_ui = ExtResource("2_t8k3g")
 

@@ -182,10 +182,9 @@ mesh = SubResource("SphereMesh_gee14")
 [node name="Env" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_s0gvp")
 
-[node name="World" type="Node3D" parent="." node_paths=PackedStringArray("world", "player")]
+[node name="World" type="Node3D" parent="." node_paths=PackedStringArray("world")]
 script = ExtResource("1_iywne")
 world = NodePath(".")
-player = NodePath("../Player")
 
 [node name="API" type="Node" parent="World" node_paths=PackedStringArray("generator", "moon")]
 script = ExtResource("2_264po")
@@ -223,10 +222,9 @@ randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_ir15t")
 draw_pass_1 = SubResource("SphereMesh_ca42v")
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("world")]
+[node name="Player" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 script = ExtResource("14_suyxu")
-world = NodePath("../World")
 
 [node name="Trypod" type="Node3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
@@ -251,11 +249,10 @@ collision_mask = 2
 script = ExtResource("6_0tnpc")
 player = NodePath("../../../../API")
 
-[node name="Inventory" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("player", "inventory_ui")]
+[node name="Inventory" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("ui")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.4, -0.35)
 script = ExtResource("11_kvpfn")
-player = NodePath("../../API")
-inventory_ui = NodePath("../../UI/Inventory")
+ui = NodePath("../../UI/Inventory")
 
 [node name="ItemHighlighter" type="SpotLight3D" parent="Player/Trypod/Inventory"]
 transform = Transform3D(0.695913, 0.4119, -0.588255, 0, 0.819152, 0.573576, 0.718126, -0.399159, 0.570058, -0.3, 0.35, 0.35)
@@ -280,7 +277,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035379, 0.209324, -0.19631)
 light_color = Color(1, 0.686275, 0.588235, 1)
 light_volumetric_fog_energy = 0.0
 script = ExtResource("6_p57ef")
-energy_multiplier = 0.1
+energy_multiplier = 0.2
+radius_multiplier = 2.0
 
 [node name="BarDelay" type="Timer" parent="Player/Lantern"]
 one_shot = true

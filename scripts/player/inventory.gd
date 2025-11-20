@@ -3,7 +3,7 @@ class_name PlayerInventory extends Node3D
 signal item_selected(item: Item)
 signal item_unselected()
 
-@export var player: PlayerAPI
+@onready var player: PlayerAPI = References.player_api
 
 @export_group("General")
 @export var slots := 3
@@ -27,7 +27,7 @@ var active_slot := 0:
 var slot_input_prefix := 'inventory_slot_'
 
 @export_group("UI")
-@export var inventory_ui: HBoxContainer
+@export var ui: HBoxContainer
 
 func add(item_id: String, quantity: int = 1) -> int:
 	var item
@@ -49,7 +49,7 @@ func add(item_id: String, quantity: int = 1) -> int:
 		item = Items.get_by_id(item_id)
 		if not item: return -1
 		
-		item.init(item_id, player)
+		item.init(item_id)
 		items.append(item)
 		self.add_child(item)
 		

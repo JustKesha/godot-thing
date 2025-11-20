@@ -22,10 +22,10 @@ func set_selection(selected: bool):
 	selection_background.visible = selected
 	selection_foreground.visible = selected
 
-func init(item: Item):
-	item.player.inventory.inventory_ui.add_child(self)
-	set_icon(item.icon_path)
+func set_item(item: Item):
 	parent_item = item
+	References.player_api.inventory.ui.add_child(self)
+	set_icon(parent_item.icon_path)
 	update()
 
 func update():
