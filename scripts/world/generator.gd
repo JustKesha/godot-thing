@@ -10,7 +10,7 @@ var loaded_segments: Array[Node3D] = []
 var current_segment: WorldSegment
 
 @export_group("Horizon")
-@export var horizon_start_at_segment := -20.0
+@export var horizon_start_at_segment := 2
 @export var horizon_depth := .05
 
 ## Clears the map and loads up a new one.
@@ -52,7 +52,8 @@ func move(by: float):
 	for segment in loaded_segments:
 		segment.position.z += by
 		if segment.position.y < 0:
-			segment.position.y += clamp(by * horizon_depth, -INF, 0)
+			segment.position.y = clamp(
+				segment.position.y + by * horizon_depth, -INF, 0)
 	update()
 	current_segment = get_current_segment()
 
@@ -105,4 +106,3 @@ func _ready():
 
 func _on_player_move(step: float):
 	move(step)
-	update()
