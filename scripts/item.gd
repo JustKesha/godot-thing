@@ -79,6 +79,4 @@ func update_ui():
 	if ui: ui.update()
 
 func _ready():
-	print(References.player_api)
-	print(References.player_api.dialogue_window)
 	dialogue_window = References.player_api.dialogue_window
