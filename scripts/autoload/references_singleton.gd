@@ -1,4 +1,4 @@
 extends Node
 
-var player_api: PlayerAPI
-var world_api: WorldAPI
+@onready var player_api: PlayerAPI = $"../Game/Player/API"
+@onready var world_api: WorldAPI = $"../Game/World/API"

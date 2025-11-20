@@ -11,5 +11,3 @@ class_name PlayerAPI extends Node
 @export var dialogue_window: PlayerDialogueWindow
 @export var cursor: PlayerCursor
 @export var info_popup: PlayerInfoPopup
-
-func _ready() -> void: References.player_api = self
