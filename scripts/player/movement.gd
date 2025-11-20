@@ -1,19 +1,29 @@
 class_name PlayerMovementController extends Node
 
-signal move(speed: float)
-signal stop(distance_traveled: float)
+signal move(step: float)
+signal stop(traveled: float)
 
-@export var world: WorldGenerator
-@export var speed := 3.25
-@export var distance_traveled := 0.0
-var is_moving := false
+@export var speed: float = 3.25
+@export var action: String = "move"
 
-func _physics_process(delta: float):
-	if Input.is_action_pressed('move'):
-		is_moving = true
-		world.move(speed * delta)
-		move.emit(speed)
-		distance_traveled += speed
-	elif is_moving:
-		is_moving = false
-		stop.emit(distance_traveled)
+var is_moving: bool = false:
+	set(value):
+		if value == is_moving: return
+		is_moving = value
+var distance_traveled: float = 0.0
+var current_speed: float = 0.0:
+	get(): return self.get_physics_process_delta_time() * speed
+
+func walk(step: float = current_speed):
+	is_moving = true
+	distance_traveled += step
+	move.emit(step)
+
+func rest():
+	if not is_moving: return
+	is_moving = false
+	stop.emit(distance_traveled)
+
+func _physics_process(_delta: float):
+	if Input.is_action_pressed(action): walk()
+	else: rest()

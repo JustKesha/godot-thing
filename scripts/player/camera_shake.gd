@@ -19,7 +19,7 @@ var shake_time := 0.0
 @export_group("Head Bobbing")
 @export var is_head_bobbing_on := true # NOTE Does not reset cam position
 @export var bob_speed := 4.5
-@export var bob_amplitude := 0.045
+@export var bob_amplitude := 2.5
 @export var bob_smoothness := 5.0
 var current_bob_intensity := 0.0
 var target_bob_intensity := 0.0
@@ -58,10 +58,10 @@ func apply_bob(delta: float):
 	
 	head.position = base_position + bob_pos
 
-func _on_player_move(speed: float):
-	target_bob_intensity = speed * bob_amplitude
+func _on_player_move(step: float):
+	target_bob_intensity = step * bob_amplitude
 
-func _on_player_stop(_distance_traveled: float):
+func _on_player_stop(_traveled: float):
 	target_bob_intensity = 0.0
 
 func _ready():

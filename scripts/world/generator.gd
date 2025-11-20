@@ -8,7 +8,7 @@ class_name WorldGenerator extends Node
 @export var segment_spacing := 10.0
 @export var segment_unload_z := 20.0
 var loaded_segments: Array[Node3D] = []
-var active_segment: WorldSegment:
+var current_segment: WorldSegment:
 	get(): return get_current_segment()
 
 @export_group("Horizon")
@@ -23,7 +23,7 @@ func update():
 	clean()
 	
 	while len(loaded_segments) < preload_segments:
-		load_segment(get_next_segment())
+		load_segment(get_next_segment_to_load())
 
 func move(by: float):
 	for segment in loaded_segments:
@@ -62,7 +62,7 @@ func get_current_segment() -> WorldSegment:
 			return segment
 	return null
 
-func load_segment(segment: Node3D):
+func load_segment(segment: WorldSegment):
 	if not segment is WorldSegment:
 		push_error("Trying to load a null segment.")
 		return
@@ -70,7 +70,7 @@ func load_segment(segment: Node3D):
 	segment.position = get_next_segment_position()
 	loaded_segments.append(segment)
 
-func unload_segment(segment: Node3D):
+func unload_segment(segment: WorldSegment):
 	if is_instance_valid(segment):
 		segment.queue_free()
 		loaded_segments.erase(segment)
@@ -87,13 +87,14 @@ func get_next_segment_position() -> Vector3:
 func get_next_segment_index() -> int:
 	return len(loaded_segments) - 1
 
-func get_next_segment() -> WorldSegment:
+func get_next_segment_to_load() -> WorldSegment:
 	return WorldSegments.roll()
 
-func is_segment_unload_time(segment: Node3D) -> bool:
+func is_segment_unload_time(segment: WorldSegment = loaded_segments[0]) -> bool:
 	return segment.position.z > segment_unload_z
 
-func _on_player_move(_speed: float):
+func _on_player_move(step: float):
+	move(step)
 	update()
 
 func _ready():
