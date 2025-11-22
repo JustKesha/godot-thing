@@ -1,7 +1,7 @@
 class_name Item extends Node3D
 
 @export var id: String
-@onready var player: PlayerAPI = References.player_api
+@onready var player: PlayerAPI = References.player
 var is_initiated := false
 
 @export_group("Selection")
@@ -79,4 +79,4 @@ func update_ui():
 	if ui: ui.update()
 
 func _ready():
-	dialogue_window = References.player_api.dialogue_window
+	dialogue_window = References.player.dialogue_window

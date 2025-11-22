@@ -7,7 +7,7 @@ signal item_removed(item: Item)
 signal item_selected(item: Item)
 signal item_unselected(item: Item)
 
-@onready var player: PlayerAPI = References.player_api
+@onready var player: PlayerAPI = References.player
 var debug_info: String:
 	get():
 		if not items: return ''
@@ -179,7 +179,8 @@ func find_item(id: String) -> Item:
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed(open_action):
-		is_open = not is_open
+		if is_open: close()
+		else: open()
 		return
 	
 	if is_open:
@@ -187,14 +188,17 @@ func _unhandled_input(event: InputEvent):
 			use()
 			return
 	
-	for i in range(len(items)):
-		if event.is_action_pressed(select_slot_action_prefix + str(i+1)):
-			if i == active_slot:
-				is_open = not is_open
-				return
-			
-			active_slot = i
+	for slot in range(len(items)):
+		if not event.is_action_pressed(select_slot_action_prefix + str(slot+1)):
+			continue
+		
+		if slot == active_slot:
+			if is_open: close()
+			else: open()
 			return
+		
+		active_slot = slot
+		return
 
 func _ready():
 	init()

@@ -24,7 +24,7 @@ func set_selection(selected: bool):
 
 func set_item(item: Item):
 	parent_item = item
-	References.player_api.inventory.ui.add_child(self)
+	References.player.inventory.ui.add_child(self)
 	set_icon(parent_item.icon_path)
 	update()
 

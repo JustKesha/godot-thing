@@ -92,7 +92,7 @@ func is_segment_unload_time(segment: WorldSegment = loaded_segments[0]) -> bool:
 	return segment.position.z > segment_unload_at_z
 
 func get_current_segment() -> WorldSegment:
-	var player_z := References.player_api.body.global_position.z
+	var player_z := References.player.body.global_position.z
 	for segment in loaded_segments:
 		if( segment.position.z + segment_spacing/2 > player_z
 			and segment.position.z - segment_spacing/2 < player_z ):
