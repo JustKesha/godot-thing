@@ -1,9 +1,22 @@
 class_name PlayerInventory extends Node3D
 
+signal opened()
+signal closed()
+signal item_added(item: Item, quantity: int)
+signal item_removed(item: Item)
 signal item_selected(item: Item)
-signal item_unselected()
+signal item_unselected(item: Item)
 
 @onready var player: PlayerAPI = References.player_api
+var debug_info: String:
+	get():
+		if not items: return ''
+		var str := 'INV: '
+		for i in range(len(items)):
+			var item = items[i]
+			if i != 0: str += ',\n     '
+			str += item.id.to_upper()+' x'+str(item.quantity)+'/'+str(item.stack)
+		return str
 
 @export_group("General")
 @export var slots := 3
@@ -14,9 +27,11 @@ var is_open := false:
 		
 		if is_open:
 			_show_item()
-			logme()
+			Logger.write(debug_info)
+			opened.emit()
 		else:
 			_hide_item()
+			closed.emit()
 var items: Array[Item] = []
 var active_slot := 0:
 	set(value):
@@ -24,11 +39,23 @@ var active_slot := 0:
 		active_slot = clamp(value, 0, len(items)-1)
 		_show_item()
 		is_open = true
-var slot_input_prefix := 'inventory_slot_'
+
+@export_group("Controls")
+@export var open_action := 'inventory'
+@export var use_action := 'use'
+@export var select_slot_action_prefix := 'inventory_slot_'
+
+@export_group("Responses")
+@export var responses_overflow: Array[String] = ['Full.']
+@export var responses_acquired: Array[String] = ['+']
 
 @export_group("UI")
 @export var ui: HBoxContainer
 
+@export_group("Other")
+@export var starting_items: Array[String] = []
+
+# TODO Simplify
 func add(item_id: String, quantity: int = 1) -> int:
 	var item
 	var item_in_inv := find_item(item_id)
@@ -60,15 +87,14 @@ func add(item_id: String, quantity: int = 1) -> int:
 	quantity_added = quantity - quantity_overflow
 	
 	if quantity_added > 0:
-		player.dialogue_window.display("Got +"+str(quantity_added)+" "+item_id+"!")
-		logme()
+		player.dialogue_window.display(
+			responses_acquired.pick_random() + " "
+			+ str(quantity_added) + " " + item_id + ".")
+		Logger.write(debug_info)
 		open()
+		item_added.emit(item, quantity_added)
 	elif quantity == quantity_overflow:
-		player.dialogue_window.display([
-			"I'm full.",
-			"Can't carry anymore.",
-			"My hands are full.",
-		].pick_random())
+		player.dialogue_window.display(responses_overflow.pick_random())
 		
 	
 	return quantity_overflow
@@ -85,17 +111,29 @@ func remove(item: Item) -> bool:
 			items.erase(item)
 			item.destroy()
 			active_slot = active_slot
-			logme()
-			if not items:
-				close()
+			Logger.write(debug_info)
+			if not items: close()
+			item_removed.emit(item)
 			return true
 	return false
+
+func init():
+	clear()
+	give_starting_items()
+	close()
+
+func open():
+	is_open = true
 
 func close():
 	is_open = false
 
-func open():
-	is_open = true
+func clear():
+	for item in items:
+		remove(item)
+
+func give_starting_items(list: Array[String] = starting_items):
+	for item_id in starting_items: add(item_id)
 
 func _show_item(item: Item = null):
 	if not item: item = get_active()
@@ -111,49 +149,52 @@ func _hide_item(item: Item = null):
 	item.update_ui()
 	item_unselected.emit(item)
 
+# HELPERS
+
+## Returns the item for given slot or null.
 func get_item(slot: int) -> Item:
-	if not items or slot >= len(items): return null
+	if slot < 0 or slot >= len(items): return null
 	return items[slot]
 
-func get_item_slot(id: String) -> int:
+## Returns slot index if item is in inventory, otherwise -1.
+func get_item_slot(item_id: String) -> int:
 	for i in range(len(items)):
-		if items[i].id == id:
+		if items[i].id == item_id:
 			return i
 	return -1
 
+## Returns the currently selected item, or the last selected item if inventory is
+## is closed. If inventory is empty (or no item was ever selected) will return null.
 func get_active() -> Item:
 	return get_item(active_slot)
 
+## Get item from inventory by id, otherwise get null.
 func find_item(id: String) -> Item:
 	for item in items:
 		if item.id == id:
 			return item
 	return null
 
-func logme():
-	if not items: return
-	var log_str := 'INV: '
-	for i in range(len(items)):
-		var item = items[i]
-		if i != 0: log_str += ',\n     '
-		log_str += item.id.to_upper()+' x'+str(item.quantity)+'/'+str(item.stack)
-	print(log_str)
+# GENERAL
 
 func _unhandled_input(event: InputEvent):
-	if event.is_action_pressed('inventory'):
+	if event.is_action_pressed(open_action):
 		is_open = not is_open
 		return
 	
 	if is_open:
-		if event.is_action_pressed('use'):
+		if event.is_action_pressed(use_action):
 			use()
 			return
 	
 	for i in range(len(items)):
-		if event.is_action_pressed(slot_input_prefix + str(i+1)):
+		if event.is_action_pressed(select_slot_action_prefix + str(i+1)):
 			if i == active_slot:
 				is_open = not is_open
 				return
 			
 			active_slot = i
 			return
+
+func _ready():
+	init()
