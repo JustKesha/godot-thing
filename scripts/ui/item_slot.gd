@@ -13,9 +13,11 @@ var is_selected: bool = false
 func set_icon(path: String): icon.texture = load(path)
 func set_nametag(tag: String): nametag.text = tag
 func set_quantity(new: int, max: int = min_stack_to_display):
-	var str = 'x' + str(new)
-	if max > min_stack_to_display and is_selected:
-		str += '/' + str(max)
+	var str = ''
+	if max != 1 or is_selected:
+		str = 'x' + str(new)
+		if max > min_stack_to_display and is_selected:
+			str += '/' + str(max)
 	quantity.text = str
 func set_selection(selected: bool):
 	is_selected = selected

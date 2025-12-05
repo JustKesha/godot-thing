@@ -1,9 +1,9 @@
-class_name NiceDice extends Dice
+class_name SoulDice extends Dice
 
-@export var fuel_rewards: Array[float] = [-100, -50, -15, 25, 50, 75]
+@onready var lantern: PlayerLantern = References.player.lantern
+@export var fuel_rewards: Array[float] = [-100, -50, -15, 30, 75, 135]
 
 func _on_roll_finished():
-	var lantern := References.player_api.lantern
 	var reward := fuel_rewards[score-1] if (score >= 1 and score <= 6) else 0.0
 	
 	lantern.fuel += reward

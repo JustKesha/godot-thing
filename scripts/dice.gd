@@ -31,10 +31,10 @@ class_name Dice extends Node
 @export var roll_angular_speed_min: float = 7.5
 @export var roll_angular_speed_max: float = 10.0
 
-@export_group("Destroy")
+@export_group("Auto Destroy")
 @export var destroy_timer: Timer
 @export var destroy_on_roll_limit: bool = true
-@export var destroy_delay: float = 3.5
+@export var destroy_delay: float = 2.0
 var is_queued_for_destroy: bool = false
 
 @export_group("Projector")
@@ -47,55 +47,13 @@ var projector: Projector:
 		projector = value
 		body.get_parent().add_child(projector)
 
-@export_group("Reactions")
+@export_group("Responses")
 @export var roll_react: bool = false
 @export var roll_reactions: Array[Array] = [
-	[
-		"A crushing defeat, paid in ambition.",
-		"Abyssal luck, matched only by the darkness.",
-		"The gamble is lost, and with it, a future.",
-		"A king's ransom, squandered in a moment.",
-		"The fates demand a heavy toll."
-	],
-	[
-		"The shadows deepen their claim.",
-		"Misfortune bleeds the coffers dry.",
-		"A costly miscalculation.",
-		"The price of hope is often despair."
-	],
-	[
-		"A minor toll to the endless night.",
-		"The balance tips towards ruin.",
-		"A small step towards oblivion.",
-		"Luck remains a fickle, distant ally.",
-		"The balance tips, ever so slightly."
-	],
-	[
-		"A pittance of hope, wrested from the dark.",
-		"The gamble pays a modest dividend.",
-		"A fleeting victory against the tide.",
-		"A pittance, wrested from chance.",
-		"Fortune offers a crumb, not a feast."
-	],
-	[
-		"A substantial boon in this sea of black.",
-		"The dice finally favor the bold.",
-		"A spark of hope, fanned into a steady flame.",
-		"The darkness is pushed back, for now.",
-		"A worthy prize for a desperate wager.",
-		"A substantial boon, claimed from the jaws of luck.",
-		"The gamble pays a worthy dividend."
-	],
-	[
-		"The gamble pays in brilliant dividends.",
-		"The lantern blazes, a defiance of the void.",
-		"Fortune smiles, a rare and brilliant sight.",
-		"A brilliant beacon in the oppressive gloom.",
-		"A king's bounty, a radiant victory!"
-	]
+	["1...", "1?!"], ["2.."], ["3."], ["4."], ["5!"], ["6!"]
 ]
 
-@export_group("Values")
+@export_group("Faces")
 @export var faces = [
 	[Vector3.UP, 1],
 	[Vector3.DOWN, 6], 
@@ -114,10 +72,10 @@ var is_rolling: bool = false:
 		interactable.is_enabled = not is_rolling
 		if is_rolling:
 			if lock_camera_on_roll:
-				References.player_api.camera.lock(body,-1,false,true)
+				References.player.camera.lock(body,-1,false,true)
 		else:
 			if lock_camera_on_roll:
-				References.player_api.camera.face(body)
+				References.player.camera.face(body)
 var roll_count: int = 0
 var score: int = 5:
 	set(value):
@@ -158,7 +116,7 @@ func stop():
 		if( score >= 0
 			and score-1 < len(roll_reactions)
 			and len(roll_reactions[score-1]) > 0 ):
-			References.player_api.dialogue_window.display(
+			References.player.dialogue_window.display(
 				roll_reactions[score-1].pick_random())
 
 func move(to: Vector3):

@@ -20,6 +20,9 @@ var debug_info: String:
 
 @export_group("General")
 @export var slots := 4
+@export var inventory_full_responses: Array[String] = [
+	'',
+	]
 var is_open := false:
 	set(value):
 		if value == is_open: return
@@ -46,8 +49,9 @@ var active_slot := 0:
 @export var select_slot_action_prefix := 'inventory_slot_'
 
 @export_group("Responses")
-@export var responses_overflow: Array[String] = ['Full.']
 @export var responses_acquired: Array[String] = ['+']
+@export var responses_brimfull: Array[String] = ['Full.']
+@export var responses_overflow: Array[String] = ['Full.']
 
 @export_group("UI")
 @export var ui: HBoxContainer
@@ -71,7 +75,9 @@ func add(item_id: String, quantity: int = 1) -> int:
 		item.quantity += quantity
 		active_slot = get_item_slot(item_id)
 	else:
-		if len(items) == slots: return quantity
+		if len(items) == slots:
+			player.dialogue_window.display(responses_brimfull.pick_random())
+			return quantity
 		item = Items.get_by_id(item_id)
 		if not item: return -1
 		

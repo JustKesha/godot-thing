@@ -1,9 +1,12 @@
-# TEMP
+# Temp
 project.godot
 .editorconfig
 .gitattributes
 
-# Custom Exports
+# Vscode
+.vscode/
+
+# Custom exports
 /export/
 export_presets.cfg
 *.rar

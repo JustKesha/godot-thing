@@ -10,8 +10,8 @@ var loaded_segments: Array[Node3D] = []
 var current_segment: WorldSegment
 
 @export_group("Horizon")
-@export var horizon_start_at_segment := 2
-@export var horizon_depth := .05
+@export var horizon_start_at_segment := 1
+@export var horizon_depth := .1
 
 ## Clears the map and loads up a new one.
 func init():

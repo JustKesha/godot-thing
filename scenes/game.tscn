@@ -252,7 +252,11 @@ player = NodePath("../../../../API")
 [node name="Inventory" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("ui")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.4, -0.35)
 script = ExtResource("11_kvpfn")
+responses_acquired = Array[String](["+", "+", "+", "Got", "Found", "Acquired"])
+responses_brimfull = Array[String](["Provisions burden the body, as regrets burden the mind. Shed one.", "Grasping greedily, you find your hands are full. And empty.", "Even the stoutest sack has its limits. As does ambition.", "No room remains. Not for trinkets, nor for trophies... nor for hope.", "To cling to all is to hold nothing. A clenched fist cannot receive.", "The pack groans, strained. Some plunder must be left to the dark."])
+responses_overflow = Array[String](["This burden reaches its limit.", "I can bear no more of this particular commodity.", "The stack is full. Avarice has its price.", "This resource has been stockpiled to its absolute limit.", "The quota for this particular good is filled."])
 ui = NodePath("../../UI/Inventory")
+starting_items = Array[String](["dice", "candle"])
 
 [node name="ItemHighlighter" type="SpotLight3D" parent="Player/Trypod/Inventory"]
 transform = Transform3D(0.695913, 0.4119, -0.588255, 0, 0.819152, 0.573576, 0.718126, -0.399159, 0.570058, -0.3, 0.35, 0.35)
@@ -260,14 +264,15 @@ light_energy = 0.1
 spot_range = 1.0
 spot_angle = 35.0
 
-[node name="Lantern" type="Node3D" parent="Player" node_paths=PackedStringArray("light", "fuel_bar", "fuel_bar_bg", "fuel_under_bar", "fuel_bar_delay_timer")]
+[node name="Lantern" type="Node3D" parent="Player" node_paths=PackedStringArray("light", "update_timer", "fuel_bar", "fuel_bar_delay_timer", "fuel_bar_bg", "fuel_under_bar")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.6, 0.35)
 script = ExtResource("6_u5sy4")
 light = NodePath("Light")
+update_timer = NodePath("Update")
 fuel_bar = NodePath("../UI/FuelBar/Meter")
+fuel_bar_delay_timer = NodePath("BarDelay")
 fuel_bar_bg = NodePath("../UI/FuelBar/Background")
 fuel_under_bar = NodePath("../UI/FuelBar/UnderMeter")
-fuel_bar_delay_timer = NodePath("BarDelay")
 
 [node name="Model" parent="Player/Lantern" instance=ExtResource("7_gee14")]
 transform = Transform3D(-0.283701, 0, -0.204973, 0, 0.35, 0, 0.204973, 0, -0.283701, 0, 0, 0)
@@ -282,6 +287,9 @@ radius_multiplier = 2.0
 
 [node name="BarDelay" type="Timer" parent="Player/Lantern"]
 one_shot = true
+
+[node name="Update" type="Timer" parent="Player/Lantern"]
+autostart = true
 
 [node name="UI" type="CanvasLayer" parent="Player"]
 
@@ -461,9 +469,8 @@ dialogue_window = NodePath("../UI/DialogueWindow")
 cursor = NodePath("../UI/Cursor")
 info_popup = NodePath("../UI/Cursor/Info")
 
-[node name="Events" type="Node" parent="." node_paths=PackedStringArray("player_api", "random_event_timer")]
+[node name="Events" type="Node" parent="." node_paths=PackedStringArray("random_event_timer")]
 script = ExtResource("14_trtic")
-player_api = NodePath("../Player/API")
 random_event_timer = NodePath("RandomEvent")
 
 [node name="RandomEvent" type="Timer" parent="Events"]
@@ -496,5 +503,6 @@ mesh = SubResource("QuadMesh_iywne")
 [connection signal="move" from="Player" to="World" method="_on_player_move"]
 [connection signal="move" from="Player" to="Player/Trypod/Head" method="_on_player_move"]
 [connection signal="stop" from="Player" to="Player/Trypod/Head" method="_on_player_stop"]
+[connection signal="timeout" from="Player/Lantern/Update" to="Player/Lantern" method="_on_update_timeout"]
 [connection signal="timeout" from="Player/UI/DialogueWindow/Timeout" to="Player/UI/DialogueWindow" method="_on_timer_timeout"]
 [connection signal="timeout" from="Events/RandomEvent" to="Events" method="_on_random_event_timeout"]

@@ -17,7 +17,7 @@ var message := "":
 
 @export_group("General")
 @export var default_message := "..."
-@export var default_timeout := 2.5
+@export var default_timeout := 3.5
 
 @export_group("Typing")
 enum TypeDelay {

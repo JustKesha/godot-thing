@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://4aoulrn6dufw"]
+
+[ext_resource type="PackedScene" uid="uid://sne3g4v5nffb" path="res://scenes/objects/item.tscn" id="1_nepff"]
+[ext_resource type="PackedScene" uid="uid://cq15mh70luvld" path="res://assets/models/Dasha_CustomBits/dice_center.fbx" id="2_0lin3"]
+[ext_resource type="Script" uid="uid://cjcyc78fxycpf" path="res://scripts/items/dice.gd" id="2_30bpc"]
+[ext_resource type="PackedScene" uid="uid://7qo00wv6l7mq" path="res://scenes/objects/dice/soul_dice.tscn" id="3_nepff"]
+
+[node name="Item" instance=ExtResource("1_nepff")]
+script = ExtResource("2_30bpc")
+dice_scene = ExtResource("3_nepff")
+player_offset = Vector3(0, 3, -1.75)
+stack = 3
+icon_path = "uid://dhx6ab7n550t7"
+tag = "Hope"
+
+[node name="Model" parent="Display" index="0" instance=ExtResource("2_0lin3")]
+transform = Transform3D(-3.27835e-09, 0.0194114, -0.0724444, 0, 0.0724444, 0.0194114, 0.075, 8.485e-10, -3.16665e-09, 0, 0.1, 0)
