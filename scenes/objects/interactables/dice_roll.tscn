@@ -6,3 +6,6 @@
 [node name="Interactable" instance=ExtResource("1_do22e")]
 transform = Transform3D(0.5, 1.86265e-09, 2.98023e-08, -1.86265e-09, 0.5, -6.51925e-09, -2.98023e-08, 6.51925e-09, 0.5, 0, 0, 0)
 script = ExtResource("2_ydf4m")
+tooltip_action = "Roll"
+tooltip_title = "Old Die"
+tooltip_descs = Array[String](["Time has worn its corners, but not its intent.", "A square of bone, etched with faded fates.", "Its numbers whisper of gambles long-settled.", "An arbiter of chance, now a prisoner of dust.", "Uneven, stained... and unnervingly still."])

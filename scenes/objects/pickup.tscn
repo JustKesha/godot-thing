@@ -9,6 +9,7 @@ item_name = "candle"
 quantity = 1
 pickup_rate = 99
 allow_overflow = false
+tooltip_action = "Collect"
 cooldown_enabled = false
 
 [node name="Hitbox" parent="." index="0"]

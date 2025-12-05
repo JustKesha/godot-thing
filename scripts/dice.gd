@@ -81,7 +81,6 @@ var score: int = 5:
 	set(value):
 		score = value
 		score_total += score
-		interactable.info_desc = "Rolled " + str(score)
 var score_total: int = 0
 
 func _on_roll_started(): pass
@@ -129,6 +128,7 @@ func destroy(delay: float = destroy_delay):
 func remove():
 	_on_remove()
 	queue_free()
+	interactable.remove()
 
 func get_score() -> int:
 	var best_score = 0

@@ -9,16 +9,16 @@
 [ext_resource type="Script" uid="uid://nogdh47dnwq2" path="res://scripts/player/api.gd" id="10_vtaks"]
 [ext_resource type="Script" uid="uid://dflx3x0d23ff1" path="res://scripts/player/inventory.gd" id="11_kvpfn"]
 [ext_resource type="FontFile" uid="uid://bdhjbd58rv1aa" path="res://assets/fonts/tiny5/Tiny5-Regular.ttf" id="12_kvuet"]
-[ext_resource type="Script" uid="uid://73uqankf26ly" path="res://scripts/player/dialogue_window.gd" id="12_trtic"]
+[ext_resource type="Script" uid="uid://73uqankf26ly" path="res://scripts/player/ui/dialogue_window.gd" id="12_trtic"]
 [ext_resource type="Script" uid="uid://c26pbg35u3ubc" path="res://scripts/ui/cursor.gd" id="13_ca42v"]
 [ext_resource type="Texture2D" uid="uid://1x0dqgjaimb1" path="res://assets/sprites/cursor/inspect.png" id="13_ir15t"]
 [ext_resource type="Script" uid="uid://utcd1g44dmpc" path="res://scripts/player/movement.gd" id="14_suyxu"]
 [ext_resource type="Script" uid="uid://be3bpi6vm5va5" path="res://scripts/world/event_system.gd" id="14_trtic"]
-[ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera_shake.gd" id="15_rysoc"]
-[ext_resource type="Script" uid="uid://y0hxp8wo0eyv" path="res://scripts/player/camera.gd" id="15_sgl2t"]
+[ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera/camera_effects.gd" id="15_rysoc"]
+[ext_resource type="Script" uid="uid://y0hxp8wo0eyv" path="res://scripts/player/camera/camera.gd" id="15_sgl2t"]
 [ext_resource type="Texture2D" uid="uid://vclibtl54q3f" path="res://assets/sprites/cursor/inspect_2.png" id="15_ssvqc"]
 [ext_resource type="Shader" uid="uid://bsjuon6lgj8fe" path="res://shaders/pixelation.gdshader" id="16_qouja"]
-[ext_resource type="Script" uid="uid://cou6n441nnfq4" path="res://scripts/player/info_popup.gd" id="16_ssvqc"]
+[ext_resource type="Script" uid="uid://cou6n441nnfq4" path="res://scripts/player/ui/interaction_tooltip.gd" id="16_ssvqc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rysoc"]
 emission_enabled = true
@@ -139,6 +139,7 @@ font_size = 24
 font_color = Color(0.890196, 0.843137, 0.694118, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ssvqc"]
+line_spacing = 1.0
 font = ExtResource("12_kvuet")
 font_size = 18
 font_color = Color(0.890196, 0.843137, 0.694118, 1)
@@ -242,12 +243,11 @@ trypod = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
 mesh = SubResource("QuadMesh_imku0")
 
-[node name="Hands" type="RayCast3D" parent="Player/Trypod/Head/Camera" node_paths=PackedStringArray("player")]
+[node name="Hands" type="RayCast3D" parent="Player/Trypod/Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, -5, 0)
 collision_mask = 2
 script = ExtResource("6_0tnpc")
-player = NodePath("../../../../API")
 
 [node name="Inventory" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("ui")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.4, -0.35)
@@ -406,7 +406,7 @@ autowrap_mode = 2
 [node name="Timeout" type="Timer" parent="Player/UI/DialogueWindow"]
 one_shot = true
 
-[node name="Cursor" type="Control" parent="Player/UI" node_paths=PackedStringArray("sprite")]
+[node name="Cursor" type="Control" parent="Player/UI" node_paths=PackedStringArray("sprite", "tooltip")]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -419,6 +419,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("13_ca42v")
 sprite = NodePath("Sprite")
+tooltip = NodePath("Info")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Player/UI/Cursor"]
 texture_filter = 1
@@ -428,13 +429,57 @@ animation = &"INSPECT"
 frame_progress = 0.661117
 speed_scale = 0.5
 
-[node name="Info" type="Control" parent="Player/UI/Cursor" node_paths=PackedStringArray("title", "desc")]
+[node name="Interaction" type="Control" parent="Player/UI/Cursor"]
+anchors_preset = 0
+offset_top = -60.0
+offset_bottom = -60.0
+
+[node name="Key" type="Label" parent="Player/UI/Cursor/Interaction"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -13.5
+offset_right = 100.0
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Key Code"
+label_settings = SubResource("LabelSettings_rysoc")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Acion" type="Label" parent="Player/UI/Cursor/Interaction"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -219.5
+offset_top = -38.5
+offset_right = 219.5
+offset_bottom = -15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Interact"
+label_settings = SubResource("LabelSettings_ssvqc")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Info" type="Control" parent="Player/UI/Cursor" node_paths=PackedStringArray("action", "title", "desc", "key")]
 anchors_preset = 0
 offset_top = 75.0
 offset_bottom = 75.0
 script = ExtResource("16_ssvqc")
+action = NodePath("../Interaction/Acion")
 title = NodePath("Title")
 desc = NodePath("Desc")
+key = NodePath("../Interaction/Key")
 
 [node name="Title" type="Label" parent="Player/UI/Cursor/Info"]
 layout_mode = 0
@@ -450,24 +495,23 @@ vertical_alignment = 1
 [node name="Desc" type="Label" parent="Player/UI/Cursor/Info"]
 layout_mode = 0
 offset_left = -100.0
-offset_top = -22.0
+offset_top = -20.0
 offset_right = 100.0
-offset_bottom = 95.0
+offset_bottom = 97.0
 text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt."
 label_settings = SubResource("LabelSettings_ssvqc")
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("body", "lantern", "inventory", "camera", "camera_effects", "dialogue_window", "cursor", "info_popup")]
+[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("body", "lantern", "inventory", "camera", "camera_effects", "cursor", "dialogue_window")]
 script = ExtResource("10_vtaks")
 body = NodePath("..")
 lantern = NodePath("../Lantern")
 inventory = NodePath("../Trypod/Inventory")
 camera = NodePath("../Trypod/Head/Camera")
 camera_effects = NodePath("../Trypod/Head")
-dialogue_window = NodePath("../UI/DialogueWindow")
 cursor = NodePath("../UI/Cursor")
-info_popup = NodePath("../UI/Cursor/Info")
+dialogue_window = NodePath("../UI/DialogueWindow")
 
 [node name="Events" type="Node" parent="." node_paths=PackedStringArray("random_event_timer")]
 script = ExtResource("14_trtic")

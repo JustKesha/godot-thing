@@ -2,5 +2,5 @@ class_name InteractableDiceRoll extends Interactable
 
 @export var dice: Dice
 
-func _on_interact(_player: PlayerAPI):
+func _on_interact():
 	dice.roll()

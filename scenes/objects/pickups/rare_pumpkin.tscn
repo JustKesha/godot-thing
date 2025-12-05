@@ -6,8 +6,8 @@
 [node name="Pickup" instance=ExtResource("1_gnxkf")]
 item_name = "pumpkin"
 quantity = 3
-info_titles = Array[String](["Bigger Pumpkin", "Bigger Pumpkin", "Bigger Pumpkin", "Huge Pumpkin", "Massive Pumpkin", "Enormous Pumpkin", "Majestic Pumpkin"])
-info_descs = Array[String](["Yuck", "I guess I could eat that", "I dont like pumpkins", "It smells funny", "It's pretty big"])
+tooltip_titles = Array[String](["Majestic Pumpkin", "Massive Pumpkin", "Bigger Pumpkin"])
+tooltip_descs = Array[String](["A monstrous gourd, swollen with bitter flesh. A feast for the desperate, or the damned.", "Blighted and bulbous, a testament to corrupted growth. It will sustain, but not nourish.", "A gargantuan lump of vulgar sustenance. One does not eat it; one endures it."])
 
 [node name="Model" parent="." index="1" instance=ExtResource("2_4slry")]
 transform = Transform3D(0.996749, 0.0803256, -0.00618644, -0.0805631, 0.99356, -0.0796778, -0.00025357, 0.0799173, 0.996802, 0, -0.0726742, 9.47562e-10)

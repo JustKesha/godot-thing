@@ -34,8 +34,6 @@ shape = SubResource("BoxShape3D_xpujh")
 [node name="Interactable" parent="." node_paths=PackedStringArray("dice") instance=ExtResource("2_p7ajc")]
 transform = Transform3D(1, 3.72528e-09, 5.96046e-08, -3.72528e-09, 1, -1.30385e-08, -5.96046e-08, 1.30385e-08, 1, 0, 0, 0)
 dice = NodePath("..")
-info_title = "Dice"
-info_desc = "Press E to roll"
 
 [node name="DestroyTimer" type="Timer" parent="."]
 one_shot = true

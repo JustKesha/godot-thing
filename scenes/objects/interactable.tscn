@@ -9,6 +9,8 @@ transform = Transform3D(1, 0, 0, -3.72529e-09, 1, -1.39698e-08, -5.96046e-08, 1.
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_khwtm")
+tooltip_action = "Interact"
+tooltip_key = "E"
 cooldown_timer = NodePath("CooldownTimer")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]

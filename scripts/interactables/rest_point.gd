@@ -1,8 +1,9 @@
 class_name InteractableRestPoint extends Interactable
 
+@onready var player: PlayerAPI = References.player
 @export var fuel_gain := 100.0
 
-func _on_interact(player: PlayerAPI):
+func _on_interact():
 	player.lantern.fuel += fuel_gain
 	player.dialogue_window.display([
 		"Sweet rest.",
@@ -12,7 +13,3 @@ func _on_interact(player: PlayerAPI):
 	$Light.is_lit = false
 	
 	remove()
-
-func _on_interactable_ready():
-	info_title = "Resting Place"
-	info_desc = "Save energy for the road"
