@@ -8,6 +8,5 @@ class_name PlayerAPI extends Node
 @export var camera_effects: PlayerCameraEffects
 
 @export_group("UI")
-@export var dialogue_window: PlayerDialogueWindow
 @export var cursor: PlayerCursor
-@export var info_popup: PlayerInfoPopup
+@export var dialogue_window: PlayerDialogueWindow
