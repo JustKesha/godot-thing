@@ -19,7 +19,7 @@ var debug_info: String:
 		return str
 
 @export_group("General")
-@export var slots := 3
+@export var slots := 4
 var is_open := false:
 	set(value):
 		if value == is_open: return
@@ -60,8 +60,6 @@ func add(item_id: String, quantity: int = 1) -> int:
 	var item
 	var item_in_inv := find_item(item_id)
 	
-	if not item_in_inv and len(items) == slots: return quantity
-	
 	var quantity_overflow := 0
 	var quantity_before := 0
 	var quantity_added := 0
@@ -73,6 +71,7 @@ func add(item_id: String, quantity: int = 1) -> int:
 		item.quantity += quantity
 		active_slot = get_item_slot(item_id)
 	else:
+		if len(items) == slots: return quantity
 		item = Items.get_by_id(item_id)
 		if not item: return -1
 		
@@ -95,7 +94,6 @@ func add(item_id: String, quantity: int = 1) -> int:
 		item_added.emit(item, quantity_added)
 	elif quantity == quantity_overflow:
 		player.dialogue_window.display(responses_overflow.pick_random())
-		
 	
 	return quantity_overflow
 
