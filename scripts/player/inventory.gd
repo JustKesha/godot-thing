@@ -81,7 +81,7 @@ func add(item_id: String, quantity: int = 1) -> int:
 		self.add_child(item)
 		
 		item.quantity = quantity
-		active_slot += 1
+		active_slot = len(items) - 1
 	
 	quantity_overflow = quantity_before + quantity - item.quantity
 	quantity_added = quantity - quantity_overflow
