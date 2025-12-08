@@ -12,7 +12,7 @@ class_name Dice extends Node
 		roll_speed if roll_speed >= 0
 		else randf_range(roll_speed_min, roll_speed_max)
 	)
-@export var roll_speed_min: float = 2.5
+@export var roll_speed_min: float = 3.5
 @export var roll_speed_max: float = 5.0
 @export var roll_angular_direction: Vector3 = Vector3(2.6, 0.8, 2.3):
 	get(): return (
@@ -28,8 +28,8 @@ class_name Dice extends Node
 		roll_angular_speed if roll_angular_speed >= 0
 		else randf_range(roll_angular_speed_min, roll_angular_speed_max)
 	)
-@export var roll_angular_speed_min: float = 7.5
-@export var roll_angular_speed_max: float = 10.0
+@export var roll_angular_speed_min: float = 10.0
+@export var roll_angular_speed_max: float = 15.0
 
 @export_group("Auto Destroy")
 @export var destroy_timer: Timer
@@ -48,10 +48,10 @@ var projector: Projector:
 		body.get_parent().add_child(projector)
 
 @export_group("Responses")
-@export var roll_react: bool = false
-@export var roll_reactions: Array[Array] = [
+@export var roll_respond: bool = false
+@export var roll_responses: Array[Array] = [
 	["1"], ["2"], ["3"], ["4"], ["5"], ["6"]
-]
+	]
 
 @export_group("Faces")
 @export var faces = [
@@ -61,7 +61,7 @@ var projector: Projector:
 	[Vector3.RIGHT, 4],
 	[Vector3.FORWARD, 2],
 	[Vector3.BACK, 5]
-]
+	]
 
 var is_ready_to_roll: bool = true:
 	get(): return ( not is_rolling and roll_count < roll_limit
@@ -79,7 +79,7 @@ var is_rolling: bool = false:
 var roll_count: int = 0
 var score: int = 5:
 	set(value):
-		score = value
+		score = clamp(value, 1, 6)
 		score_total += score
 var score_total: int = 0
 
@@ -111,12 +111,12 @@ func stop():
 	if roll_count >= roll_limit:
 		_on_roll_limit()
 		if destroy_on_roll_limit: destroy()
-	if roll_react:
+	if roll_respond:
 		if( score >= 0
-			and score-1 < len(roll_reactions)
-			and len(roll_reactions[score-1]) > 0 ):
+			and score-1 < len(roll_responses)
+			and len(roll_responses[score-1]) > 0 ):
 			References.player.dialogue_window.display(
-				roll_reactions[score-1].pick_random())
+				roll_responses[score-1].pick_random())
 
 func move(to: Vector3):
 	body.global_position = to
@@ -124,6 +124,7 @@ func move(to: Vector3):
 func destroy(delay: float = destroy_delay):
 	destroy_timer.start(delay)
 	is_queued_for_destroy = true
+	interactable.is_enabled = false
 
 func remove():
 	_on_remove()
