@@ -50,7 +50,7 @@ var projector: Projector:
 @export_group("Responses")
 @export var roll_react: bool = false
 @export var roll_reactions: Array[Array] = [
-	["1...", "1?!"], ["2.."], ["3."], ["4."], ["5!"], ["6!"]
+	["1"], ["2"], ["3"], ["4"], ["5"], ["6"]
 ]
 
 @export_group("Faces")

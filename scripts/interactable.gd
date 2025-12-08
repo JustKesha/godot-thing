@@ -10,11 +10,14 @@ func _on_cooldown_end(): pass
 func _on_interact(): pass
 
 # GENERAL
+@onready var player: PlayerAPI = References.player
 @export var is_enabled: bool = true
 func interact():
 	if not is_enabled: return
 	if is_on_cooldown: return
 	_on_interact()
+	if responses_interact: player.dialogue_window.display(
+		responses_interact.pick_random())
 	if cooldown_seconds > 0: set_on_cooldown()
 
 # CURSOR
@@ -56,6 +59,10 @@ func unhover():
 	player_cursor.set_tooltip()
 	is_hovered = false
 	_on_unhover()
+
+# RESPONSES
+@export_group("Responses")
+@export var responses_interact: Array[String] = []
 
 # COOLDOWN
 @export_group("Cooldown")

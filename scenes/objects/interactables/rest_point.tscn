@@ -10,6 +10,7 @@ fuel_gain = 100.0
 tooltip_action = "Rest"
 tooltip_title = "Resting Place"
 tooltip_descs = Array[String](["This place feels safe. Your journey is saved.", "You feel your burdens lighten here. You can rest.", "The world feels far away here. You are filled with hope."])
+responses_interact = Array[String](["The weight comes off. For now.", "The shadows hold their breath.", "Cherish it. It will not last.", "A small, temporary victory.", "You let the stillness seep into your bones.", "A fragile peace..."])
 
 [node name="Light" parent="." index="1" instance=ExtResource("3_mx0nq")]
 intensity = 1.0

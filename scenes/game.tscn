@@ -224,7 +224,7 @@ process_material = SubResource("ParticleProcessMaterial_ir15t")
 draw_pass_1 = SubResource("SphereMesh_ca42v")
 
 [node name="Player" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 script = ExtResource("14_suyxu")
 
 [node name="Trypod" type="Node3D" parent="Player"]
