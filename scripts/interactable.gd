@@ -23,7 +23,7 @@ func interact():
 # CURSOR
 @export_group("Cursor")
 @onready var player_cursor: PlayerCursor = References.player.cursor
-@export var cursor: int = 1 # FIXME Should instead by of type PlayerCursor.Cursor
+@export var cursor: int = 0 # FIXME Should instead by of type PlayerCursor.Cursor
 
 # TOOLTIP
 @export_group("Tooltip")

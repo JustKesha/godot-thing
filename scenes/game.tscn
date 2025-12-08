@@ -133,15 +133,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="LabelSettings" id="LabelSettings_rysoc"]
-font = ExtResource("12_kvuet")
-font_size = 24
-font_color = Color(0.890196, 0.843137, 0.694118, 1)
-
 [sub_resource type="LabelSettings" id="LabelSettings_ssvqc"]
 line_spacing = 1.0
 font = ExtResource("12_kvuet")
 font_size = 18
+font_color = Color(0.890196, 0.843137, 0.694118, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rysoc"]
+font = ExtResource("12_kvuet")
+font_size = 24
 font_color = Color(0.890196, 0.843137, 0.694118, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
@@ -356,6 +356,7 @@ offset_bottom = 35.0
 grow_horizontal = 2
 
 [node name="DialogueWindow" type="Control" parent="Player/UI" node_paths=PackedStringArray("label", "timer")]
+visible = false
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
@@ -406,6 +407,7 @@ autowrap_mode = 2
 one_shot = true
 
 [node name="Cursor" type="Control" parent="Player/UI" node_paths=PackedStringArray("sprite", "tooltip")]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -424,34 +426,15 @@ texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_264po")
 animation = &"INSPECT"
-frame_progress = 0.661117
+frame_progress = 0.764897
 speed_scale = 0.5
 
-[node name="Interaction" type="Control" parent="Player/UI/Cursor"]
+[node name="Tooltip" type="Control" parent="Player/UI/Cursor"]
 anchors_preset = 0
-offset_top = -50.0
-offset_bottom = -50.0
+offset_top = -75.0
+offset_bottom = -75.0
 
-[node name="Key" type="Label" parent="Player/UI/Cursor/Interaction"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -13.5
-offset_right = 100.0
-offset_bottom = 13.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Key Code"
-label_settings = SubResource("LabelSettings_rysoc")
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="Acion" type="Label" parent="Player/UI/Cursor/Interaction"]
+[node name="Key" type="Label" parent="Player/UI/Cursor/Tooltip"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -464,12 +447,32 @@ offset_right = 219.5
 offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Interact"
+text = "Action key code"
 label_settings = SubResource("LabelSettings_ssvqc")
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="Action" type="Label" parent="Player/UI/Cursor/Tooltip"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -13.5
+offset_right = 100.0
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "ACTION NAME"
+label_settings = SubResource("LabelSettings_rysoc")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
 [node name="Interaction" type="Control" parent="Player/UI" node_paths=PackedStringArray("action", "title", "desc", "key")]
+visible = false
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
@@ -479,18 +482,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("16_ssvqc")
-action = NodePath("../Cursor/Interaction/Acion")
+action = NodePath("../Cursor/Tooltip/Action")
 title = NodePath("Title")
 desc = NodePath("Desc")
-key = NodePath("../Cursor/Interaction/Key")
+key = NodePath("../Cursor/Tooltip/Key")
 
 [node name="Title" type="Label" parent="Player/UI/Interaction"]
 layout_mode = 0
 offset_left = -100.0
-offset_top = -250.0
+offset_top = -275.0
 offset_right = 100.0
-offset_bottom = -223.0
-text = "Title"
+offset_bottom = -248.0
+text = "Interaction Title"
 label_settings = SubResource("LabelSettings_rysoc")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -498,9 +501,9 @@ vertical_alignment = 1
 [node name="Desc" type="Label" parent="Player/UI/Interaction"]
 layout_mode = 0
 offset_left = -200.0
-offset_top = -220.0
+offset_top = -245.0
 offset_right = 200.0
-offset_bottom = -170.0
+offset_bottom = -195.0
 text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt."
 label_settings = SubResource("LabelSettings_ssvqc")
 horizontal_alignment = 1

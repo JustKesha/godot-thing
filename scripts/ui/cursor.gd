@@ -12,9 +12,11 @@ var state := Cursor.HIDDEN:
 		state = value
 		if state < 0:
 			self.visible = false
+			tooltip.visible = false
 			sprite.stop()
 		else:
 			self.visible = true
+			tooltip.visible = true
 			if state < len(animations):
 				sprite.play(animations[state])
 

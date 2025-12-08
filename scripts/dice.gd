@@ -51,7 +51,7 @@ var projector: Projector:
 @export var roll_respond: bool = false
 @export var roll_responses: Array[Array] = [
 	["1"], ["2"], ["3"], ["4"], ["5"], ["6"]
-	]
+	] # NOTE Make sure its always fixed size
 
 @export_group("Faces")
 @export var faces = [
@@ -69,7 +69,7 @@ var is_ready_to_roll: bool = true:
 var is_rolling: bool = false:
 	set(value):
 		is_rolling = value
-		interactable.is_enabled = not is_rolling
+		interactable.is_enabled = not is_rolling and roll_count < roll_limit
 		if is_rolling:
 			if lock_camera_on_roll:
 				References.player.camera.lock(body,-1,false,true)
@@ -88,11 +88,22 @@ func _on_roll_finished(): pass
 func _on_roll_limit(): pass
 func _on_remove(): pass
 
+# ACTIONS
+
 func init():
-	if spawn_projector:
-		if not projector: projector = projector_scene.instantiate()
-		projector.spectating = body
-		projector.global_position = body.global_position + projector_offset
+	if not projector: projector = projector_scene.instantiate()
+	projector.spectating = body
+	move(body.global_position)
+
+func update():
+	if not is_rolling: return
+	if( body.linear_velocity.length() < 0.1
+		and body.angular_velocity.length() < 0.1 ):
+		stop()
+
+func move(to: Vector3):
+	body.global_position = to
+	if projector: projector.global_position = body.global_position + projector_offset
 
 func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
 	if not is_ready_to_roll: return
@@ -105,31 +116,19 @@ func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
 	_on_roll_started()
 
 func stop():
+	if not is_rolling: return
+	
 	score = get_score()
 	is_rolling = false
 	_on_roll_finished()
+	
 	if roll_count >= roll_limit:
 		_on_roll_limit()
 		if destroy_on_roll_limit: destroy()
+	
 	if roll_respond:
-		if( score >= 0
-			and score-1 < len(roll_responses)
-			and len(roll_responses[score-1]) > 0 ):
-			References.player.dialogue_window.display(
-				roll_responses[score-1].pick_random())
-
-func move(to: Vector3):
-	body.global_position = to
-
-func destroy(delay: float = destroy_delay):
-	destroy_timer.start(delay)
-	is_queued_for_destroy = true
-	interactable.is_enabled = false
-
-func remove():
-	_on_remove()
-	queue_free()
-	interactable.remove()
+		References.player.dialogue_window.display(
+			roll_responses[score-1].pick_random())
 
 func get_score() -> int:
 	var best_score = 0
@@ -144,14 +143,24 @@ func get_score() -> int:
 
 	return best_score
 
+func destroy(delay: float = destroy_delay):
+	destroy_timer.start(delay)
+	is_queued_for_destroy = true
+	interactable.is_enabled = false
+	is_rolling = false
+
+func _delete():
+	_on_remove()
+	queue_free()
+	interactable.remove()
+
+# GENERAL
+
 func _ready():
 	init()
 
-func _physics_process(delta: float):
-	if not is_rolling: return
-	if( body.linear_velocity.length() < 0.1
-		and body.angular_velocity.length() < 0.1 ):
-		stop()
+func _physics_process(_delta: float):
+	update()
 
 func _on_destroy_timer_timeout():
-	remove()
+	_delete()

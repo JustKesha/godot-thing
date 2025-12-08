@@ -8,7 +8,7 @@
 [node name="Item" instance=ExtResource("1_nepff")]
 script = ExtResource("2_30bpc")
 dice_scene = ExtResource("3_nepff")
-player_offset = Vector3(0, 3, -1.75)
+player_offset = Vector3(0, 3, -1.25)
 stack = 3
 icon_path = "uid://dhx6ab7n550t7"
 tag = "Hope"

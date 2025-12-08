@@ -110,11 +110,17 @@ var fuel_under_bar_width := 0.0:
 			fuel_under_bar.size.x = fuel_under_bar_width * fuel_bar_scale
 			fuel_under_bar.position.x = -fuel_under_bar.size.x/2
 
-## Depletes the given amount of fuel, if given a number below [param 0] will
-## instead use current [param fuel_depletion_rate].
+# ACTIONS
+
+## Depletes given amount of fuel, if amount <0 will use fuel_depletion_rate.
 func deplete(how_much: float = -1.0):
 	if how_much < 0: how_much = fuel_depletion_rate
 	fuel -= how_much
+
+## Refills given amount of fuel, if amount <0 will max out the fuel.
+func refill(how_much: float = -1.0):
+	if how_much < 0: how_much = fuel_limit
+	fuel += how_much
 
 func extinguish():
 	light.is_lit = false
@@ -122,6 +128,8 @@ func extinguish():
 func reignite(intensity: float = -1.0):
 	light.is_lit = true
 	if intensity > 0: light.intensity = intensity
+
+# GENERAL
 
 func _update():
 	if light.is_lit: deplete()

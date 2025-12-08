@@ -168,7 +168,4 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.5, 
 spectating = NodePath("../Dice")
 
 [node name="Dice" parent="DiceGame" index="2" instance=ExtResource("7_n1b37")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.5, 0.25, 0)
-fuel_rewards = Array[float]([-100.0, -50.0, -15.0, 25.0, 50.0, 75.0])
-spawn_projector = false
-projector_scene = null
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2, 0.25, 0)

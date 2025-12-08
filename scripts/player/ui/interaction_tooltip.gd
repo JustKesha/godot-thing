@@ -8,7 +8,7 @@ class_name PlayerInteractionTooltip extends Control
 func set_action(text: String): action.text = text
 func set_title(text: String): title.text = text
 func set_desc(text: String): desc.text = text
-func set_key(text: String): key.text = text
+func set_key(text: String): key.text = 'Press ' + text + ' to'
 
 func set_info(title_text: String, desc_text: String, action_text: String,
 	key_text: String):
