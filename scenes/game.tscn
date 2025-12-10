@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://b7owo051mahdu"]
+[gd_scene load_steps=47 format=3 uid="uid://b7owo051mahdu"]
 
 [ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://bau8n7lhn1s68" path="res://scripts/world/api.gd" id="2_264po"]
@@ -13,12 +13,13 @@
 [ext_resource type="Script" uid="uid://c26pbg35u3ubc" path="res://scripts/ui/cursor.gd" id="13_ca42v"]
 [ext_resource type="Texture2D" uid="uid://1x0dqgjaimb1" path="res://assets/sprites/cursor/inspect.png" id="13_ir15t"]
 [ext_resource type="Script" uid="uid://utcd1g44dmpc" path="res://scripts/player/movement.gd" id="14_suyxu"]
-[ext_resource type="Script" uid="uid://be3bpi6vm5va5" path="res://scripts/world/event_system.gd" id="14_trtic"]
+[ext_resource type="Script" uid="uid://be3bpi6vm5va5" path="res://scripts/world/systems/events.gd" id="14_trtic"]
 [ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera/camera_effects.gd" id="15_rysoc"]
 [ext_resource type="Script" uid="uid://y0hxp8wo0eyv" path="res://scripts/player/camera/camera.gd" id="15_sgl2t"]
 [ext_resource type="Texture2D" uid="uid://vclibtl54q3f" path="res://assets/sprites/cursor/inspect_2.png" id="15_ssvqc"]
 [ext_resource type="Shader" uid="uid://bsjuon6lgj8fe" path="res://shaders/pixelation.gdshader" id="16_qouja"]
 [ext_resource type="Script" uid="uid://cou6n441nnfq4" path="res://scripts/player/ui/interaction_tooltip.gd" id="16_ssvqc"]
+[ext_resource type="Script" uid="uid://w47mp4oej8y" path="res://scripts/world/systems/particles.gd" id="20_1kice"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rysoc"]
 emission_enabled = true
@@ -187,9 +188,13 @@ environment = SubResource("Environment_s0gvp")
 script = ExtResource("1_iywne")
 world = NodePath(".")
 
-[node name="API" type="Node" parent="World" node_paths=PackedStringArray("generator", "moon")]
+[node name="Particles" type="Node" parent="World"]
+script = ExtResource("20_1kice")
+
+[node name="API" type="Node" parent="World" node_paths=PackedStringArray("generator", "particles", "moon")]
 script = ExtResource("2_264po")
 generator = NodePath("..")
+particles = NodePath("../Particles")
 moon = NodePath("../../Moon")
 
 [node name="Beast" type="Node3D" parent="."]

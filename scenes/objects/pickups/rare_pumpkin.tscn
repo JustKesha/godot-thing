@@ -4,8 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b4mtxfoplhdou" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/pumpkin_yellow.fbx" id="2_4slry"]
 
 [node name="Pickup" instance=ExtResource("1_gnxkf")]
-item_name = "pumpkin"
-quantity = 3
+pickup_item = "pumpkin"
 tooltip_titles = Array[String](["Majestic Pumpkin", "Massive Pumpkin", "Bigger Pumpkin"])
 tooltip_descs = Array[String](["A monstrous gourd, swollen with bitter flesh. A feast for the desperate, or the damned.", "Blighted and bulbous, a testament to corrupted growth. It will sustain, but not nourish.", "A gargantuan lump of vulgar sustenance. One does not eat it; one endures it."])
 

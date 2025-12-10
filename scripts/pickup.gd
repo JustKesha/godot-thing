@@ -1,23 +1,29 @@
 class_name Pickup extends Interactable
 
-@export var item_name := 'candle'
-@export var quantity := 1
+@onready var particles := References.particles
+
+@export var pickup_item := 'candle'
+@export var pickup_quantity := 1
 @export var pickup_rate := 99
-@export var allow_overflow := false
+@export var pickup_allow_overflow := false
+
+func _on_remove():
+	particles.spawn(particles.Particles.POOF,
+		self.global_position + Vector3.UP * .1)
 
 func _on_interact():
 	var overflow := 0
 	var pickup_amount := 0
 	
-	if pickup_rate > quantity:
-		pickup_amount = quantity
+	if pickup_rate > pickup_quantity:
+		pickup_amount = pickup_quantity
 	else:
 		pickup_amount = pickup_rate
-		overflow += quantity - pickup_amount
+		overflow += pickup_quantity - pickup_amount
 	
-	overflow += player.inventory.add(item_name, pickup_amount)
+	overflow += player.inventory.add(pickup_item, pickup_amount)
 	
-	if overflow == 0 or allow_overflow:
+	if overflow == 0 or pickup_allow_overflow:
 		remove()
 	else:
-		quantity = overflow
+		pickup_quantity = overflow

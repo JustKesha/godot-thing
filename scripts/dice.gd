@@ -1,5 +1,7 @@
 class_name Dice extends Node
 
+@onready var particles := References.particles
+
 @export var body: RigidBody3D
 @export var interactable: Interactable
 
@@ -97,8 +99,8 @@ func init():
 
 func update():
 	if not is_rolling: return
-	if( body.linear_velocity.length() < 0.1
-		and body.angular_velocity.length() < 0.1 ):
+	if( body.linear_velocity.length() < 0.01
+		and body.angular_velocity.length() < 0.01 ):
 		stop()
 
 func move(to: Vector3):
@@ -149,10 +151,11 @@ func destroy(delay: float = destroy_delay):
 	interactable.is_enabled = false
 	is_rolling = false
 
-func _delete():
+func delete():
 	_on_remove()
 	queue_free()
 	interactable.remove()
+	particles.spawn(particles.Particles.POOF, body.global_position)
 
 # GENERAL
 
@@ -163,4 +166,4 @@ func _physics_process(_delta: float):
 	update()
 
 func _on_destroy_timer_timeout():
-	_delete()
+	delete()

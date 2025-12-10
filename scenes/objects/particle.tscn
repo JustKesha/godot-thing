@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://dce6agwnuxi8n"]
+
+[ext_resource type="Script" uid="uid://d1hk0g08fwm4v" path="res://scripts/particle.gd" id="1_rqx7g"]
+
+[node name="Particles" type="GPUParticles3D"]
+emitting = false
+amount = 16
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 10
+local_coords = true
+script = ExtResource("1_rqx7g")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://djy8fdnty7y20" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/pumpkin_yellow_small.fbx" id="2_4o2vu"]
 
 [node name="Pickup" instance=ExtResource("1_72iyq")]
-item_name = "pumpkin"
+pickup_item = "pumpkin"
+pickup_quantity = 3
 tooltip_titles = Array[String](["Tiny Pumpkin", "Tiny Pumpkin", "Smaller Pumpkin"])
 tooltip_descs = Array[String](["A small, lopsided pumpkin. Eating it would be a genuine act of determination.", "Not exactly a treat. But its will to nourish is... admirably stubborn.", "A truly miserable gourd. You feel a little bad for it. You can eat it anyway."])
 
