@@ -9,7 +9,7 @@ script = ExtResource("2_v31hw")
 fuel_gain = 15.0
 stack = 5
 on_use_responses = Array[String](["A foul taste, but a flicker of hope is reignited within.", "The gourd's vile pulp sustains not the body, but the wavering flame ofthe spirit.", "One pays for fortitude in discomfort. The lantern burns brighter, fornow.", "A small sacrifice of comfort to purchase a few more moments of tenuouslight."])
-on_deny_responses = Array[String](["\"Gluttony in the face of sufficiency is a swift path to ruin.\"", "\"The spirit can hold no more. To force it is to court madness.\"", "\"This repulsive sustenance is wasted on a soul already brimming with grim resolve.\"", "\"Consumption now would be an act of sheer desperation, not need. Preserve your resources.\""])
+on_deny_responses = Array[String](["Gluttony in the face of sufficiency is a swift path to ruin.", "The spirit can hold no more. To force it is to court madness.", "This repulsive sustenance is wasted on a soul already brimming with grim resolve.", "Consumption now would be an act of sheer desperation, not need. Preserve your resources."])
 tag = "Fuel"
 
 [node name="Model" parent="Display" index="0" instance=ExtResource("3_v31hw")]

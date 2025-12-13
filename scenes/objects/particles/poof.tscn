@@ -30,7 +30,8 @@ radial_segments = 6
 rings = 3
 
 [node name="Particles" instance=ExtResource("1_3st2b")]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+amount = 12
 lifetime = 1.0
 process_material = SubResource("ParticleProcessMaterial_3st2b")
 draw_pass_1 = SubResource("SphereMesh_3st2b")

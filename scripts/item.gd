@@ -1,7 +1,8 @@
 class_name Item extends Node3D
 
-@export var id: String
 @onready var player: PlayerAPI = References.player
+
+@export var id: String
 var is_initiated := false
 
 @export_group("Selection")

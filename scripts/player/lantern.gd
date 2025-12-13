@@ -1,4 +1,6 @@
-class_name PlayerLantern extends Node
+class_name PlayerLantern extends Node3D
+
+@onready var particles: ParticleSystem = References.particles
 
 @export var light: InteractiveLight
 var debug_info: String:
@@ -43,6 +45,7 @@ var debug_info: String:
 				* fuel_bar_delay_max
 			)
 			fuel_bar_delay_timer.start(fuel_bar_delay)
+			particles.spawn(self.global_position, particles.Particles.SPARK, self)
 		Logger.write(debug_info)
 @export var fuel_limit := 100.0:
 	set(value):
@@ -127,6 +130,7 @@ func extinguish():
 
 func reignite(intensity: float = -1.0):
 	light.is_lit = true
+	particles.spawn(self.global_position, particles.Particles.SPARK, self)
 	if intensity > 0: light.intensity = intensity
 
 # GENERAL

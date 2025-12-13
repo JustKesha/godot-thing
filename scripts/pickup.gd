@@ -1,15 +1,13 @@
 class_name Pickup extends Interactable
 
-@onready var particles := References.particles
-
 @export var pickup_item := 'candle'
 @export var pickup_quantity := 1
 @export var pickup_rate := 99
 @export var pickup_allow_overflow := false
 
 func _on_remove():
-	particles.spawn(particles.Particles.POOF,
-		self.global_position + Vector3.UP * .1)
+	particles.spawn(self.global_position + Vector3.UP * .1,
+		particles.Particles.POOF)
 
 func _on_interact():
 	var overflow := 0

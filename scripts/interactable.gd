@@ -11,6 +11,7 @@ func _on_interact(): pass
 
 # GENERAL
 @onready var player: PlayerAPI = References.player
+@onready var particles: ParticleSystem = References.particles
 @export var is_enabled: bool = true
 func interact():
 	if not is_enabled: return

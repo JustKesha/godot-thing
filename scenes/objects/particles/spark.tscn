@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://dfcm3felm4ule"]
+
+[ext_resource type="PackedScene" uid="uid://dce6agwnuxi8n" path="res://scenes/objects/particle.tscn" id="1_6jcjo"]
+
+[sub_resource type="Curve" id="Curve_6jcjo"]
+_data = [Vector2(0, 0.510825), 0.0, 0.0, 0, 0, Vector2(0.241379, 1), 0.0, 0.0, 0, 0, Vector2(0.904509, 0.490722), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_muw6h"]
+curve = SubResource("Curve_6jcjo")
+
+[sub_resource type="Curve" id="Curve_muw6h"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.377892, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_f0lld"]
+curve = SubResource("Curve_muw6h")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6jcjo"]
+lifetime_randomness = 0.5
+direction = Vector3(0, 1, 0)
+spread = 100.0
+initial_velocity_min = 0.35
+initial_velocity_max = 0.5
+gravity = Vector3(0, 0.25, 0)
+scale_min = 0.1
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_muw6h")
+turbulence_enabled = true
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.2
+turbulence_initial_displacement_min = 1.0
+turbulence_initial_displacement_max = 1.0
+turbulence_influence_over_life = SubResource("CurveTexture_f0lld")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_muw6h"]
+shading_mode = 0
+diffuse_mode = 3
+
+[sub_resource type="SphereMesh" id="SphereMesh_f0lld"]
+material = SubResource("StandardMaterial3D_muw6h")
+radius = 0.133
+height = 0.267
+radial_segments = 6
+rings = 3
+
+[node name="Particles" instance=ExtResource("1_6jcjo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000218689, 0, 0)
+amount = 8
+lifetime = 2.5
+process_material = SubResource("ParticleProcessMaterial_6jcjo")
+draw_pass_1 = SubResource("SphereMesh_f0lld")

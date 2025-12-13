@@ -95,7 +95,7 @@ func _on_remove(): pass
 func init():
 	if not projector: projector = projector_scene.instantiate()
 	projector.spectating = body
-	move(body.global_position)
+	move(body.global_position, false)
 
 func update():
 	if not is_rolling: return
@@ -103,8 +103,9 @@ func update():
 		and body.angular_velocity.length() < 0.01 ):
 		stop()
 
-func move(to: Vector3):
+func move(to: Vector3, effects: bool = true):
 	body.global_position = to
+	if effects: particles.spawn(body.global_position, particles.Particles.POOF)
 	if projector: projector.global_position = body.global_position + projector_offset
 
 func roll(speed: float = roll_speed, angular_speed: float = roll_angular_speed):
@@ -155,7 +156,7 @@ func delete():
 	_on_remove()
 	queue_free()
 	interactable.remove()
-	particles.spawn(particles.Particles.POOF, body.global_position)
+	particles.spawn(body.global_position, particles.Particles.POOF)
 
 # GENERAL
 

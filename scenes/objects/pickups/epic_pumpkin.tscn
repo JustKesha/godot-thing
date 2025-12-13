@@ -1,13 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://brnu0hk6cuceg"]
+[gd_scene load_steps=3 format=3 uid="uid://t641p716hpon"]
 
 [ext_resource type="PackedScene" uid="uid://dqsberxr7n7i5" path="res://scenes/objects/pickup.tscn" id="1_72iyq"]
-[ext_resource type="PackedScene" uid="uid://djy8fdnty7y20" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/pumpkin_yellow_small.fbx" id="2_4o2vu"]
+[ext_resource type="PackedScene" uid="uid://b4mtxfoplhdou" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/pumpkin_yellow.fbx" id="2_72iyq"]
 
 [node name="Pickup" instance=ExtResource("1_72iyq")]
 pickup_item = "pumpkin"
 pickup_quantity = 3
-tooltip_titles = Array[String](["Tiny Pumpkin", "Tiny Pumpkin", "Smaller Pumpkin"])
-tooltip_descs = Array[String](["A small, lopsided pumpkin. Eating it would be a genuine act of determination.", "Not exactly a treat. But its will to nourish is... admirably stubborn.", "A truly miserable gourd. You feel a little bad for it. You can eat it anyway."])
+tooltip_titles = Array[String](["Majestic Pumpkin", "Massive Pumpkin", "Bigger Pumpkin"])
+tooltip_descs = Array[String](["A monstrous gourd, swollen with bitter flesh. A feast for the desperate, or the damned.", "Blighted and bulbous, a testament to corrupted growth. It will sustain, but not nourish.", "A gargantuan lump of vulgar sustenance. One does not eat it; one endures it."])
 
-[node name="Model" parent="." index="1" instance=ExtResource("2_4o2vu")]
-transform = Transform3D(0.904342, -0.0721112, 0.420673, 0.0347388, 0.99479, 0.0958458, -0.425392, -0.0720637, 0.902135, 0, -0.0539728, 7.03724e-10)
+[node name="Model" parent="." index="1" instance=ExtResource("2_72iyq")]
+transform = Transform3D(0.996749, 0.0803256, -0.00618644, -0.0805631, 0.99356, -0.0796778, -0.00025357, 0.0799173, 0.996802, 0, -0.0726742, 9.47562e-10)
