@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://b7owo051mahdu"]
+[gd_scene load_steps=49 format=3 uid="uid://b7owo051mahdu"]
 
 [ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://bau8n7lhn1s68" path="res://scripts/world/api.gd" id="2_264po"]
@@ -10,8 +10,10 @@
 [ext_resource type="Script" uid="uid://dflx3x0d23ff1" path="res://scripts/player/inventory.gd" id="11_kvpfn"]
 [ext_resource type="FontFile" uid="uid://bdhjbd58rv1aa" path="res://assets/fonts/tiny5/Tiny5-Regular.ttf" id="12_kvuet"]
 [ext_resource type="Script" uid="uid://73uqankf26ly" path="res://scripts/player/ui/dialogue_window.gd" id="12_trtic"]
-[ext_resource type="Script" uid="uid://c26pbg35u3ubc" path="res://scripts/ui/cursor.gd" id="13_ca42v"]
+[ext_resource type="Script" uid="uid://ctywk6ra30gwe" path="res://scripts/player/ui/lantern_fuel_bar.gd" id="13_5newe"]
+[ext_resource type="Script" uid="uid://c26pbg35u3ubc" path="res://scripts/player/ui/cursor.gd" id="13_ca42v"]
 [ext_resource type="Texture2D" uid="uid://1x0dqgjaimb1" path="res://assets/sprites/cursor/inspect.png" id="13_ir15t"]
+[ext_resource type="Script" uid="uid://d0qhr5rcxkybf" path="res://scripts/generic/bar.gd" id="14_37s47"]
 [ext_resource type="Script" uid="uid://utcd1g44dmpc" path="res://scripts/player/movement.gd" id="14_suyxu"]
 [ext_resource type="Script" uid="uid://be3bpi6vm5va5" path="res://scripts/world/systems/events.gd" id="14_trtic"]
 [ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera/camera_effects.gd" id="15_rysoc"]
@@ -20,6 +22,15 @@
 [ext_resource type="Shader" uid="uid://bsjuon6lgj8fe" path="res://shaders/pixelation.gdshader" id="16_qouja"]
 [ext_resource type="Script" uid="uid://cou6n441nnfq4" path="res://scripts/player/ui/interaction_tooltip.gd" id="16_ssvqc"]
 [ext_resource type="Script" uid="uid://w47mp4oej8y" path="res://scripts/world/systems/particles.gd" id="20_1kice"]
+
+[sub_resource type="Environment" id="Environment_s0gvp"]
+background_mode = 1
+ambient_light_source = 1
+reflected_light_source = 1
+fog_light_color = Color(0.0119747, 0.0144936, 0.0190329, 1)
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.2
+volumetric_fog_albedo = Color(0.269937, 0.0749075, 2.40654e-08, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rysoc"]
 emission_enabled = true
@@ -40,14 +51,64 @@ material = SubResource("StandardMaterial3D_gee14")
 radius = 5.0
 height = 10.0
 
-[sub_resource type="Environment" id="Environment_s0gvp"]
-background_mode = 1
-ambient_light_source = 1
-reflected_light_source = 1
-fog_light_color = Color(0.0119747, 0.0144936, 0.0190329, 1)
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.2
-volumetric_fog_albedo = Color(0.269937, 0.0749075, 2.40654e-08, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
+albedo_color = Color(0.714661, 0.558355, 0.424573, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_80nbo"]
+material = SubResource("StandardMaterial3D_u5sy4")
+size = Vector2(250, 250)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ssvqc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]
+render_priority = 0
+shader = ExtResource("16_qouja")
+shader_parameter/TwixelAngle = 15.0
+shader_parameter/PixelSize = 4.0
+shader_parameter/Posterize = true
+shader_parameter/ColorSteps = 64
+shader_parameter/UsePalette = true
+shader_parameter/PaletteSize = 8
+shader_parameter/PaletteColor0 = Color(0.05, 0.05, 0.05, 1)
+shader_parameter/PaletteColor1 = Color(0.25, 0.15, 0.12, 1)
+shader_parameter/PaletteColor2 = Color(0.5, 0.35, 0.25, 1)
+shader_parameter/PaletteColor3 = Color(0.9, 0.85, 0.7, 1)
+shader_parameter/Brightness = 1.0
+shader_parameter/Saturation = 1.0
+shader_parameter/Contrast = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_imku0"]
+material = SubResource("ShaderMaterial_kvpfn")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_264po"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_ir15t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ssvqc")
+}],
+"loop": true,
+"name": &"INSPECT",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ssvqc"]
+line_spacing = 1.0
+font = ExtResource("12_kvuet")
+font_size = 18
+font_color = Color(0.890196, 0.843137, 0.694118, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rysoc"]
+font = ExtResource("12_kvuet")
+font_size = 24
+font_color = Color(0.890196, 0.843137, 0.694118, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_trtic"]
+font = ExtResource("12_kvuet")
+font_size = 25
+font_color = Color(0.890196, 0.843137, 0.694118, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssvqc"]
 shading_mode = 0
@@ -95,65 +156,6 @@ height = 0.05
 radial_segments = 6
 rings = 3
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]
-render_priority = 0
-shader = ExtResource("16_qouja")
-shader_parameter/TwixelAngle = 15.0
-shader_parameter/PixelSize = 4.0
-shader_parameter/Posterize = true
-shader_parameter/ColorSteps = 64
-shader_parameter/UsePalette = true
-shader_parameter/PaletteSize = 8
-shader_parameter/PaletteColor0 = Color(0.05, 0.05, 0.05, 1)
-shader_parameter/PaletteColor1 = Color(0.25, 0.15, 0.12, 1)
-shader_parameter/PaletteColor2 = Color(0.5, 0.35, 0.25, 1)
-shader_parameter/PaletteColor3 = Color(0.9, 0.85, 0.7, 1)
-shader_parameter/Brightness = 1.0
-shader_parameter/Saturation = 1.0
-shader_parameter/Contrast = 1.0
-
-[sub_resource type="QuadMesh" id="QuadMesh_imku0"]
-material = SubResource("ShaderMaterial_kvpfn")
-
-[sub_resource type="LabelSettings" id="LabelSettings_trtic"]
-font = ExtResource("12_kvuet")
-font_size = 25
-font_color = Color(0.890196, 0.843137, 0.694118, 1)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_264po"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("13_ir15t")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_ssvqc")
-}],
-"loop": true,
-"name": &"INSPECT",
-"speed": 5.0
-}]
-
-[sub_resource type="LabelSettings" id="LabelSettings_ssvqc"]
-line_spacing = 1.0
-font = ExtResource("12_kvuet")
-font_size = 18
-font_color = Color(0.890196, 0.843137, 0.694118, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_rysoc"]
-font = ExtResource("12_kvuet")
-font_size = 24
-font_color = Color(0.890196, 0.843137, 0.694118, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
-albedo_color = Color(0.714661, 0.558355, 0.424573, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_80nbo"]
-material = SubResource("StandardMaterial3D_u5sy4")
-size = Vector2(250, 250)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ssvqc"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80cx4"]
 albedo_color = Color(0.129307, 0.00678502, 0, 1)
 emission_enabled = true
@@ -169,24 +171,31 @@ size = Vector2(100, 5)
 
 [node name="Game" type="Node3D"]
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.127099, 0.99189, 0, -0.99189, 0.127099, 0, 0, 0)
-visible = false
-
-[node name="Moon" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -20, 20, -15)
-mesh = SubResource("SphereMesh_ssvqc")
-
-[node name="Shadow" type="MeshInstance3D" parent="Moon"]
-transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 1.31693, -1.11521, 1.95184)
-mesh = SubResource("SphereMesh_gee14")
-
-[node name="Env" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_s0gvp")
-
 [node name="World" type="Node3D" parent="." node_paths=PackedStringArray("world")]
 script = ExtResource("1_iywne")
 world = NodePath(".")
+
+[node name="Env" type="WorldEnvironment" parent="World"]
+environment = SubResource("Environment_s0gvp")
+
+[node name="Moon" type="MeshInstance3D" parent="World"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -20, 20, -15)
+mesh = SubResource("SphereMesh_ssvqc")
+skeleton = NodePath("../..")
+
+[node name="Shadow" type="MeshInstance3D" parent="World/Moon"]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 1.31693, -1.11521, 1.95184)
+mesh = SubResource("SphereMesh_gee14")
+
+[node name="Ground" type="StaticBody3D" parent="World"]
+
+[node name="Mesh" type="MeshInstance3D" parent="World/Ground"]
+visible = false
+mesh = SubResource("PlaneMesh_80nbo")
+skeleton = NodePath("../../..")
+
+[node name="Hitbox" type="CollisionShape3D" parent="World/Ground"]
+shape = SubResource("WorldBoundaryShape3D_ssvqc")
 
 [node name="Particles" type="Node" parent="World"]
 script = ExtResource("20_1kice")
@@ -195,38 +204,7 @@ script = ExtResource("20_1kice")
 script = ExtResource("2_264po")
 generator = NodePath("..")
 particles = NodePath("../Particles")
-moon = NodePath("../../Moon")
-
-[node name="Beast" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
-visible = false
-
-[node name="Body" type="MeshInstance3D" parent="Beast"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1)
-visible = false
-mesh = SubResource("CapsuleMesh_264po")
-skeleton = NodePath("")
-
-[node name="Head" type="Node3D" parent="Beast"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-
-[node name="EyeLeft" type="MeshInstance3D" parent="Beast/Head"]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, -0.15, 0, 0)
-mesh = SubResource("SphereMesh_ir15t")
-
-[node name="Fire" type="GPUParticles3D" parent="Beast/Head/EyeLeft"]
-randomness = 1.0
-process_material = SubResource("ParticleProcessMaterial_ir15t")
-draw_pass_1 = SubResource("SphereMesh_ca42v")
-
-[node name="EyeRight" type="MeshInstance3D" parent="Beast/Head"]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0.15, 0, 0)
-mesh = SubResource("SphereMesh_ir15t")
-
-[node name="Fire" type="GPUParticles3D" parent="Beast/Head/EyeRight"]
-randomness = 1.0
-process_material = SubResource("ParticleProcessMaterial_ir15t")
-draw_pass_1 = SubResource("SphereMesh_ca42v")
+moon = NodePath("../Moon")
 
 [node name="Player" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
@@ -269,15 +247,11 @@ light_energy = 0.1
 spot_range = 1.0
 spot_angle = 35.0
 
-[node name="Lantern" type="Node3D" parent="Player" node_paths=PackedStringArray("light", "update_timer", "fuel_bar", "fuel_bar_delay_timer", "fuel_bar_bg", "fuel_under_bar")]
+[node name="Lantern" type="Node3D" parent="Player" node_paths=PackedStringArray("light", "update_timer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.6, 0.35)
 script = ExtResource("6_u5sy4")
 light = NodePath("Light")
 update_timer = NodePath("Update")
-fuel_bar = NodePath("../UI/FuelBar/Meter")
-fuel_bar_delay_timer = NodePath("BarDelay")
-fuel_bar_bg = NodePath("../UI/FuelBar/Background")
-fuel_under_bar = NodePath("../UI/FuelBar/UnderMeter")
 
 [node name="Model" parent="Player/Lantern" instance=ExtResource("7_gee14")]
 transform = Transform3D(-0.283701, 0, -0.204973, 0, 0.35, 0, 0.204973, 0, -0.283701, 0, 0, 0)
@@ -287,129 +261,115 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035379, 0.209324, -0.19631)
 light_color = Color(1, 0.686275, 0.588235, 1)
 light_volumetric_fog_energy = 0.0
 script = ExtResource("6_p57ef")
+intensity = 0.0
 energy_multiplier = 0.2
 radius_multiplier = 2.0
-
-[node name="BarDelay" type="Timer" parent="Player/Lantern"]
-one_shot = true
 
 [node name="Update" type="Timer" parent="Player/Lantern"]
 autostart = true
 
 [node name="UI" type="CanvasLayer" parent="Player"]
 
-[node name="FuelBar" type="Control" parent="Player/UI"]
+[node name="FuelBar" type="Control" parent="Player/UI" node_paths=PackedStringArray("lantern", "limit", "loss", "fuel", "fire")]
 layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_top = 10.0
-offset_bottom = 25.0
+offset_top = 15.0
+offset_bottom = 15.0
 grow_horizontal = 2
+script = ExtResource("13_5newe")
+lantern = NodePath("../../Lantern")
+limit = NodePath("Limit")
+loss = NodePath("Loss")
+fuel = NodePath("Fuel")
+fire = NodePath("Fire")
 
-[node name="Background" type="ColorRect" parent="Player/UI/FuelBar"]
+[node name="Limit" type="ColorRect" parent="Player/UI/FuelBar"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -225.0
-offset_top = -6.0
-offset_right = 225.0
-offset_bottom = 6.0
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.231373, 0.137255, 0.109804, 1)
+script = ExtResource("14_37s47")
+is_centered = true
+width_scale = 3.0
+width_max = 999.0
+transition_speed = 2.0
 
-[node name="UnderMeter" type="ColorRect" parent="Player/UI/FuelBar"]
+[node name="Loss" type="ColorRect" parent="Player/UI/FuelBar" node_paths=PackedStringArray("delay_timer")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -225.0
-offset_top = -6.0
-offset_right = 225.0
-offset_bottom = 6.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.341176, 0.227451, 0.168627, 1)
+script = ExtResource("14_37s47")
+is_centered = true
+width_scale = 3.0
+transition_speed = 3.0
+delay_enabled = true
+delay_timer = NodePath("Delay")
+delay_on_increase = false
+delay_time_multiplier = 0.03
+
+[node name="Delay" type="Timer" parent="Player/UI/FuelBar/Loss"]
+one_shot = true
+
+[node name="Fuel" type="ColorRect" parent="Player/UI/FuelBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.580392, 0.462745, 0.356863, 1)
+script = ExtResource("14_37s47")
+is_centered = true
+width_scale = 3.0
+transition_speed = 6.0
 
-[node name="Meter" type="ColorRect" parent="Player/UI/FuelBar"]
+[node name="Fire" type="ColorRect" parent="Player/UI/FuelBar" node_paths=PackedStringArray("delay_timer")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -225.0
-offset_top = -6.0
-offset_right = 225.0
-offset_bottom = 6.0
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.890196, 0.843137, 0.694118, 1)
+script = ExtResource("14_37s47")
+is_centered = true
+width_scale = 3.0
+transition_speed = 6.0
+delay_enabled = true
+delay_timer = NodePath("Delay")
+delay_on_decrease = false
+
+[node name="Delay" type="Timer" parent="Player/UI/FuelBar/Fire"]
+one_shot = true
 
 [node name="Inventory" type="HBoxContainer" parent="Player/UI"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_top = 35.0
-offset_bottom = 35.0
+offset_top = 40.0
+offset_bottom = 40.0
 grow_horizontal = 2
-
-[node name="DialogueWindow" type="Control" parent="Player/UI" node_paths=PackedStringArray("label", "timer")]
-visible = false
-layout_mode = 3
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_top = -150.0
-grow_horizontal = 2
-grow_vertical = 0
-script = ExtResource("12_trtic")
-label = NodePath("Message")
-timer = NodePath("Timeout")
-
-[node name="Background" type="ColorRect" parent="Player/UI/DialogueWindow"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -375.0
-offset_top = -62.5
-offset_right = 375.0
-offset_bottom = 62.5
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0509804, 0.0509804, 0.0509804, 1)
-
-[node name="Message" type="Label" parent="Player/UI/DialogueWindow"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -350.0
-offset_top = -50.0
-offset_right = 350.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "The moon is telling you lies. The moon is telling you lies. The moon is telling you lies. The moon is telling you lies. The moon is telling you lies. The moon is telling you lies. The moon is telling."
-label_settings = SubResource("LabelSettings_trtic")
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="Timeout" type="Timer" parent="Player/UI/DialogueWindow"]
-one_shot = true
 
 [node name="Cursor" type="Control" parent="Player/UI" node_paths=PackedStringArray("sprite", "tooltip")]
 visible = false
@@ -514,6 +474,57 @@ label_settings = SubResource("LabelSettings_ssvqc")
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="DialogueWindow" type="Control" parent="Player/UI" node_paths=PackedStringArray("label", "timer")]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -150.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("12_trtic")
+label = NodePath("Message")
+timer = NodePath("Timeout")
+
+[node name="Background" type="ColorRect" parent="Player/UI/DialogueWindow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -62.5
+offset_right = 375.0
+offset_bottom = 62.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+
+[node name="Message" type="Label" parent="Player/UI/DialogueWindow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -50.0
+offset_right = 350.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "The moon is telling you lies. The moon is telling you lies. The moon is telling you lies. The moon is telling you lies. The moon is telling you lies. The moon is telling you lies. The moon is telling."
+label_settings = SubResource("LabelSettings_trtic")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Timeout" type="Timer" parent="Player/UI/DialogueWindow"]
+one_shot = true
+
 [node name="API" type="Node" parent="Player" node_paths=PackedStringArray("body", "lantern", "inventory", "camera", "camera_effects", "cursor", "dialogue_window")]
 script = ExtResource("10_vtaks")
 body = NodePath("..")
@@ -530,34 +541,69 @@ random_event_timer = NodePath("RandomEvent")
 
 [node name="RandomEvent" type="Timer" parent="Events"]
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="Test" type="Node" parent="."]
 
-[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+[node name="Beast" type="Node3D" parent="Test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 visible = false
-mesh = SubResource("PlaneMesh_80nbo")
-skeleton = NodePath("../..")
 
-[node name="Hitbox" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("WorldBoundaryShape3D_ssvqc")
+[node name="Body" type="MeshInstance3D" parent="Test/Beast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -1)
+visible = false
+mesh = SubResource("CapsuleMesh_264po")
+skeleton = NodePath("")
 
-[node name="Sky" type="MeshInstance3D" parent="."]
+[node name="Head" type="Node3D" parent="Test/Beast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="EyeLeft" type="MeshInstance3D" parent="Test/Beast/Head"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, -0.15, 0, 0)
+mesh = SubResource("SphereMesh_ir15t")
+
+[node name="Fire" type="GPUParticles3D" parent="Test/Beast/Head/EyeLeft"]
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ir15t")
+draw_pass_1 = SubResource("SphereMesh_ca42v")
+
+[node name="EyeRight" type="MeshInstance3D" parent="Test/Beast/Head"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0.15, 0, 0)
+mesh = SubResource("SphereMesh_ir15t")
+
+[node name="Fire" type="GPUParticles3D" parent="Test/Beast/Head/EyeRight"]
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ir15t")
+draw_pass_1 = SubResource("SphereMesh_ca42v")
+
+[node name="Sky" type="MeshInstance3D" parent="Test"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
 visible = false
 mesh = SubResource("PlaneMesh_e8heu")
+skeleton = NodePath("../..")
 
-[node name="ForestLeft" type="MeshInstance3D" parent="."]
+[node name="Sun" type="DirectionalLight3D" parent="Test"]
+transform = Transform3D(1, 0, 0, 0, 0.127099, 0.99189, 0, -0.99189, 0.127099, 0, 0, 0)
+visible = false
+
+[node name="ForestLeft" type="MeshInstance3D" parent="Test"]
 transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -15, 2.5, -15)
 visible = false
 mesh = SubResource("QuadMesh_iywne")
+skeleton = NodePath("../..")
 
-[node name="ForestRight" type="MeshInstance3D" parent="."]
+[node name="ForestRight" type="MeshInstance3D" parent="Test"]
 transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 15, 2.5, -15)
 visible = false
 mesh = SubResource("QuadMesh_iywne")
+skeleton = NodePath("../..")
 
 [connection signal="move" from="Player" to="World" method="_on_player_move"]
 [connection signal="move" from="Player" to="Player/Trypod/Head" method="_on_player_move"]
 [connection signal="stop" from="Player" to="Player/Trypod/Head" method="_on_player_stop"]
+[connection signal="fuel_changed" from="Player/Lantern" to="Player/Lantern" method="_on_fuel_changed"]
+[connection signal="fuel_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_fuel_changed"]
+[connection signal="fuel_limit_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_fuel_limit_changed"]
+[connection signal="state_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_state_changed"]
 [connection signal="timeout" from="Player/Lantern/Update" to="Player/Lantern" method="_on_update_timeout"]
+[connection signal="timeout" from="Player/UI/FuelBar/Fire/Delay" to="Player/UI/FuelBar" method="_on_delay_timeout"]
 [connection signal="timeout" from="Player/UI/DialogueWindow/Timeout" to="Player/UI/DialogueWindow" method="_on_timer_timeout"]
 [connection signal="timeout" from="Events/RandomEvent" to="Events" method="_on_random_event_timeout"]

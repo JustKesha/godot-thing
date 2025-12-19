@@ -1,7 +1,8 @@
 class_name SoulDice extends Dice
 
 @onready var lantern: PlayerLantern = References.player.lantern
-@export var rewards: Array[float] = [-100, -60, 0, 30, 75, 125]
+@export var rewards: Array[float] = [-999, -60, -15, 30, 75, 125]
+# NOTE Re-Export when changing -Inspector bug
 
 func _on_roll_finished():
 	var reward = rewards[score-1]

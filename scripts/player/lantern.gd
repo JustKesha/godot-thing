@@ -2,51 +2,43 @@ class_name PlayerLantern extends Node3D
 
 @onready var particles: ParticleSystem = References.particles
 
+signal state_changed(is_burning: bool)
+signal extinguished()
+signal reignited()
+signal fuel_changed(by: float, current: float)
+signal fuel_increased(by: float, current: float)
+signal fuel_decreased(by: float, current: float)
+signal fuel_limit_changed(new_fuel_limit: float)
+
+@export_group("General")
 @export var light: InteractiveLight
-var debug_info: String:
-	get(): return 'LANTERN: '+', '.join([
-		'F: '+str(fuel)+'/'+str(fuel_limit),
-		'I: '+str(light.intensity),
-		'DR: '+str(fuel_depletion_rate)
-	])
+@onready var is_lit := light.is_lit:
+	set(value):
+		if light.is_lit == value: return
+		
+		light.is_lit = value
+		is_lit = light.is_lit
+		
+		state_changed.emit(is_lit)
+		if is_lit:
+			particles.spawn(self.global_position, particles.Particles.SPARK, self)
+			reignited.emit()
+		else:
+			extinguished.emit()
 
 @export_group("Fuel")
 @export var fuel := 40.0:
 	set(value):
 		var fuel_before := fuel
 		fuel = clampf(value, 0, fuel_limit)
-		light.intensity = (
-			fuel / fuel_limit * (light.max_intensity - light.min_intensity)
-			+ light.min_intensity )
 		var fuel_diff = fuel - fuel_before
 		
-		if fuel == 0: extinguish()
-		
-		elif fuel < 20:
-			light.flicker_intensity = 0.3
-			light.flicker_min_duration = 0.01
-			light.flicker_max_duration = 0.075
-		elif fuel < 50:
-			light.flicker_intensity = 0.25
-			light.flicker_min_duration = 0.05
-			light.flicker_max_duration = 0.2
-		else:
-			light.flicker_intensity = 0.1
-			light.flicker_min_duration = 0.1
-			light.flicker_max_duration = 0.25
-		
-		if fuel_bar_delay_timer and fuel_diff > fuel_bar_delay_threshold:
-			# TODO Add a remap util remap(a,a_min,a_max,b_min,b_max) -> b
-			var fuel_bar_delay = (
-				(fuel_bar_delay_multiplier * fuel_diff
-					- fuel_bar_delay_threshold)
-				/ (fuel_bar_delay_multiplier * fuel_limit
-					- fuel_bar_delay_threshold)
-				* fuel_bar_delay_max
-			)
-			fuel_bar_delay_timer.start(fuel_bar_delay)
-			particles.spawn(self.global_position, particles.Particles.SPARK, self)
-		Logger.write(debug_info)
+		if fuel_diff != 0:
+			fuel_changed.emit(fuel_diff, fuel)
+			if fuel_diff > 0:
+				fuel_increased.emit(abs(fuel_diff), fuel)
+			else:
+				fuel_decreased.emit(abs(fuel_diff), fuel)
 @export var fuel_limit := 100.0:
 	set(value):
 		if value < 0:
@@ -54,6 +46,7 @@ var debug_info: String:
 		else:
 			fuel_limit = value
 		fuel = fuel
+		fuel_limit_changed.emit(fuel_limit)
 
 @export_group("Depletion")
 @export var update_timer: Timer
@@ -82,37 +75,6 @@ var debug_info: String:
 @export_group("Controls")
 @export var extinguish_action: String = 'extinguish'
 
-@export_group("UI")
-@export var fuel_bar_scale := 3.0
-@export var fuel_bar: ColorRect
-@export var fuel_bar_trans_speed := 10.75
-@export var fuel_bar_delay_timer: Timer
-@export var fuel_bar_delay_threshold := 10
-@export var fuel_bar_delay_multiplier := .035
-@export var fuel_bar_delay_max := 0.75
-var fuel_bar_width := 0.0:
-	set(value):
-		fuel_bar_width = value
-		if fuel_bar:
-			fuel_bar.size.x = fuel_bar_width * fuel_bar_scale
-			fuel_bar.position.x = -fuel_bar.size.x/2
-@export var fuel_bar_bg: ColorRect
-@export var fuel_bar_bg_trans_speed := 3.0
-var fuel_bar_bg_width := 0.0:
-	set(value):
-		fuel_bar_bg_width = value
-		if fuel_bar_bg:
-			fuel_bar_bg.size.x = fuel_bar_bg_width * fuel_bar_scale
-			fuel_bar_bg.position.x = -fuel_bar_bg.size.x/2
-@export var fuel_under_bar: ColorRect
-@export var fuel_under_bar_trans_speed := 8
-var fuel_under_bar_width := 0.0:
-	set(value):
-		fuel_under_bar_width = value
-		if fuel_under_bar:
-			fuel_under_bar.size.x = fuel_under_bar_width * fuel_bar_scale
-			fuel_under_bar.position.x = -fuel_under_bar.size.x/2
-
 # ACTIONS
 
 ## Depletes given amount of fuel, if amount <0 will use fuel_depletion_rate.
@@ -121,45 +83,53 @@ func deplete(how_much: float = -1.0):
 	fuel -= how_much
 
 ## Refills given amount of fuel, if amount <0 will max out the fuel.
-func refill(how_much: float = -1.0):
-	if how_much < 0: how_much = fuel_limit
-	fuel += how_much
+func refill(amount: float = -1.0):
+	if amount < 0: amount = fuel_limit
+	fuel += amount
 
 func extinguish():
-	light.is_lit = false
+	is_lit = false
 
-func reignite(intensity: float = -1.0):
-	light.is_lit = true
-	particles.spawn(self.global_position, particles.Particles.SPARK, self)
-	if intensity > 0: light.intensity = intensity
+func reignite():
+	is_lit = true
 
 # GENERAL
 
-func _update():
+func _on_update_timeout():
 	if light.is_lit: deplete()
 
-func _update_ui(delta: float):
-	if not fuel_bar: return
-	var fuel_trg := (fuel / fuel_limit) * fuel_limit
+func _on_fuel_changed(by: float, current: float):
+	if fuel == 0: extinguish()
+	
+	elif fuel < 20:
+		light.flicker_intensity = 0.3
+		light.flicker_min_duration = 0.01
+		light.flicker_max_duration = 0.075
+	elif fuel < 50:
+		light.flicker_intensity = 0.25
+		light.flicker_min_duration = 0.05
+		light.flicker_max_duration = 0.2
+	else:
+		light.flicker_intensity = 0.1
+		light.flicker_min_duration = 0.1
+		light.flicker_max_duration = 0.25
+	
+	light.intensity = (
+		fuel / fuel_limit * (light.max_intensity - light.min_intensity)
+		+ light.min_intensity )
+	
+	Logger.write(debug_info)
 
-	if fuel_bar_delay_timer.is_stopped():
-		fuel_bar_width = lerp(fuel_bar_width,
-			fuel_trg, fuel_bar_trans_speed * delta)
-	
-	fuel_bar_bg_width = lerp(fuel_bar_bg_width,
-		fuel_limit, fuel_bar_bg_trans_speed * delta)
-	
-	fuel_under_bar_width = lerp(fuel_under_bar_width,
-		fuel_trg, fuel_under_bar_trans_speed * delta)
+func _ready():
+	update_rate = update_rate
+	fuel = fuel
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed(extinguish_action): extinguish()
 
-func _ready():
-	update_rate = update_rate
-	
-func _process(delta: float):
-	_update_ui(delta)
-
-func _on_update_timeout():
-	_update()
+var debug_info: String:
+	get(): return 'LANTERN: '+', '.join([
+		'F: '+str(fuel)+'/'+str(fuel_limit),
+		'I: '+str(light.intensity),
+		'DR: '+str(fuel_depletion_rate)
+	])

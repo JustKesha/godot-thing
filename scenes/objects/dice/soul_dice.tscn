@@ -5,6 +5,6 @@
 
 [node name="Dice" instance=ExtResource("1_3s214")]
 script = ExtResource("2_xewt5")
-rewards = Array[float]([-100.0, -60.0, 0.0, 30.0, 75.0, 125.0])
+rewards = Array[float]([-999.0, -60.0, -15.0, 30.0, 75.0, 125.0])
 roll_respond = true
 roll_responses = Array[Array]([["A crushing defeat, paid in ambition.", "Abyssal luck, matched only by the darkness.", "The gamble is lost, and with it, a future.", "The fates demand - a heavy toll."], ["The shadows deepen their claim.", "Misfortune bleeds the coffers dry.", "A costly miscalculation.", "The price of hope is often despair."], ["The balance tips towards ruin.", "A small step towards oblivion.", "Luck remains a fickle, distant ally.", "The balance tips, ever so slightly."], ["A pittance of hope, wrested from the dark.", "The gamble pays a modest dividend.", "A fleeting victory against the tide.", "Fortune offers a crumb, not a feast."], ["The dice finally favor the bold.", "A spark of hope, fanned into a steady flame.", "The darkness is pushed back, for now.", "A worthy prize for a desperate wager.", "A substantial boon, claimed from the jaws of luck.", "The gamble pays a worthy dividend."], ["The gamble pays in brilliant dividends.", "The lantern blazes, a defiance of the void.", "Fortune smiles, a rare and brilliant sight.", "A brilliant beacon in the oppressive gloom.", "A king's bounty, a radiant victory!"]])
