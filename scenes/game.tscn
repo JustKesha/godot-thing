@@ -229,7 +229,7 @@ mesh = SubResource("QuadMesh_imku0")
 [node name="Hands" type="RayCast3D" parent="Player/Trypod/Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, -5, 0)
-collision_mask = 2
+collision_mask = 3
 script = ExtResource("6_0tnpc")
 
 [node name="Inventory" type="Node3D" parent="Player/Trypod" node_paths=PackedStringArray("ui")]
