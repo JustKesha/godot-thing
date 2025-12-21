@@ -1,7 +1,5 @@
 class_name Observer extends Node3D
 
-enum PupilSize { RELAXED = 130, NORMAL = 75, ALERT = 50, HAUNT = 0 }
-
 @export_group("Head")
 @export var head: Node3D
 @export var head_turn_rate: float = 1.0
@@ -14,12 +12,13 @@ enum PupilSize { RELAXED = 130, NORMAL = 75, ALERT = 50, HAUNT = 0 }
 		for eye in eyes:
 			if not eye: continue
 			eye.turn_rate = eyes_turn_rate
-@export var pupils_size: float = PupilSize.NORMAL:
+enum PupilSize { RELAXED = 130, NORMAL = 75, ALERT = 50, HAUNT = 0 }
+@export var pupils_size: PupilSize = PupilSize.NORMAL:
 	set(value):
 		pupils_size = value
 		for eye in eyes:
 			if not eye: continue
-			eye.set_pupil_size(pupils_size)
+			eye.set_pupil_size(float(pupils_size))
 
 @export_group("Tracking")
 @export var target_object: Node3D:
@@ -35,7 +34,6 @@ func follow(object: Node3D):
 func stop():
 	target_object = null
 
-# GENERAL
 # NOTE _ready is over-written in ObserverAI
 func _physics_process(delta: float):
 	if not head or not target_object: return

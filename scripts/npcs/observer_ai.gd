@@ -15,18 +15,18 @@ func get_trigger() -> Node3D:
 	
 	# Player
 	if not player.lantern.is_lit:
-		pupils_size = float(PupilSize.HAUNT)
+		pupils_size = PupilSize.HAUNT
 		return player.head
 		
 	# Player
 	elif fuel_percentage <= 20:
-		pupils_size = float(PupilSize.ALERT)
+		pupils_size = PupilSize.ALERT
 		return player.head
 		
 	elif fuel_percentage <= 60:
-		pupils_size = float(PupilSize.NORMAL)
+		pupils_size = PupilSize.NORMAL
 	else:
-		pupils_size = float(PupilSize.RELAXED)
+		pupils_size = PupilSize.RELAXED
 	
 	# Rolling Dice
 	for trigger in bodies:
@@ -36,16 +36,16 @@ func get_trigger() -> Node3D:
 	
 	# Hovered Interactables
 	if player.eyes.hovered:
+		pupils_size = PupilSize.RELAXED
 		return player.eyes.hovered
 	
 	# Held Items
 	if player.inventory.is_open:
+		pupils_size = PupilSize.RELAXED
 		return player.inventory
 	
 	# Player
 	return player.head
-
-# GENERAL
 
 func _ready():
 	if update_timer: update_timer.connect('timeout', _on_update_timer_timeout)
