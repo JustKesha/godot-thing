@@ -47,6 +47,8 @@ signal fuel_limit_changed(new_fuel_limit: float)
 			fuel_limit = value
 		fuel = fuel
 		fuel_limit_changed.emit(fuel_limit)
+var fuel_percentage: float:
+	get(): return (fuel / fuel_limit) * 100.0
 
 @export_group("Depletion")
 @export var update_timer: Timer

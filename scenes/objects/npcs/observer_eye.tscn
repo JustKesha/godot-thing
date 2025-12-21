@@ -1,4 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bs306v1mu2aep"]
+[gd_scene load_steps=11 format=3 uid="uid://bs306v1mu2aep"]
+
+[ext_resource type="Script" uid="uid://giffqh2p0ibw" path="res://scripts/generic/eye.gd" id="1_rkn7m"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir15t"]
 emission_enabled = true
@@ -47,9 +49,12 @@ height = 0.5
 radial_segments = 6
 rings = 5
 
-[node name="Eye" type="MeshInstance3D"]
+[node name="Eye" type="MeshInstance3D" node_paths=PackedStringArray("eyeball", "pupil")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 mesh = SubResource("SphereMesh_n1b37")
+script = ExtResource("1_rkn7m")
+eyeball = NodePath(".")
+pupil = NodePath("Pupil")
 
 [node name="Fire" type="GPUParticles3D" parent="."]
 transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0.0553145, 0.105534)
