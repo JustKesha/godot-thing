@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://bs306v1mu2aep"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir15t"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 10.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_n1b37"]
+material = SubResource("StandardMaterial3D_ir15t")
+radial_segments = 8
+rings = 6
+
+[sub_resource type="Curve" id="Curve_ubgoq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.655527, 0.489563), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ir15t"]
+curve = SubResource("Curve_ubgoq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2yo8d"]
+direction = Vector3(0, 1, 0)
+spread = 15.0
+initial_velocity_max = 3.0
+gravity = Vector3(0, 1, 0)
+scale_curve = SubResource("CurveTexture_ir15t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ca42v"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 8.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_2jvvc"]
+material = SubResource("StandardMaterial3D_ca42v")
+radius = 0.675
+height = 1.35
+radial_segments = 6
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2yo8d"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_b7eb1"]
+material = SubResource("StandardMaterial3D_2yo8d")
+radius = 0.25
+height = 0.5
+radial_segments = 6
+rings = 5
+
+[node name="Eye" type="MeshInstance3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = SubResource("SphereMesh_n1b37")
+
+[node name="Fire" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0.0553145, 0.105534)
+visible = false
+randomness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_2yo8d")
+draw_pass_1 = SubResource("SphereMesh_2jvvc")
+
+[node name="Pupil" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.45)
+mesh = SubResource("SphereMesh_b7eb1")

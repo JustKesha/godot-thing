@@ -2,6 +2,7 @@ class_name PlayerAPI extends Node
 
 @export_group("General")
 @export var body: Node3D
+@export var head: Node3D
 @export var lantern: PlayerLantern
 @export var inventory: PlayerInventory
 @export var camera: PlayerCameraController

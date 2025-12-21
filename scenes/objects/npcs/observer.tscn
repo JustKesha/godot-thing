@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8fkc0l0mkyco"]
+
+[ext_resource type="Script" uid="uid://dp371f72hd7dw" path="res://scripts/npcs/observer.gd" id="1_v0dad"]
+[ext_resource type="PackedScene" uid="uid://bs306v1mu2aep" path="res://scenes/objects/npcs/observer_eye.tscn" id="2_jvmqb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssvqc"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ycbic"]
+material = SubResource("StandardMaterial3D_ssvqc")
+radius = 0.75
+height = 2.5
+radial_segments = 12
+rings = 1
+
+[node name="Observer" type="Node3D" node_paths=PackedStringArray("head", "eyes")]
+script = ExtResource("1_v0dad")
+head = NodePath("Body")
+eyes = [NodePath("Body/LeftEye"), NodePath("Body/RightEye")]
+
+[node name="Body" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="Head" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(-8.74228e-09, -0.984808, 0.173648, 0, 0.173648, 0.984808, -0.2, 4.30473e-08, -7.59039e-09, 0, 0, -0.552)
+mesh = SubResource("CapsuleMesh_ycbic")
+skeleton = NodePath("")
+
+[node name="LeftEye" parent="Body" instance=ExtResource("2_jvmqb")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.675, 0.25, -0.65)
+
+[node name="RightEye" parent="Body" instance=ExtResource("2_jvmqb")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.6, 0.025, -0.65)
+skeleton = NodePath("")
