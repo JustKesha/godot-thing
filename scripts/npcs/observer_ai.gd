@@ -46,6 +46,7 @@ func get_trigger() -> Node3D:
 	return player.head
 
 # GENERAL
+
 func _ready():
 	if update_timer: update_timer.connect('timeout', _on_update_timer_timeout)
 
