@@ -20,6 +20,7 @@ transform = Transform3D(-0.521993, 0.0367432, 0.537284, 0.0416925, 0.748764, -0.
 
 [node name="lantern_hanging" parent="." index="3" instance=ExtResource("3_n1b37")]
 transform = Transform3D(-0.791523, 0.0535658, -0.103066, 0.0560503, 0.797878, -0.0157772, 0.101737, -0.0228312, -0.793176, -2.22919, 2.98568, -2.26008)
+visible = false
 
 [node name="Light" parent="lantern_hanging" index="0" instance=ExtResource("4_432jj")]
 transform = Transform3D(1, 0, 7.15256e-08, 0, 1, 0, -7.15256e-08, 0, 1, -0.25, -1, -0.25)
@@ -34,7 +35,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88222, 0, -0.421171)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 0)
 
 [node name="Observer" parent="DiceGame" index="0" node_paths=PackedStringArray("target_object") instance=ExtResource("7_2yo8d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.520855, 0, 0)
 target_object = NodePath("../Dice")
 
 [node name="Projector" parent="DiceGame" index="1" node_paths=PackedStringArray("spectating") instance=ExtResource("7_ubgoq")]
