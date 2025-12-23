@@ -10,13 +10,10 @@ var base_rotation := Vector2.ZERO
 enum ShakeStrength { OFF = 0, LOW = 15, MILD = 30, MEDIUM = 45, HIGH = 60 }
 enum ShakeAmplitude { OFF = 0, LOW = 35, MILD = 30, MEDIUM = 20, HIGH = 15 }
 enum ShakeSpeed { OFF = 0, LOW = 75, MILD = 60, MEDIUM = 45, HIGH = 35 }
-## INFO Will set shake_amplitude & shake_speed based on shake_strength if true
-@export var is_shake_strength_prime := true
 @export var shake_strength := ShakeStrength.LOW:
 	set(value):
 		shake_strength = value
 		
-		if not is_shake_strength_prime: return
 		match shake_strength:
 			ShakeStrength.OFF:
 				shake_amplitude = ShakeAmplitude.OFF
@@ -33,8 +30,8 @@ enum ShakeSpeed { OFF = 0, LOW = 75, MILD = 60, MEDIUM = 45, HIGH = 35 }
 			ShakeStrength.HIGH:
 				shake_amplitude = ShakeAmplitude.HIGH
 				shake_speed = ShakeSpeed.HIGH
-@export var shake_amplitude := ShakeAmplitude.LOW
-@export var shake_speed := ShakeSpeed.LOW
+var shake_amplitude := ShakeAmplitude.LOW
+var shake_speed := ShakeSpeed.LOW
 var shake_amplitude_divider := 150000.0
 var shake_speed_divider := 1000.0
 var shake_v_offset_multiplier := 1.7
