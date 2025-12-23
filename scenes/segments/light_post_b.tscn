@@ -20,10 +20,10 @@ transform = Transform3D(-0.521993, 0.0367432, 0.537284, 0.0416925, 0.748764, -0.
 
 [node name="lantern_hanging" parent="." index="3" instance=ExtResource("3_n1b37")]
 transform = Transform3D(-0.791523, 0.0535658, -0.103066, 0.0560503, 0.797878, -0.0157772, 0.101737, -0.0228312, -0.793176, -2.22919, 2.98568, -2.26008)
-visible = false
 
 [node name="Light" parent="lantern_hanging" index="0" instance=ExtResource("4_432jj")]
 transform = Transform3D(1, 0, 7.15256e-08, 0, 1, 0, -7.15256e-08, 0, 1, -0.25, -1, -0.25)
+visible = false
 
 [node name="post" parent="." index="4" instance=ExtResource("4_ubgoq")]
 transform = Transform3D(-0.779678, 0.0669573, 0.622589, 0.0344531, 0.997348, -0.064115, -0.625231, -0.028539, -0.779917, -3.11481, -0.0254676, -1.29983)

@@ -49,6 +49,19 @@ signal fuel_limit_changed(new_fuel_limit: float)
 		fuel_limit_changed.emit(fuel_limit)
 var fuel_percentage: float:
 	get(): return (fuel / fuel_limit) * 100.0
+var fuel_state: FuelState:
+	get():
+		if fuel == 0:
+			return FuelState.NONE
+		
+		var percentage = fuel_percentage
+		
+		if percentage <= FuelState.LOW:
+			return FuelState.LOW
+		elif percentage <= FuelState.MID:
+			return FuelState.MID
+		else: return FuelState.HIGH
+enum FuelState { NONE = 0, LOW = 20, MID = 50, HIGH = 100 }
 
 @export_group("Depletion")
 @export var update_timer: Timer
@@ -101,20 +114,21 @@ func _on_update_timeout():
 	if light.is_lit: deplete()
 
 func _on_fuel_changed(by: float, current: float):
-	if fuel == 0: extinguish()
-	
-	elif fuel < 20:
-		light.flicker_intensity = 0.3
-		light.flicker_min_duration = 0.01
-		light.flicker_max_duration = 0.075
-	elif fuel < 50:
-		light.flicker_intensity = 0.25
-		light.flicker_min_duration = 0.05
-		light.flicker_max_duration = 0.2
-	else:
-		light.flicker_intensity = 0.1
-		light.flicker_min_duration = 0.1
-		light.flicker_max_duration = 0.25
+	match fuel_state:
+		FuelState.NONE:
+			extinguish()
+		FuelState.LOW:
+			light.flicker_intensity = 0.3
+			light.flicker_min_duration = 0.01
+			light.flicker_max_duration = 0.075
+		FuelState.MID:
+			light.flicker_intensity = 0.25
+			light.flicker_min_duration = 0.05
+			light.flicker_max_duration = 0.2
+		FuelState.HIGH, _:
+			light.flicker_intensity = 0.1
+			light.flicker_min_duration = 0.1
+			light.flicker_max_duration = 0.25
 	
 	light.intensity = (
 		fuel / fuel_limit * (light.max_intensity - light.min_intensity)

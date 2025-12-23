@@ -1,17 +1,42 @@
 class_name PlayerCameraEffects extends Node
 
+@onready var lantern: PlayerLantern = References.player.lantern
 @export var head: Node3D
 var base_position := Vector3.ZERO
 var base_rotation := Vector2.ZERO
 
 @export_group("Screen Shake")
 @export var is_screen_shake_on := true # NOTE Does not reset cam position
-enum ShakeStrength { OFF = 0, LOW = 15, MILD = 40, MEDIUM = 75, HIGH = 100 }
-@export var shake_strength := ShakeStrength.LOW
-@export var shake_amplitude := 3.5
-@export var shake_speed := 0.75
-var shake_amplitude_divider := 15000
-var shake_speed_divider := 10
+enum ShakeStrength { OFF = 0, LOW = 15, MILD = 30, MEDIUM = 45, HIGH = 60 }
+enum ShakeAmplitude { OFF = 0, LOW = 35, MILD = 30, MEDIUM = 20, HIGH = 15 }
+enum ShakeSpeed { OFF = 0, LOW = 75, MILD = 60, MEDIUM = 45, HIGH = 35 }
+## INFO Will set shake_amplitude & shake_speed based on shake_strength if true
+@export var is_shake_strength_prime := true
+@export var shake_strength := ShakeStrength.LOW:
+	set(value):
+		shake_strength = value
+		
+		if not is_shake_strength_prime: return
+		match shake_strength:
+			ShakeStrength.OFF:
+				shake_amplitude = ShakeAmplitude.OFF
+				shake_speed = ShakeSpeed.OFF
+			ShakeStrength.LOW:
+				shake_amplitude = ShakeAmplitude.LOW
+				shake_speed = ShakeSpeed.LOW
+			ShakeStrength.MILD:
+				shake_amplitude = ShakeAmplitude.MILD
+				shake_speed = ShakeSpeed.MILD
+			ShakeStrength.MEDIUM:
+				shake_amplitude = ShakeAmplitude.MEDIUM
+				shake_speed = ShakeSpeed.MEDIUM
+			ShakeStrength.HIGH:
+				shake_amplitude = ShakeAmplitude.HIGH
+				shake_speed = ShakeSpeed.HIGH
+@export var shake_amplitude := ShakeAmplitude.LOW
+@export var shake_speed := ShakeSpeed.LOW
+var shake_amplitude_divider := 150000.0
+var shake_speed_divider := 1000.0
 var shake_v_offset_multiplier := 1.7
 var shake_h_offset_multiplier := 2.3
 var shake_time := 0.0
@@ -63,6 +88,17 @@ func _on_player_move(step: float):
 
 func _on_player_stop(_traveled: float):
 	target_bob_intensity = 0.0
+
+func _on_lantern_fuel_changed(_by: float, _current: float):
+	match lantern.fuel_state:
+		lantern.FuelState.NONE:
+			shake_strength = ShakeStrength.HIGH
+		lantern.FuelState.LOW:
+			shake_strength = ShakeStrength.MEDIUM
+		lantern.FuelState.MID:
+			shake_strength = ShakeStrength.MILD
+		lantern.FuelState.HIGH, _:
+			shake_strength = ShakeStrength.LOW
 
 func _ready():
 	if not head: head = $'.'

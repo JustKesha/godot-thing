@@ -12,7 +12,7 @@ var current_segment: WorldSegment
 @export_group("Horizon")
 @export var horizon_enabled := true
 @export var horizon_start_at_segment := 3
-@export var horizon_depth := .1
+@export var horizon_depth := .15
 
 ## Clears the map and loads up a new one.
 func init():

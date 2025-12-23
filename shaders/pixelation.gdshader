@@ -4,7 +4,7 @@ render_mode unshaded, depth_draw_always, cull_disabled;
 uniform sampler2D ScreenTexture : hint_screen_texture;
 
 uniform float TwixelAngle : hint_range(0.0, 45.0) = 15.0;
-uniform float PixelSize   : hint_range(1.0, 32.0) = 4.0;
+uniform float PixelSize   : hint_range(1.0, 32.0) = 3.0;
 
 uniform bool  Posterize   = true;
 uniform int   ColorSteps  : hint_range(2, 32) = 64;

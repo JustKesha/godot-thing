@@ -60,11 +60,11 @@ size = Vector2(250, 250)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ssvqc"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kvpfn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37s47"]
 render_priority = 0
 shader = ExtResource("16_qouja")
 shader_parameter/TwixelAngle = 15.0
-shader_parameter/PixelSize = 4.0
+shader_parameter/PixelSize = 3.0
 shader_parameter/Posterize = true
 shader_parameter/ColorSteps = 64
 shader_parameter/UsePalette = true
@@ -78,7 +78,7 @@ shader_parameter/Saturation = 1.0
 shader_parameter/Contrast = 1.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_imku0"]
-material = SubResource("ShaderMaterial_kvpfn")
+material = SubResource("ShaderMaterial_37s47")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_264po"]
 animations = [{
@@ -601,6 +601,7 @@ skeleton = NodePath("../..")
 [connection signal="move" from="Player" to="World" method="_on_player_move"]
 [connection signal="move" from="Player" to="Player/Trypod/Head" method="_on_player_move"]
 [connection signal="stop" from="Player" to="Player/Trypod/Head" method="_on_player_stop"]
+[connection signal="fuel_changed" from="Player/Lantern" to="Player/Trypod/Head" method="_on_lantern_fuel_changed"]
 [connection signal="fuel_changed" from="Player/Lantern" to="Player/Lantern" method="_on_fuel_changed"]
 [connection signal="fuel_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_fuel_changed"]
 [connection signal="fuel_limit_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_fuel_limit_changed"]
