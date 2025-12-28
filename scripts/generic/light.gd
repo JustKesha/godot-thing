@@ -22,6 +22,9 @@ signal reignited
 		var before = intensity
 		
 		intensity = clampf(value, min_intensity, max_intensity)
+		intensity_transition_speed = (
+			intensity_increase_speed if intensity > _current_intensity
+			else intensity_decrease_speed )
 		
 		if intensity != before:
 			intensity_changed.emit(intensity)
@@ -47,7 +50,9 @@ signal reignited
 		_update()
 
 @export_group("Transition")
-@export var intensity_transition_speed := 6.0
+@export var intensity_increase_speed := 2.0
+@export var intensity_decrease_speed := 4.0
+var intensity_transition_speed := intensity_increase_speed
 var _current_intensity := intensity:
 	set(value):
 		_current_intensity = value
