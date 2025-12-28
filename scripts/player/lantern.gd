@@ -1,7 +1,5 @@
 class_name PlayerLantern extends Node3D
 
-@onready var particles: ParticleSystem = References.particles
-
 signal state_changed(is_burning: bool)
 signal extinguished()
 signal reignited()
@@ -21,7 +19,6 @@ signal fuel_limit_changed(new_fuel_limit: float)
 		
 		state_changed.emit(is_lit)
 		if is_lit:
-			particles.spawn(self.global_position, particles.Particles.SPARK, self)
 			reignited.emit()
 		else:
 			extinguished.emit()

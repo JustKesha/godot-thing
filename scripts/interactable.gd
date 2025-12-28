@@ -1,6 +1,9 @@
 class_name Interactable extends Node3D
 
+signal removed()
+
 # OVERWRITE ME
+# TODO Replace with signals on children
 func _on_ready(): pass
 func _on_remove(): pass
 func _on_hover(): pass
@@ -89,6 +92,7 @@ func _on_cooldown_timer_timeout():
 # READY / REMOVE
 func _ready(): _on_ready()
 func remove():
-	_on_remove()
 	queue_free()
+	_on_remove()
+	removed.emit()
 	unhover()

@@ -121,7 +121,7 @@ func get_camera_angle() -> Vector2:
 	return Vector2(camera.rotation.x, trypod.rotation.y)
 
 func is_at_target_rotation(error_margin: float = 0.025) -> bool:
-	# Couldnt find a way to use custom weight for is_zero_approx
+	# TODO Couldnt find a way to use custom weight for is_zero_approx
 	var rotation = get_camera_angle()
 	return ( abs(rotation.x - target_x_rotation) <= error_margin
 		 and abs(rotation.y - target_y_rotation) <= error_margin )

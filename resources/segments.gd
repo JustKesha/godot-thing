@@ -26,6 +26,8 @@ const data := {
 	"light_post_a": { "rarity": Rarity.EPIC },
 	"light_post_b": { "rarity": Rarity.COMMON },
 	"light_post_c": { "rarity": Rarity.RARE },
+	
+	"pickup_selection": { "rarity": Rarity.RARE },
 }
 
 static var scenes: Dictionary[String, PackedScene] = {}

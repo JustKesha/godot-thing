@@ -36,7 +36,8 @@ var _type_delay_multiplier := 0.0001
 	"-": TypeDelay.DRAMATIC,
 	":": TypeDelay.DRAMATIC,
 	";": TypeDelay.DRAMATIC,
-}
+	"'": TypeDelay.DRAMATIC,
+	}
 var is_typing := false
 var _type_message := "":
 	set(value):

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://b4u5rlfmcvmwy"]
 
-[ext_resource type="PackedScene" uid="uid://cq15mh70luvld" path="res://assets/models/Dasha_CustomBits/dice_center.fbx" id="1_iibli"]
+[ext_resource type="PackedScene" uid="uid://cq15mh70luvld" path="res://assets/models/Dasha_CustomBits/dice.fbx" id="1_iibli"]
 [ext_resource type="Script" uid="uid://jtg3bm2sbi8k" path="res://scripts/dice.gd" id="1_p7ajc"]
 [ext_resource type="PackedScene" uid="uid://dc4flq44itola" path="res://scenes/objects/generic/projector.tscn" id="2_jtpqc"]
 [ext_resource type="PackedScene" uid="uid://bewn6ut3hs1dm" path="res://scenes/objects/interactables/dice.tscn" id="2_p7ajc"]

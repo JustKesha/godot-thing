@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu6ul0y4vb8yw"]
+
+[ext_resource type="PackedScene" uid="uid://ddbnnkfv7j6kv" path="res://scenes/segment.tscn" id="1_ajokp"]
+[ext_resource type="PackedScene" uid="uid://bsl50yx4yg3bd" path="res://scenes/objects/pickup_selection.tscn" id="2_3tlur"]
+
+[node name="Segment" instance=ExtResource("1_ajokp")]
+
+[node name="PickupSelection" parent="Map" index="0" instance=ExtResource("2_3tlur")]

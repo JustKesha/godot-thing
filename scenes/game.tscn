@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://b7owo051mahdu"]
+[gd_scene load_steps=50 format=3 uid="uid://b7owo051mahdu"]
 
 [ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://bau8n7lhn1s68" path="res://scripts/world/api.gd" id="2_264po"]
@@ -109,6 +109,9 @@ font_color = Color(0.890196, 0.843137, 0.694118, 1)
 font = ExtResource("12_kvuet")
 font_size = 25
 font_color = Color(0.890196, 0.843137, 0.694118, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_37s47"]
+radius = 0.1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssvqc"]
 shading_mode = 0
@@ -246,7 +249,7 @@ responses_acquired = Array[String](["+", "+", "+", "Got", "Found", "Acquired"])
 responses_brimfull = Array[String](["Provisions burden the body, as regrets burden the mind. Shed one.", "Grasping greedily, you find your hands are full. And empty.", "Even the stoutest sack has its limits. As does ambition.", "No room remains. Not for trinkets, nor for trophies... nor for hope.", "To cling to all is to hold nothing. A clenched fist cannot receive.", "The pack groans, strained. Some plunder must be left to the dark."])
 responses_overflow = Array[String](["This burden reaches its limit.", "I can bear no more of this particular commodity.", "The stack is full. Avarice has its price.", "This resource has been stockpiled to its absolute limit.", "The quota for this particular good is filled."])
 ui = NodePath("../../UI/Inventory")
-starting_items = Array[String](["dice", "candle"])
+starting_items = Array[String](["dice", "candle", "pumpkin", "pumpkin", "pumpkin", "pumpkin"])
 
 [node name="ItemHighlighter" type="SpotLight3D" parent="Player/Trypod/Inventory"]
 transform = Transform3D(0.695913, 0.4119, -0.588255, 0, 0.819152, 0.573576, 0.718126, -0.399159, 0.570058, -0.3, 0.35, 0.35)
@@ -539,6 +542,14 @@ body = NodePath("..")
 head = NodePath("../Trypod/Head")
 cursor = NodePath("../UI/Cursor")
 dialogue_window = NodePath("../UI/DialogueWindow")
+
+[node name="Hitbox" type="StaticBody3D" parent="Player"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape3D" parent="Player/Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("SphereShape3D_37s47")
 
 [node name="Test" type="Node" parent="."]
 

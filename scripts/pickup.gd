@@ -1,5 +1,7 @@
 class_name Pickup extends Interactable
 
+signal picked_up(amount: int)
+
 @export var pickup_item := 'candle'
 @export var pickup_quantity := 1
 @export var pickup_rate := 99
@@ -20,6 +22,9 @@ func _on_interact():
 		overflow += pickup_quantity - pickup_amount
 	
 	overflow += player.inventory.add(pickup_item, pickup_amount)
+	
+	if pickup_amount - overflow > 0:
+		picked_up.emit(pickup_amount - overflow)
 	
 	if overflow == 0 or pickup_allow_overflow:
 		remove()

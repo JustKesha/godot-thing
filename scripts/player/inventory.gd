@@ -60,6 +60,8 @@ var active_slot := 0:
 @export var starting_items: Array[String] = []
 
 # TODO Simplify
+# TODO Should instead return quantity of item added to inventory (update other scripts too)
+## Returns the quantity overflow (how much quantity of the item was ignored)
 func add(item_id: String, quantity: int = 1) -> int:
 	var item
 	var item_in_inv := find_item(item_id)

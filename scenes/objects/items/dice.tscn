@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://4aoulrn6dufw"]
 
 [ext_resource type="PackedScene" uid="uid://sne3g4v5nffb" path="res://scenes/objects/item.tscn" id="1_nepff"]
-[ext_resource type="PackedScene" uid="uid://cq15mh70luvld" path="res://assets/models/Dasha_CustomBits/dice_center.fbx" id="2_0lin3"]
+[ext_resource type="PackedScene" uid="uid://cq15mh70luvld" path="res://assets/models/Dasha_CustomBits/dice.fbx" id="2_0lin3"]
 [ext_resource type="Script" uid="uid://cjcyc78fxycpf" path="res://scripts/items/dice.gd" id="2_30bpc"]
 [ext_resource type="PackedScene" uid="uid://7qo00wv6l7mq" path="res://scenes/objects/dice/soul_dice.tscn" id="3_nepff"]
 

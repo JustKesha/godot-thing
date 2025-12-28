@@ -40,7 +40,7 @@ static func _static_init():
 
 static func _get_random(roll := -1.0, chance_epic := -1.0, chance_rare := -1.0,
 	chance_comm := -1.0, epic_pool: Array[String] = epic,
-	rare_pool: Array[String] = rare, comm_pool: Array[String] = comm) -> Node3D:
+	rare_pool: Array[String] = rare, comm_pool: Array[String] = comm) -> Pickup:
 	if chance_epic < 0: chance_epic = epic_chance
 	if chance_rare < 0: chance_rare = rare_chance
 	if chance_comm < 0: chance_comm = comm_chance
@@ -58,7 +58,7 @@ static func _get_random(roll := -1.0, chance_epic := -1.0, chance_rare := -1.0,
 		return null
 
 static func get_random(pool: PickupPool = PickupPool.ALL,
-	chances: Chances = Chances.OKAY, roll := -1.0):
+	chances: Chances = Chances.OKAY, roll := -1.0) -> Pickup:
 
 	var comm_pool := comm
 	var rare_pool := rare
@@ -109,19 +109,19 @@ static func get_random(pool: PickupPool = PickupPool.ALL,
 	return _get_random(roll, chance_epic, chance_rare, chance_comm, epic_pool,
 		rare_pool, comm_pool)
 
-static func get_truly_random(pool: Array[String] = comm + rare + epic) -> Node3D:
+static func get_truly_random(pool: Array[String] = comm + rare + epic) -> Pickup:
 	return get_by_id(pool.pick_random())
 
-static func get_comm(pool: Array[String] = comm) -> Node3D:
+static func get_comm(pool: Array[String] = comm) -> Pickup:
 	return Pickups.get_by_id(pool.pick_random() if pool else '')
 
-static func get_rare(pool: Array[String] = rare) -> Node3D:
+static func get_rare(pool: Array[String] = rare) -> Pickup:
 	return get_by_id(pool.pick_random() if pool else '')
 
-static func get_epic(pool: Array[String] = epic) -> Node3D:
+static func get_epic(pool: Array[String] = epic) -> Pickup:
 	return get_by_id(pool.pick_random() if pool else '')
 
-static func get_by_id(pickup_id: String) -> Node3D:
+static func get_by_id(pickup_id: String) -> Pickup:
 	if not pickup_id: return null
 	var pickup_path = path + pickup_id + ".tscn"
 	if not ResourceLoader.exists(pickup_path):

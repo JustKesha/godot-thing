@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsl50yx4yg3bd"]
+
+[ext_resource type="Script" uid="uid://qb0i1a5jtcm2" path="res://scripts/pickup_selection.gd" id="1_cj4d0"]
+[ext_resource type="PackedScene" uid="uid://cprgsniy86yia" path="res://scenes/objects/pickup_stand.tscn" id="2_cj4d0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cj4d0"]
+size = Vector3(3, 3, 3)
+
+[node name="PickupSelection" type="Node3D" node_paths=PackedStringArray("stands")]
+script = ExtResource("1_cj4d0")
+stands = [NodePath("PickupSelectionStand1"), NodePath("PickupSelectionStand2"), NodePath("PickupSelectionStand3")]
+responses_appear = Array[String](["You can only take one.", "Pick what your soul desires.", "Pick one.", "Choose wisely...", "Choose carefully...", "Choose with caution..."])
+responses_disappear = Array[String](["Good choice.", "Interesting...", "We'll see how this plays out...", "Oh poor soul...", "Short-sighted...", "So naive..."])
+
+[node name="PickupSelectionStand1" parent="." instance=ExtResource("2_cj4d0")]
+
+[node name="PickupSelectionStand2" parent="." instance=ExtResource("2_cj4d0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="PickupSelectionStand3" parent="." instance=ExtResource("2_cj4d0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Trigger" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="Hitbox" type="CollisionShape3D" parent="Trigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.35)
+shape = SubResource("BoxShape3D_cj4d0")
+
+[connection signal="body_entered" from="Trigger" to="." method="_on_trigger_body_entered"]
