@@ -1,5 +1,7 @@
 class_name PlayerCameraController extends Node
 
+@onready var player: PlayerAPI = References.player
+
 @export var camera: Camera3D
 @export var trypod: Node3D
 
@@ -19,7 +21,11 @@ var sensitivity_divider := 100000.0
 var is_rotating := false
 
 @export_group("Target Lock")
-@export var is_target_locked := false
+@export var is_target_locked := false:
+	set(value):
+		is_target_locked = value
+		if is_target_locked: player.lock("camera_locked")
+		else: player.unlock("camera_locked")
 @export var lock_turn_rate := 3.5
 @export var lock_object: Node3D = null:
 	set(value):
@@ -69,17 +75,17 @@ var target_y_rotation := 0.0:
 			target_y_rotation = clamp(value, h_min, h_max)
 		is_rotating = true
 
+# ACTIONS
+
+## Wrapper for lock method
 func face(where: Variant):
 	lock(where, 2.0, true, true)
 
+## Wrapper for lock method
 ## NOTE The [param duration] determines the total number of seconds for which
 ## the player's free camera movement is obstructed (including turn time),
 ## not how long the player will face the target.
-func look(
-	at: Variant,
-	duration: float = 1.75,
-	reset_after: bool = true
-	):
+func look(at: Variant, duration: float = 1.75, reset_after: bool = true):
 	lock(at, duration, false, false)
 	if reset_after: lock_start_angle = Vector2.ZERO
 
@@ -87,12 +93,8 @@ func look(
 ## or a [Node3D] object to lock onto. Use [param duration] [param -1] to lock
 ## until manually reset. When [param auto_unlock] is [param true], will
 ## reset once the [param objective] condition is reached. Using seconds.
-func lock(
-	objective: Variant,
-	timeout: float = -1.0,
-	auto_unlock: bool = false,
-	keep_angle: bool = false,
-	):
+func lock(objective: Variant, timeout: float = -1.0, auto_unlock: bool = false,
+	keep_angle: bool = false ):
 	is_target_locked = true
 	lock_keep_angle = keep_angle
 	lock_await_goal = auto_unlock
@@ -113,6 +115,8 @@ func unlock():
 	if not lock_keep_angle: lock(lock_start_angle, 1.5, true, true)
 	else: awake()
 
+# HELPERS
+
 func get_camera_angle() -> Vector2:
 	return Vector2(camera.rotation.x, trypod.rotation.y)
 
@@ -126,6 +130,8 @@ func awake():
 	var angle = get_camera_angle()
 	target_x_rotation = angle.x
 	target_y_rotation = angle.y
+
+# GENERAL
 
 func _ready():
 	if not camera: camera = $'.'

@@ -200,6 +200,12 @@ shape = SubResource("WorldBoundaryShape3D_ssvqc")
 [node name="Particles" type="Node" parent="World"]
 script = ExtResource("20_1kice")
 
+[node name="Events" type="Node" parent="World" node_paths=PackedStringArray("random_event_timer")]
+script = ExtResource("14_trtic")
+random_event_timer = NodePath("RandomEvent")
+
+[node name="RandomEvent" type="Timer" parent="World/Events"]
+
 [node name="API" type="Node" parent="World" node_paths=PackedStringArray("generator", "particles", "moon")]
 script = ExtResource("2_264po")
 generator = NodePath("..")
@@ -538,12 +544,6 @@ head = NodePath("../Trypod/Head")
 cursor = NodePath("../UI/Cursor")
 dialogue_window = NodePath("../UI/DialogueWindow")
 
-[node name="Events" type="Node" parent="." node_paths=PackedStringArray("random_event_timer")]
-script = ExtResource("14_trtic")
-random_event_timer = NodePath("RandomEvent")
-
-[node name="RandomEvent" type="Timer" parent="Events"]
-
 [node name="Test" type="Node" parent="."]
 
 [node name="Beast" type="Node3D" parent="Test"]
@@ -599,6 +599,7 @@ visible = false
 mesh = SubResource("QuadMesh_iywne")
 skeleton = NodePath("../..")
 
+[connection signal="timeout" from="World/Events/RandomEvent" to="World/Events" method="_on_random_event_timeout"]
 [connection signal="move" from="Player" to="World" method="_on_player_move"]
 [connection signal="move" from="Player" to="Player/Trypod/Head" method="_on_player_move"]
 [connection signal="stop" from="Player" to="Player/Trypod/Head" method="_on_player_stop"]
@@ -610,4 +611,3 @@ skeleton = NodePath("../..")
 [connection signal="timeout" from="Player/Lantern/Update" to="Player/Lantern" method="_on_update_timeout"]
 [connection signal="timeout" from="Player/UI/FuelBar/Fire/Delay" to="Player/UI/FuelBar" method="_on_delay_timeout"]
 [connection signal="timeout" from="Player/UI/DialogueWindow/Timeout" to="Player/UI/DialogueWindow" method="_on_timer_timeout"]
-[connection signal="timeout" from="Events/RandomEvent" to="Events" method="_on_random_event_timeout"]

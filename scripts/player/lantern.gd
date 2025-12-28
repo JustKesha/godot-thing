@@ -84,8 +84,8 @@ enum FuelState { NONE = 0, LOW = 20, MID = 50, HIGH = 100 }
 			* (fuel_depletion_rate_max - fuel_depletion_rate_min)
 			+ fuel_depletion_rate_min
 		)
-@export var fuel_depletion_rate_min := 5.25
-@export var fuel_depletion_rate_max := 9.75
+@export var fuel_depletion_rate_min := 0.25
+@export var fuel_depletion_rate_max := 2.75
 ## NOTE Read only, use lock & unlock methods instead
 var is_fuel_depletion_paused: bool:
 	get(): return not fuel_depletion_paused_by.is_empty()

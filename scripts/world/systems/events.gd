@@ -29,7 +29,7 @@ func play_event(event_id: Events = Events.RANDOM) -> bool:
 				"You feel like you're being watched...",
 			].pick_random())
 			player.camera.look(world.moon, 1.75, false)
-			player.lantern.fuel -= 25
+			player.lantern.deplete(25)
 		Events.RANDOM:
 			return play_event(RandomEventsPool.pick_random())
 		_:
