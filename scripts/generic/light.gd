@@ -50,8 +50,11 @@ signal reignited
 		_update()
 
 @export_group("Transition")
+@export var transition_pause_timer: Timer
 @export var intensity_increase_speed := 2.0
 @export var intensity_decrease_speed := 4.0
+var is_transition_paused: bool:
+	get(): return not transition_pause_timer.is_stopped()
 var intensity_transition_speed := intensity_increase_speed
 var _current_intensity := intensity:
 	set(value):
@@ -91,9 +94,13 @@ func _update():
 		_halo.omni_range = fact_intensity * halo_radius_multiplier
 		_halo.light_volumetric_fog_energy = fact_intensity * halo_fog_multiplier
 
+func pause_transition(pause_duration: float):
+	transition_pause_timer.start(pause_duration)
+
 func _transition(delta: float):
 	if not is_lit: return
 	if _current_intensity == intensity: return
+	if is_transition_paused: return
 	
 	if abs(_current_intensity - intensity) <= _intensity_snap_threshold:
 		_current_intensity = intensity
@@ -138,6 +145,10 @@ func _awake():
 func _ready():
 	_awake()
 	if create_halo: _create_halo()
+	if not transition_pause_timer:
+		transition_pause_timer = Timer.new()
+		transition_pause_timer.one_shot = true
+		self.add_child(transition_pause_timer)
 	_update()
 
 func _process(delta: float):

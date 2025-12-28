@@ -277,7 +277,7 @@ autostart = true
 
 [node name="UI" type="CanvasLayer" parent="Player"]
 
-[node name="FuelBar" type="Control" parent="Player/UI" node_paths=PackedStringArray("lantern", "limit", "loss", "fuel", "fire")]
+[node name="FuelBar" type="Control" parent="Player/UI" node_paths=PackedStringArray("limit", "loss", "fuel", "fire")]
 layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
@@ -286,7 +286,6 @@ offset_top = 15.0
 offset_bottom = 15.0
 grow_horizontal = 2
 script = ExtResource("13_5newe")
-lantern = NodePath("../../Lantern")
 limit = NodePath("Limit")
 loss = NodePath("Loss")
 fuel = NodePath("Fuel")
@@ -610,5 +609,6 @@ skeleton = NodePath("../..")
 [connection signal="fuel_limit_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_fuel_limit_changed"]
 [connection signal="state_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_state_changed"]
 [connection signal="timeout" from="Player/Lantern/Update" to="Player/Lantern" method="_on_update_timeout"]
+[connection signal="delayed" from="Player/UI/FuelBar/Fire" to="Player/UI/FuelBar" method="_on_fire_delayed"]
 [connection signal="timeout" from="Player/UI/FuelBar/Fire/Delay" to="Player/UI/FuelBar" method="_on_delay_timeout"]
 [connection signal="timeout" from="Player/UI/DialogueWindow/Timeout" to="Player/UI/DialogueWindow" method="_on_timer_timeout"]

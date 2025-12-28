@@ -1,8 +1,8 @@
 class_name PlayerFuelBarUI extends Control
 
+@onready var lantern: PlayerLantern = References.player.lantern
 @onready var particles: ParticleSystem = References.particles
 
-@export var lantern: PlayerLantern
 @export var limit: BarUI
 @export var loss: BarUI
 @export var fuel: BarUI
@@ -15,6 +15,7 @@ func _update_limits():
 	loss.width_max = lantern.fuel_limit
 
 func _update():
+	if not lantern: return
 	fuel.target_width = lantern.fuel
 	fire.target_width = lantern.fuel if lantern.is_lit else 0
 	loss.target_width = lantern.fuel
@@ -34,3 +35,6 @@ func _on_delay_timeout():
 func _ready():
 	_update_limits()
 	_update()
+
+func _on_fire_delayed(by: float):
+	lantern.light.pause_transition(by)
