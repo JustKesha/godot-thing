@@ -115,9 +115,12 @@ func reignite():
 func pause_depletion(source: String):
 	if fuel_depletion_paused_by.has(source): return
 	fuel_depletion_paused_by.append(source)
+	update_timer.paused = true
 
 func unpause_depletion(source: String):
 	fuel_depletion_paused_by.erase(source)
+	if not is_fuel_depletion_paused:
+		update_timer.paused = false
 
 # GENERAL
 
