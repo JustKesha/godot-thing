@@ -81,9 +81,9 @@ func apply_bob(delta: float):
 	head.position = base_position + bob_pos
 
 func _on_player_move(step: float):
-	target_bob_intensity = step * bob_amplitude
+	target_bob_intensity = abs(step) * bob_amplitude
 
-func _on_player_stop(_traveled: float):
+func _on_player_stop():
 	target_bob_intensity = 0.0
 
 func _on_lantern_fuel_changed(_by: float, _current: float):

@@ -215,6 +215,7 @@ moon = NodePath("../Moon")
 [node name="Player" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 script = ExtResource("14_suyxu")
+backward_travel_limit_responses = Array[String](["I need to keep moving forward.", "I have to keep moving forward.", "I can't go back..."])
 
 [node name="Trypod" type="Node3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
