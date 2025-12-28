@@ -9,7 +9,7 @@ signal delayed(by: float)
 @export var width_max := 100.0
 
 @export_group("Transition")
-@export var transition_speed := 5.0
+@export var transition_speed := 6.0
 
 @export_group("Delay")
 @export var delay_enabled := false

@@ -1,6 +1,7 @@
 class_name PlayerCameraEffects extends Node
 
 @onready var lantern: PlayerLantern = References.player.lantern
+
 @export var head: Node3D
 var base_position := Vector3.ZERO
 var base_rotation := Vector2.ZERO
@@ -86,7 +87,11 @@ func _on_player_move(step: float):
 func _on_player_stop():
 	target_bob_intensity = 0.0
 
-func _on_lantern_fuel_changed(_by: float, _current: float):
+func _on_lantern_updated():
+	if not lantern.is_lit:
+		shake_strength = ShakeStrength.HIGH
+		return
+	
 	match lantern.fuel_state:
 		lantern.FuelState.NONE:
 			shake_strength = ShakeStrength.HIGH
@@ -96,6 +101,12 @@ func _on_lantern_fuel_changed(_by: float, _current: float):
 			shake_strength = ShakeStrength.MILD
 		lantern.FuelState.HIGH, _:
 			shake_strength = ShakeStrength.LOW
+
+func _on_lantern_state_changed(is_burning: bool):
+	_on_lantern_updated()
+
+func _on_lantern_fuel_changed(_by: float, _current: float):
+	_on_lantern_updated()
 
 func _ready():
 	if not head: head = $'.'

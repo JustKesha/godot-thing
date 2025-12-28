@@ -306,7 +306,6 @@ script = ExtResource("14_37s47")
 is_centered = true
 width_scale = 3.0
 width_max = 999.0
-transition_speed = 2.0
 
 [node name="Loss" type="ColorRect" parent="Player/UI/FuelBar" node_paths=PackedStringArray("delay_timer")]
 layout_mode = 1
@@ -322,7 +321,6 @@ color = Color(0.341176, 0.227451, 0.168627, 1)
 script = ExtResource("14_37s47")
 is_centered = true
 width_scale = 3.0
-transition_speed = 3.0
 delay_enabled = true
 delay_timer = NodePath("Delay")
 delay_on_increase = false
@@ -345,7 +343,6 @@ color = Color(0.580392, 0.462745, 0.356863, 1)
 script = ExtResource("14_37s47")
 is_centered = true
 width_scale = 3.0
-transition_speed = 6.0
 
 [node name="Fire" type="ColorRect" parent="Player/UI/FuelBar" node_paths=PackedStringArray("delay_timer")]
 layout_mode = 1
@@ -361,7 +358,6 @@ color = Color(0.890196, 0.843137, 0.694118, 1)
 script = ExtResource("14_37s47")
 is_centered = true
 width_scale = 3.0
-transition_speed = 6.0
 delay_enabled = true
 delay_timer = NodePath("Delay")
 delay_on_decrease = false
@@ -607,6 +603,7 @@ skeleton = NodePath("../..")
 [connection signal="fuel_changed" from="Player/Lantern" to="Player/Lantern" method="_on_fuel_changed"]
 [connection signal="fuel_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_fuel_changed"]
 [connection signal="fuel_limit_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_fuel_limit_changed"]
+[connection signal="state_changed" from="Player/Lantern" to="Player/Trypod/Head" method="_on_lantern_state_changed"]
 [connection signal="state_changed" from="Player/Lantern" to="Player/UI/FuelBar" method="_on_lantern_state_changed"]
 [connection signal="timeout" from="Player/Lantern/Update" to="Player/Lantern" method="_on_update_timeout"]
 [connection signal="delayed" from="Player/UI/FuelBar/Fire" to="Player/UI/FuelBar" method="_on_fire_delayed"]
