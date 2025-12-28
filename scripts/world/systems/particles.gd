@@ -13,7 +13,7 @@ enum Particles {
 
 ## Spawns particles by id, by default assigns them to the current world segment.     
 func spawn(position: Vector3 = Vector3.ZERO, id: Particles = Particles.POOF,
-	parent: Node3D = null) -> ParticlesObject:
+	parent: Node = null, scale: Vector3 = Vector3.ONE) -> ParticlesObject:
 	if id < 0 or id > len(particles):
 		push_error('Tried to spawn particles by unknown id: ', id)
 		return null
@@ -21,7 +21,9 @@ func spawn(position: Vector3 = Vector3.ZERO, id: Particles = Particles.POOF,
 	if parent == null:
 		push_error('Both given parent and current world segment are null')
 		return null
-	var node: ParticlesObject = particles[id].instantiate()
-	parent.add_child(node)
-	node.global_position = position
-	return node
+	
+	var particles_node: ParticlesObject = particles[id].instantiate()
+	parent.add_child(particles_node)
+	particles_node.global_position = position
+	particles_node.scale = scale
+	return particles_node
