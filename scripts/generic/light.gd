@@ -56,7 +56,7 @@ signal reignited
 var is_transition_paused: bool:
 	get(): return not transition_pause_timer.is_stopped()
 var intensity_transition_speed := intensity_increase_speed
-var _current_intensity := intensity:
+var _current_intensity := 0.0:
 	set(value):
 		_current_intensity = value
 		_update()
@@ -148,6 +148,7 @@ func _ready():
 	if not transition_pause_timer:
 		transition_pause_timer = Timer.new()
 		transition_pause_timer.one_shot = true
+		transition_pause_timer.autostart = false 
 		self.add_child(transition_pause_timer)
 	_update()
 
