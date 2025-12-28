@@ -84,8 +84,12 @@ enum FuelState { NONE = 0, LOW = 20, MID = 50, HIGH = 100 }
 			* (fuel_depletion_rate_max - fuel_depletion_rate_min)
 			+ fuel_depletion_rate_min
 		)
-@export var fuel_depletion_rate_min := 0.25
-@export var fuel_depletion_rate_max := 2.75
+@export var fuel_depletion_rate_min := 5.25
+@export var fuel_depletion_rate_max := 9.75
+## NOTE Read only, use lock & unlock methods instead
+var is_fuel_depletion_paused: bool:
+	get(): return not fuel_depletion_paused_by.is_empty()
+var fuel_depletion_paused_by := []
 
 @export_group("Controls")
 @export var extinguish_action: String = 'extinguish'
@@ -108,9 +112,17 @@ func extinguish():
 func reignite():
 	is_lit = true
 
+func pause_depletion(source: String):
+	if fuel_depletion_paused_by.has(source): return
+	fuel_depletion_paused_by.append(source)
+
+func unpause_depletion(source: String):
+	fuel_depletion_paused_by.erase(source)
+
 # GENERAL
 
 func _on_update_timeout():
+	if is_fuel_depletion_paused: return
 	if light.is_lit: deplete()
 
 func _on_fuel_changed(by: float, current: float):

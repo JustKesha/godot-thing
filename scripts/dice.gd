@@ -1,5 +1,6 @@
 class_name Dice extends Node
 
+@onready var player := References.player
 @onready var particles := References.particles
 
 @export var body: RigidBody3D
@@ -74,10 +75,12 @@ var is_rolling: bool = false:
 		interactable.is_enabled = not is_rolling and roll_count < roll_limit
 		if is_rolling:
 			if lock_camera_on_roll:
-				References.player.camera.lock(body,-1,false,true)
+				player.camera.lock(body,-1,false,true)
+				player.lock(self.get_path())
 		else:
 			if lock_camera_on_roll:
-				References.player.camera.face(body)
+				player.camera.face(body)
+				player.unlock(self.get_path())
 var roll_count: int = 0
 var score: int = 5:
 	set(value):
