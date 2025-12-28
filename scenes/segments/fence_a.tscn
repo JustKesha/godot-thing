@@ -10,42 +10,53 @@
 
 [node name="Segment" instance=ExtResource("1_qs2u5")]
 
-[node name="fence2" parent="." index="1" instance=ExtResource("3_10ree")]
+[node name="LeftFence" type="Node3D" parent="Map" index="0"]
+
+[node name="LongFence1" type="Node3D" parent="Map/LeftFence" index="0"]
+
+[node name="Fence1" parent="Map/LeftFence/LongFence1" index="0" instance=ExtResource("3_10ree")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 0, -1.7375)
 
-[node name="fence3" parent="." index="2" instance=ExtResource("3_10ree")]
+[node name="Fence2" parent="Map/LeftFence/LongFence1" index="1" instance=ExtResource("3_10ree")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 0, 1.75814)
 
-[node name="fence6" parent="." index="3" instance=ExtResource("3_10ree")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76375, 0, -3.49014)
-
-[node name="fence7" parent="." index="4" instance=ExtResource("3_10ree")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.26589, 0, -3.49221)
-
-[node name="fence8" parent="." index="5" instance=ExtResource("3_10ree")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.74538, 0, 3.51251)
-
-[node name="fence9" parent="." index="6" instance=ExtResource("3_10ree")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.24752, 0, 3.51044)
-
-[node name="path_D" parent="." index="7" instance=ExtResource("4_yp3xp")]
+[node name="Stones" parent="Map/LeftFence/LongFence1" index="2" instance=ExtResource("4_yp3xp")]
 transform = Transform3D(0.420814, 0.0174782, -0.906978, -4.97283e-10, 0.999814, 0.0192672, 0.907147, -0.00810792, 0.420736, -2.82753, -0.032434, 1.04281)
 
-[node name="path_D2" parent="." index="8" instance=ExtResource("4_yp3xp")]
-transform = Transform3D(0.0241941, 0.0234616, 0.999432, -0.0167004, 0.999595, -0.0230611, -0.999567, -0.016133, 0.0245764, -3.26413, -0.0232964, 3.56935)
+[node name="LongFence2" type="Node3D" parent="Map/LeftFence" index="1"]
 
-[node name="path_D5" parent="." index="9" instance=ExtResource("4_yp3xp")]
+[node name="Fence1" parent="Map/LeftFence/LongFence2" index="0" instance=ExtResource("3_10ree")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76375, 0, -3.49014)
+
+[node name="Fence2" parent="Map/LeftFence/LongFence2" index="1" instance=ExtResource("3_10ree")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.26589, 0, -3.49221)
+
+[node name="Stones" parent="Map/LeftFence/LongFence2" index="2" instance=ExtResource("4_yp3xp")]
 transform = Transform3D(0.614096, 0.0255365, 0.788818, -0.00574491, 0.999595, -0.0278875, -0.78921, 0.0125939, 0.613994, -3.03972, -0.0688558, -3.5797)
 
-[node name="tree_pine_orange_small" parent="." index="10" instance=ExtResource("4_48qb8")]
+[node name="LongFence3" type="Node3D" parent="Map/LeftFence" index="2"]
+
+[node name="Fence1" parent="Map/LeftFence/LongFence3" index="0" instance=ExtResource("3_10ree")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.74538, 0, 3.51251)
+
+[node name="Fence2" parent="Map/LeftFence/LongFence3" index="1" instance=ExtResource("3_10ree")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.24752, 0, 3.51044)
+
+[node name="Stones" parent="Map/LeftFence/LongFence3" index="2" instance=ExtResource("4_yp3xp")]
+transform = Transform3D(0.0241941, 0.0234616, 0.999432, -0.0167004, 0.999595, -0.0230611, -0.999567, -0.016133, 0.0245764, -3.26413, -0.0232964, 3.56935)
+
+[node name="Pines" type="Node3D" parent="Map/LeftFence" index="3"]
 transform = Transform3D(0.991479, 0.130267, 0, -0.130055, 0.989869, 0.0569716, 0.0074215, -0.0564861, 0.998376, -4.53123, 0, 2.337)
 
-[node name="tree_pine_yellow_medium" parent="." index="11" instance=ExtResource("5_10ree")]
-transform = Transform3D(0.994921, 0.100657, 0, -0.100031, 0.988736, -0.11133, -0.0112062, 0.110765, 0.993783, -4.73669, 0, -1.335)
+[node name="Pine1" parent="Map/LeftFence/Pines" index="0" instance=ExtResource("4_48qb8")]
+transform = Transform3D(1, 1.94996e-09, 0, 1.76078e-08, 1, 0, -9.31323e-10, 7.45058e-09, 1, 0, 0, 0)
 
-[node name="tree_pine_yellow_small" parent="." index="12" instance=ExtResource("6_yp3xp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.17652, 0, 2.0929)
+[node name="Pine2" parent="Map/LeftFence/Pines" index="1" instance=ExtResource("5_10ree")]
+transform = Transform3D(0.99937, -0.0279691, 0.0218544, 0.0312204, 0.985574, -0.166337, -0.0168869, 0.166915, 0.985826, -0.214433, 0.182824, -3.66603)
 
-[node name="PickupSpawner" parent="." index="14" instance=ExtResource("7_428bw")]
+[node name="Pine3" parent="Map/LeftFence/Pines" index="2" instance=ExtResource("6_yp3xp")]
+transform = Transform3D(0.991479, -0.130055, 0.00742151, 0.130267, 0.989868, -0.0564861, -1.35042e-08, 0.0569715, 0.998376, -3.61604, -0.461071, -0.243703)
+
+[node name="PickupSpawner" parent="Pickups" index="0" instance=ExtResource("7_428bw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.37295, 1.19209e-07, -3.83426)
 chances = 2

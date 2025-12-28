@@ -20,6 +20,12 @@ size = Vector2(100, 10.5)
 script = ExtResource("1_th87o")
 metadata/hewwo = false
 
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Pickups" type="Node3D" parent="."]
+
+[node name="Effects" type="Node3D" parent="."]
+
 [node name="Borders" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("PlaneMesh_yccht")

@@ -9,21 +9,21 @@
 
 [node name="Segment" instance=ExtResource("1_lmkoh")]
 
-[node name="path_D" parent="." index="1" instance=ExtResource("2_o53g2")]
+[node name="Stones1" parent="Map" index="0" instance=ExtResource("2_o53g2")]
 transform = Transform3D(1.12811, 0.0633471, 0.404154, -0.0839997, 1.19614, 0.0469877, -0.400369, -0.0724638, 1.12892, 3.56788, -0.117905, -0.148627)
 
-[node name="path_D2" parent="." index="2" instance=ExtResource("2_o53g2")]
+[node name="Stones2" parent="Map" index="1" instance=ExtResource("2_o53g2")]
 transform = Transform3D(-0.552912, 0.0235536, -0.506195, 0.0416925, 0.748764, -0.0106998, 0.505025, -0.0360274, -0.553311, 3.01635, -0.111912, -0.737032)
 
-[node name="lantern_hanging" parent="." index="3" instance=ExtResource("3_c4wn8")]
-transform = Transform3D(0.643193, 0.00551073, -0.475682, 0.00788026, 0.799713, 0.01992, 0.475649, -0.0207011, 0.642907, 1.72583, 2.83194, -0.223072)
-
-[node name="Light" parent="lantern_hanging" index="0" instance=ExtResource("4_o53g2")]
-transform = Transform3D(1, -4.47034e-09, 6.19889e-07, 4.47035e-09, 1, -1.34111e-08, -6.19889e-07, 1.34111e-08, 1, -0.25, -1, 0.25)
-
-[node name="post" parent="." index="4" instance=ExtResource("4_vlfew")]
+[node name="LightPost" parent="Map" index="2" instance=ExtResource("4_vlfew")]
 transform = Transform3D(0.126594, -0.108227, -0.986032, 0.0395945, 0.99379, -0.103995, 0.991164, -0.0258764, 0.130093, 3.19036, -0.105747, -0.300663)
 
-[node name="PickupSpawner" parent="." index="6" instance=ExtResource("6_c4wn8")]
+[node name="HangingLantern" parent="Map/LightPost" index="1" instance=ExtResource("3_c4wn8")]
+transform = Transform3D(0.553183, 0.0118437, 0.577797, -0.0740876, 0.794685, 0.0546419, -0.573151, -0.091293, 0.550605, 0.00782086, 3.07593, 1.14867)
+
+[node name="Light" parent="Map/LightPost/HangingLantern" index="0" instance=ExtResource("4_o53g2")]
+transform = Transform3D(1, -4.47034e-09, 6.19889e-07, 4.47035e-09, 1, -1.34111e-08, -6.19889e-07, 1.34111e-08, 1, -0.25, -1, 0.25)
+
+[node name="PickupSpawner" parent="Pickups" index="0" instance=ExtResource("6_c4wn8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4733, 0, 0.0853792)
 script = null

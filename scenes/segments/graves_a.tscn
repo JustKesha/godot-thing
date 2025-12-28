@@ -9,59 +9,77 @@
 
 [node name="Segment" instance=ExtResource("1_gpx17")]
 
-[node name="path_D" parent="." index="1" instance=ExtResource("2_8qtq0")]
-transform = Transform3D(0.420814, 0.0174782, -0.906978, -4.97283e-10, 0.999814, 0.0192672, 0.907147, -0.00810792, 0.420736, -6.55153, -0.0776452, 0.341319)
+[node name="Grave1" type="Node3D" parent="Map" index="0"]
+transform = Transform3D(0.923857, -0.357413, 0.136909, 0.360811, 0.932639, 0, -0.127686, 0.0493981, 0.990584, -6.33726, -0.642357, 0.15086)
 
-[node name="path_D3" parent="." index="2" instance=ExtResource("2_8qtq0")]
-transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, -6.3819, -0.0501655, 0.99479)
+[node name="Tombstone" parent="Map/Grave1" index="0" instance=ExtResource("4_ladsj")]
+transform = Transform3D(1, -2.51457e-08, 1.49012e-08, 4.56348e-08, 1, 7.45058e-09, -2.98023e-08, 3.72529e-09, 1, 0.146949, -0.0568506, -1.14002)
 
-[node name="path_D8" parent="." index="3" instance=ExtResource("2_8qtq0")]
-transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, 6.6038, -0.0782403, 3.49611)
+[node name="Stones1" parent="Map/Grave1" index="1" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(0.272941, 0.377926, -0.884689, -0.105593, 0.925818, 0.362919, 0.956218, -0.00563881, 0.292601, -0.0185194, 0.612664, 0.15933)
 
-[node name="path_D7" parent="." index="4" instance=ExtResource("2_8qtq0")]
-transform = Transform3D(-0.64252, -0.0147639, 0.766126, 3.47563e-10, 0.999814, 0.0192672, -0.766269, 0.0123796, -0.642401, 6.03953, -0.0310608, -2.68224)
+[node name="Stones2" parent="Map/Grave1" index="2" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(-0.684383, 0.372951, -0.62652, 0.264768, 0.927743, 0.263041, 0.679352, 0.0141384, -0.733676, 0.0646696, 0.609945, 0.829872)
 
-[node name="path_D4" parent="." index="5" instance=ExtResource("2_8qtq0")]
-transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, -3.549, -0.0501655, 3.66062)
+[node name="Grave2" type="Node3D" parent="Map" index="1"]
+transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, -3.32073, 0, 3.10156)
 
-[node name="path_D6" parent="." index="6" instance=ExtResource("2_8qtq0")]
-transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, 2.7721, -0.0501655, 1.24845)
+[node name="Tombstone" parent="Map/Grave2" index="0" instance=ExtResource("5_32tkp")]
+transform = Transform3D(-0.632414, 0.0986143, 0.768327, 0.0831307, 0.994775, -0.0592535, -0.770156, 0.0263989, -0.637309, -0.841493, -0.12857, 0.708715)
 
-[node name="path_D2" parent="." index="7" instance=ExtResource("2_8qtq0")]
-transform = Transform3D(0.0241941, 0.0234616, 0.999432, -0.0167004, 0.999595, -0.0230611, -0.999567, -0.016133, 0.0245764, -3.39907, -0.0723675, 2.89281)
+[node name="Stones1" parent="Map/Grave2" index="1" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(-0.788422, -0.0273497, -0.614526, -0.0285449, 0.999562, -0.00786348, 0.614472, 0.0113419, -0.788858, -0.111795, -0.0760711, 0.191489)
 
-[node name="path_D5" parent="." index="8" instance=ExtResource("2_8qtq0")]
-transform = Transform3D(0.614096, 0.0255365, 0.788818, -0.00574491, 0.999595, -0.0278875, -0.78921, 0.0125939, 0.613994, -3.41967, -0.0688558, -1.50996)
+[node name="Stones2" parent="Map/Grave2" index="2" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(1, 9.31323e-10, 0, 0, 1, 4.65661e-10, -2.98023e-08, 4.65661e-10, 1, 0.577085, -0.0467299, -0.178766)
 
-[node name="grave_A" parent="." index="9" instance=ExtResource("3_8dmij")]
-transform = Transform3D(0.9967, 0.032126, -0.0745399, -0.0353305, 0.998489, -0.0420781, 0.0730755, 0.0445728, 0.99633, -3.33726, -0.0674404, -3)
+[node name="Grave3" type="Node3D" parent="Map" index="2"]
+transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, -3.39472, 0, -1.64029)
 
-[node name="grave_A2" parent="." index="10" instance=ExtResource("3_8dmij")]
-transform = Transform3D(0.995838, -0.0750504, -0.0517187, 0.0722256, 0.995899, -0.0544796, 0.0555954, 0.0505175, 0.997175, 7.01013, -0.0901382, 2)
+[node name="Tombstone" parent="Map/Grave3" index="0" instance=ExtResource("3_8dmij")]
+transform = Transform3D(-0.575284, 0.014109, 0.817832, -0.019579, 0.999327, -0.0310125, -0.817719, -0.0338533, -0.574621, -1.08806, -0.0831783, 0.816022)
 
-[node name="grave_A_destroyed" parent="." index="11" instance=ExtResource("4_ladsj")]
-transform = Transform3D(0.997704, -0.0455847, -0.0500874, 0.045642, 0.998958, 0, 0.0500352, -0.00228609, 0.998745, 3.01013, -0.0457222, 0)
+[node name="Stones" parent="Map/Grave3" index="1" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(-0.999662, -0.00644705, -0.0251518, -0.00623172, 0.999944, -0.00862871, 0.025206, -0.00846902, -0.999647, 0.11661, -0.0676231, -0.064631)
 
-[node name="grave_A_destroyed2" parent="." index="12" instance=ExtResource("4_ladsj")]
-transform = Transform3D(0.923857, -0.357413, 0.136909, 0.360811, 0.932639, 0, -0.127686, 0.0493981, 0.990584, -6.33726, -0.642357, -1)
+[node name="Grave4" type="Node3D" parent="Map" index="3"]
+transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, 2.81967, 0, 1.29652)
 
-[node name="gravestone" parent="." index="13" instance=ExtResource("5_32tkp")]
-transform = Transform3D(0.997666, -0.0681008, 0.00489467, 0.0682765, 0.995099, -0.0715216, 0, 0.0716889, 0.997427, -3.33726, -0.114891, 2)
+[node name="Tombstone" parent="Map/Grave4" index="0" instance=ExtResource("4_ladsj")]
+transform = Transform3D(-0.59374, 0.0271278, 0.804199, 0.0611121, 0.998066, 0.0114517, -0.802333, 0.0559457, -0.59425, -1.12349, -0.0587104, 0.673545)
 
-[node name="gravestone2" parent="." index="14" instance=ExtResource("5_32tkp")]
-transform = Transform3D(0.961459, -0.0362449, 0.27255, 0, 0.991273, 0.131824, -0.274949, -0.126743, 0.953068, 6.01013, 0, -3)
+[node name="Stones" parent="Map/Grave4" index="1" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(1, 1.86265e-09, 0, 0, 1, 4.65661e-10, -2.98023e-08, 9.31323e-10, 1, -0.00702542, -0.0514522, 0.0662832)
 
-[node name="PickupSpawner" parent="." index="16" instance=ExtResource("6_8qtq0")]
+[node name="Grave5" type="Node3D" parent="Map" index="4"]
+transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, 6.82464, 0, 3.3715)
+
+[node name="Tombstone" parent="Map/Grave5" index="0" instance=ExtResource("3_8dmij")]
+transform = Transform3D(-0.588257, 0.0866452, 0.804019, 0.0877309, 0.995213, -0.0430613, -0.803902, 0.0452062, -0.593043, -1.17832, -0.104108, 0.724049)
+
+[node name="Stones" parent="Map/Grave5" index="1" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(1, 9.31323e-10, 0, 0, 1, 4.65661e-10, -2.98023e-08, 4.65661e-10, 1, 0.236367, -0.0799947, 0.0902843)
+
+[node name="Grave6" type="Node3D" parent="Map" index="5"]
+transform = Transform3D(-0.633894, 0.0149017, -0.773276, 3.47563e-10, 0.999814, 0.0192672, 0.77342, 0.0122134, -0.633776, 6.17212, 0, -2.00339)
+
+[node name="Tombstone" parent="Map/Grave6" index="0" instance=ExtResource("5_32tkp")]
+transform = Transform3D(-0.822114, -0.0750501, 0.564354, 0.0109693, 0.989001, 0.147501, -0.569218, 0.127453, -0.812249, -0.668117, -0.0145858, 0.756888)
+
+[node name="Stones" parent="Map/Grave6" index="1" instance=ExtResource("2_8qtq0")]
+transform = Transform3D(-0.185358, 0.0189334, -0.982488, -0.0189333, 0.99956, 0.0228343, 0.982489, 0.0228344, -0.184917, -0.440991, -0.0413218, 0.532166)
+
+[node name="PickupSpawner1" parent="Pickups" index="0" instance=ExtResource("6_8qtq0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.97563, 0, -1.86991)
 use_simplified = false
 rare_pool = Array[String](["comm_candle"])
 
-[node name="PickupSpawner2" parent="." index="17" instance=ExtResource("6_8qtq0")]
+[node name="PickupSpawner2" parent="Pickups" index="1" instance=ExtResource("6_8qtq0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.40029, 0, 1.65435)
 use_simplified = false
 rare_pool = Array[String](["comm_candle"])
 
-[node name="PickupSpawner3" parent="." index="18" instance=ExtResource("6_8qtq0")]
+[node name="PickupSpawner3" parent="Pickups" index="2" instance=ExtResource("6_8qtq0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.02848, 0, 3.43181)
 use_simplified = false
 rare_pool = Array[String](["comm_candle"])

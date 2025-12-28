@@ -154,6 +154,7 @@ func _on_fuel_changed(by: float, current: float):
 func _ready():
 	update_rate = update_rate
 	fuel = fuel
+	fuel_changed.emit(0, fuel)
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed(extinguish_action): extinguish()
