@@ -1,131 +1,128 @@
 class_name Pickups extends Resource
 
-# NOTE When exporting make sure resources from path below are included
-static var path := "res://scenes/objects/pickups/"
-static var comm_prefix := "comm_"
-static var comm_chance := -1.0
-static var comm: Array[String] = []
-static var rare_prefix := "rare_"
-static var rare_chance := 30.0
-static var rare: Array[String] = []
-static var epic_prefix := "epic_"
-static var epic_chance := 10.0
-static var epic: Array[String] = []
+enum Rarity { ANY = -1, COMMON, RARE, EPIC }
+enum Pool { ALL, FOREST, STRUCTURE }
+enum Chances { GRIM, SLIM, OKAY, GOOD, BEST }
 
-enum PickupPool {
-	ALL = 0,
-	FOREST = 1,
-	BENCH = 2
-}
+const CHANCES := {
+	Chances.GRIM: {
+		Rarity.COMMON: 20.0,
+		Rarity.RARE: 10.0,
+		Rarity.EPIC: 0.1,
+		},
+	Chances.SLIM: {
+		Rarity.COMMON: 30.0,
+		Rarity.RARE: 20.0,
+		Rarity.EPIC: 2.5,
+		},
+	Chances.OKAY: {
+		Rarity.COMMON: 50.0,
+		Rarity.RARE: 30.0,
+		Rarity.EPIC: 5.0,
+		},
+	Chances.GOOD: {
+		Rarity.COMMON: 30.0,
+		Rarity.RARE: 40.0,
+		Rarity.EPIC: 15.0,
+		},
+	Chances.BEST: {
+		Rarity.COMMON: 20.0,
+		Rarity.RARE: 50.0,
+		Rarity.EPIC: 30.0,
+		},
+	}
 
-enum Chances {
-	NONE = 0, GRIM = 1, SLIM = 2, OKAY = 3, GOOD = 4, EASY = 5
-}
+const PATH := "res://scenes/objects/pickups/"
+const EXTN := ".tscn"
+const DATA := {
+	"candle": {
+		"rarity": Rarity.RARE,
+		"pools": [Pool.STRUCTURE]
+		},
+	"pumpkin_small": {
+		"rarity": Rarity.COMMON,
+		"pools": [Pool.FOREST, Pool.STRUCTURE]
+		},
+	"pumpkin_large": {
+		"rarity": Rarity.RARE,
+		"pools": [Pool.FOREST]
+		},
+	}
+
+static var pools: Dictionary[Pool, Dictionary] = {}
+
+static func _generate_loot_pools():
+	for pool_id in Pool.values():
+		pools[pool_id] = {
+			Rarity.COMMON: [],
+			Rarity.RARE: [],
+			Rarity.EPIC: [],
+			}
+	for pickup_id in DATA.keys():
+		var pickup_data = DATA[pickup_id]
+		for pool_id in pickup_data["pools"] + [Pool.ALL]:
+			pools[pool_id][pickup_data["rarity"]].append(pickup_id)
+	Logger.write("LOOT POOLS GENERATED: " + JSON.stringify(pools, "\t"))
 
 static func _static_init():
-	var dir = DirAccess.open(path)
-	if not dir: return
+	_generate_loot_pools()
+
+# ACTIONS
+
+static func get_random(pool: Pool = Pool.ALL,
+	rarity: Rarity = Rarity.ANY) -> Pickup:
+	var pickup_ids := get_pickup_ids(pool, rarity)
+	if not pickup_ids: return null
 	
-	for file in dir.get_files():
-		if not file.ends_with(".tscn"):
-			continue
-		var name = file.get_basename()
-		
-		if name.begins_with(comm_prefix):
-			comm.append(name)
-		elif name.begins_with(rare_prefix):
-			rare.append(name)
-		elif name.begins_with(epic_prefix):
-			epic.append(name)
-
-static func _get_random(roll := -1.0, chance_epic := -1.0, chance_rare := -1.0,
-	chance_comm := -1.0, epic_pool: Array[String] = epic,
-	rare_pool: Array[String] = rare, comm_pool: Array[String] = comm) -> Pickup:
-	if chance_epic < 0: chance_epic = epic_chance
-	if chance_rare < 0: chance_rare = rare_chance
-	if chance_comm < 0: chance_comm = comm_chance
-
-	if chance_comm < 0: chance_comm = 100.0 - chance_epic - chance_rare
-	if roll < 0: roll = randf() * 100
-
-	if roll < chance_epic:
-		return get_epic(epic_pool)
-	elif roll < chance_rare + chance_epic:
-		return get_rare(rare_pool)
-	elif roll < chance_comm + chance_rare + chance_epic:
-		return get_comm(comm_pool)
-	else:
-		return null
-
-static func get_random(pool: PickupPool = PickupPool.ALL,
-	chances: Chances = Chances.OKAY, roll := -1.0) -> Pickup:
-
-	var comm_pool := comm
-	var rare_pool := rare
-	var epic_pool := epic
-
-	match pool:
-		PickupPool.ALL:
-			pass
-		PickupPool.FOREST:
-			comm_pool = []
-			rare_pool = ['rare_pumpkin']
-			epic_pool = ['epic_pumpkin']
-		PickupPool.BENCH:
-			comm_pool = ['comm_candle']
-			rare_pool = ['rare_pumpkin']
-			epic_pool = ['epic_pumpkin']
-	
-	var chance_comm := -1.0
-	var chance_rare := -1.0
-	var chance_epic := -1.0
-
-	match chances:
-		Chances.NONE:
-			chance_comm = 0.0
-			chance_rare = 0.0
-			chance_epic = 0.0
-		Chances.GRIM:
-			chance_comm = 12.0
-			chance_rare = 4.5
-			chance_epic = 1.0
-		Chances.SLIM:
-			chance_comm = 25.0
-			chance_rare = 7.5
-			chance_epic = 2.5
-		Chances.OKAY:
-			chance_comm = 40.0
-			chance_rare = 15.0
-			chance_epic = 5.0
-		Chances.GOOD:
-			chance_comm = 50.0
-			chance_rare = 30.0
-			chance_epic = 10.0
-		Chances.EASY:
-			chance_comm = -1.0
-			chance_rare = 45.0
-			chance_epic = 20.0
-
-	return _get_random(roll, chance_epic, chance_rare, chance_comm, epic_pool,
-		rare_pool, comm_pool)
-
-static func get_truly_random(pool: Array[String] = comm + rare + epic) -> Pickup:
-	return get_by_id(pool.pick_random())
-
-static func get_comm(pool: Array[String] = comm) -> Pickup:
-	return Pickups.get_by_id(pool.pick_random() if pool else '')
-
-static func get_rare(pool: Array[String] = rare) -> Pickup:
-	return get_by_id(pool.pick_random() if pool else '')
-
-static func get_epic(pool: Array[String] = epic) -> Pickup:
-	return get_by_id(pool.pick_random() if pool else '')
+	return get_by_id(pickup_ids.pick_random())
 
 static func get_by_id(pickup_id: String) -> Pickup:
-	if not pickup_id: return null
-	var pickup_path = path + pickup_id + ".tscn"
+	var pickup_path := PATH + pickup_id + EXTN
 	if not ResourceLoader.exists(pickup_path):
-		push_error("Segment not found at: " + pickup_path)
+		push_error("Pickup by id '" + pickup_id + "' not found.")
 		return null
-	var pickup_scene = load(pickup_path)
-	return pickup_scene.instantiate()
+	
+	var pickup = load(pickup_path).instantiate() as Pickup
+	if not pickup.id:
+		pickup.id = pickup_id
+	
+	return pickup
+
+static func get_by_roll(pool: Pool = Pool.ALL,
+	chances: Chances = Chances.OKAY, percent: float = -1) -> Pickup:
+	var rarity = get_rarity_by_roll(chances, percent)
+	return get_random(pool, rarity)
+
+# HELPERS
+
+static func get_pickup_ids(pool: Pool = Pool.ALL,
+	rarity: Rarity = Rarity.ANY) -> Array:
+	if rarity < 0:
+		rarity = [
+			Rarity.COMMON,
+			Rarity.RARE,
+			Rarity.EPIC
+		].pick_random()
+	return pools[pool][rarity] as Array
+
+static func get_rarity_chance(rarity: Rarity = Rarity.ANY,
+	chances: Chances = Chances.OKAY) -> float:
+	if rarity < 0:
+		rarity = [
+			Rarity.COMMON,
+			Rarity.RARE,
+			Rarity.EPIC
+		].pick_random()
+	return CHANCES[chances][rarity] as float
+
+static func get_rarity_by_roll(chances: Chances = Chances.OKAY,
+	percent: float = -1) -> Rarity:
+	if percent < 0: percent = randf() * 100
+	
+	var count := 0
+	for rarity in [Rarity.COMMON, Rarity.RARE, Rarity.EPIC]:
+		count += get_rarity_chance(rarity, chances)
+		
+		if percent < rarity: return rarity
+	
+	return Rarity.ANY
