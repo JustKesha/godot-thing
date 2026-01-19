@@ -74,7 +74,8 @@ static func _generate_loot_pools():
 			var pickup_rarity = pickup_data["rarity"]
 			if pickup_rarity == Rarity.ANY:
 				pickup_rarity = [Rarity.COMMON, Rarity.RARE, Rarity.EPIC].pick_random()
-			pools[pool_id][pickup_rarity].append(pickup_id)
+			if pools.keys().has(pickup_rarity):
+				pools[pool_id][pickup_rarity].append(pickup_id)
 	Logger.write("LOOT POOLS GENERATED: " + JSON.stringify(pools, "\t"))
 
 static func _static_init():
@@ -139,6 +140,6 @@ static func get_rarity_by_roll(chances: Chances = Chances.OKAY,
 	var count := 0
 	for rarity in [Rarity.COMMON, Rarity.RARE, Rarity.EPIC]:
 		count += get_rarity_chance(rarity, chances)
-		if percent < rarity: return rarity
+		if percent < count: return rarity
 	
 	return Rarity.ANY

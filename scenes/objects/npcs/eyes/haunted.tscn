@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cm4gifg7cth66"]
+
+[ext_resource type="Script" uid="uid://giffqh2p0ibw" path="res://scripts/generic/eye.gd" id="1_64ltf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ir15t"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 10.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_n1b37"]
+material = SubResource("StandardMaterial3D_ir15t")
+radial_segments = 8
+rings = 6
+
+[node name="Eye" type="MeshInstance3D" node_paths=PackedStringArray("eyeball")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = SubResource("SphereMesh_n1b37")
+script = ExtResource("1_64ltf")
+eyeball = NodePath(".")
+
+[node name="Light" type="SpotLight3D" parent="."]
+light_color = Color(0.804894, 0.50057, 0.212958, 1)
+light_energy = 0.25
+light_volumetric_fog_energy = 0.0
+spot_angle = 15.0

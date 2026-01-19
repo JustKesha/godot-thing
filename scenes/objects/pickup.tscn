@@ -1,14 +1,19 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqsberxr7n7i5"]
 
 [ext_resource type="PackedScene" uid="uid://c6es15ua1qp67" path="res://scenes/objects/interactable.tscn" id="1_ehort"]
-[ext_resource type="Script" uid="uid://c7cxppxn2hr1n" path="res://scripts/pickup.gd" id="2_ug66n"]
+[ext_resource type="Script" uid="uid://c7cxppxn2hr1n" path="res://scripts/pickups/pickup.gd" id="2_ug66n"]
 
 [node name="Pickup" instance=ExtResource("1_ehort")]
 script = ExtResource("2_ug66n")
-pickup_item = "candle"
-pickup_quantity = 1
+item = "candle"
+quantity = 1
 pickup_rate = 99
-pickup_allow_overflow = false
+allow_overflow = false
+particles_on_spawn = true
+particles_on_remove = true
+particles_type = 0
+particles_scale = Vector3(1, 1, 1)
+particles_offset = Vector3(0, 0, 0)
 tooltip_action = "Collect"
 cooldown_enabled = false
 

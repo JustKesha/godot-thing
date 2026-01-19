@@ -5,11 +5,7 @@ class_name ParticleSystem extends Node
 	preload("res://scenes/objects/particles/spark.tscn"),
 	preload("res://scenes/objects/particles/dust.tscn"),
 	]
-enum Particles {
-	POOF = 0,
-	SPARK = 1,
-	DUST = 2
-	}
+enum Particles { POOF, SPARK, DUST }
 
 ## Spawns particles by id, by default assigns them to the current world segment.     
 func spawn(position: Vector3 = Vector3.ZERO, id: Particles = Particles.POOF,

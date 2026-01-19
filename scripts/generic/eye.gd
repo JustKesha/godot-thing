@@ -11,7 +11,7 @@ const pupil_size_multiplier = 0.01
 @export var pupil: Node3D
 @export var pupil_dilation_speed: float = 1.0
 @export var pupil_constriction_speed: float = 5.0
-@onready var pupil_size: float = pupil.scale.y:
+@onready var pupil_size: float = pupil.scale.y if pupil else 1:
 	set(value):
 		pupil_size = value
 		if pupil: pupil.scale = Vector3.ONE * pupil_size * pupil_size_multiplier

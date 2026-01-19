@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://t641p716hpon"]
+
+[ext_resource type="PackedScene" uid="uid://dqsberxr7n7i5" path="res://scenes/objects/pickup.tscn" id="1_6aomt"]
+[ext_resource type="PackedScene" uid="uid://djy8fdnty7y20" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/pumpkin_yellow_small.fbx" id="2_vlect"]
+
+[node name="Pickup" instance=ExtResource("1_6aomt")]
+item = "pumpkin"
+tooltip_desc = "Refills 15 fuel"
+tooltip_titles = Array[String](["Tiny Pumpkin", "Tiny Pumpkin", "Smaller Pumpkin"])
+
+[node name="Model" parent="." index="1" instance=ExtResource("2_vlect")]
+transform = Transform3D(0.904342, -0.0721112, 0.420673, 0.0347388, 0.99479, 0.0958458, -0.425392, -0.0720637, 0.902135, 0, -0.0539728, 7.03724e-10)

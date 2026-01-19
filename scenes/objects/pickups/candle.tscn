@@ -32,7 +32,7 @@ rings = 3
 
 [node name="Pickup" instance=ExtResource("1_fcoxx")]
 tooltip_title = "Candles"
-tooltip_descs = Array[String](["A small, quiet flame. It holds the promise of light.", "The flame flickers, but does not go out. It feels determined.", "A tiny beacon against the dark. Your path forward brightens."])
+tooltip_desc = "Reignites your lantern when used"
 
 [node name="Model" parent="." index="1" instance=ExtResource("2_dxtli")]
 transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, -0.0245314, 0)

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://wmetwhfg1wjp" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/tree_pine_orange_small.fbx" id="4_d6s58"]
 [ext_resource type="PackedScene" uid="uid://ba2gcn71t1lvq" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/tree_pine_yellow_medium.fbx" id="5_glvso"]
 [ext_resource type="PackedScene" uid="uid://bqxdgjmcw4m64" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/tree_pine_yellow_small.fbx" id="6_5m6wc"]
-[ext_resource type="PackedScene" uid="uid://ukmd5em17n3f" path="res://scenes/objects/pickup_spawner.tscn" id="7_61jsm"]
+[ext_resource type="PackedScene" uid="uid://cprgsniy86yia" path="res://scenes/objects/pickups/spawners/basic.tscn" id="7_61jsm"]
 
 [node name="Segment" instance=ExtResource("1_qqgw8")]
 
@@ -54,5 +54,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.71588, 0, 2.32855)
 transform = Transform3D(0.997819, -0.0660127, 0, 0.0658609, 0.995525, 0.0677715, -0.00447378, -0.0676237, 0.997701, 4.77067, 0, 1.6547)
 
 [node name="PickupSpawner" parent="Pickups" index="0" instance=ExtResource("7_61jsm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.11379, 0, -0.673754)
-chances = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.11457, 0, -1.18789)
+loot_pool = 2
+loot_chances = 1

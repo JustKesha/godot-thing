@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cprgsniy86yia"]
+
+[ext_resource type="Script" uid="uid://8fevk85ggxwj" path="res://scripts/pickups/spawner.gd" id="1_odn60"]
+
+[node name="PickupSpawner" type="Node3D"]
+script = ExtResource("1_odn60")

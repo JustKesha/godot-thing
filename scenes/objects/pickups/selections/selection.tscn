@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b06xiwtd3gwst"]
+
+[ext_resource type="Script" uid="uid://qb0i1a5jtcm2" path="res://scripts/pickups/selection.gd" id="1_g0j6w"]
+[ext_resource type="PackedScene" uid="uid://b1w8mb0rbqk8h" path="res://scenes/objects/generic/trigger.tscn" id="2_n1hk3"]
+
+[node name="PickupSelection" type="Node3D"]
+script = ExtResource("1_g0j6w")
+
+[node name="Trigger" parent="." instance=ExtResource("2_n1hk3")]
+
+[node name="Spawners" type="Node3D" parent="."]
+
+[connection signal="triggered" from="Trigger" to="." method="_on_trigger_triggered"]

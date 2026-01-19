@@ -1,9 +1,13 @@
 class_name Interactable extends Node3D
 
 signal removed()
+signal hovered()
+signal unhovered()
+signal cooldown_set(duration: float)
+signal cooldown_ended()
+signal interacted()
 
 # OVERWRITE ME
-# TODO Replace with signals on children
 func _on_ready(): pass
 func _on_remove(): pass
 func _on_hover(): pass
@@ -23,14 +27,15 @@ func interact():
 	if responses_interact: player.dialogue_window.display(
 		responses_interact.pick_random())
 	if cooldown_seconds > 0: set_on_cooldown()
+	interacted.emit()
 
 # CURSOR
 @export_group("Cursor")
 @onready var player_cursor: PlayerCursor = References.player.cursor
-@export var cursor: int = 0 # FIXME Should instead be of type PlayerCursor.Cursor
+@export var cursor := References.player.cursor.Cursor.INSPECT
 
 # TOOLTIP
-@export_group("Tooltip")
+@export_group("Tooltip", "tooltip_")
 @export var tooltip_action: String = ''
 @export var tooltip_key: String = ''
 # Option 1: Set a const title / desc
@@ -49,7 +54,7 @@ func _get_tooltip_desc() -> String:
 	if not tooltip_descs: return ''
 	return tooltip_descs.pick_random()
 
-# ONHOVER / CURSOR & TOOLTIP
+# ONHOVER
 var is_hovered: bool = false
 func hover():
 	if not is_instance_valid(self): return
@@ -58,14 +63,16 @@ func hover():
 		tooltip_key)
 	is_hovered = true
 	_on_hover()
+	hovered.emit()
 func unhover():
 	player_cursor.set_state(player_cursor.Cursor.HIDDEN)
 	player_cursor.set_tooltip()
 	is_hovered = false
 	_on_unhover()
+	unhovered.emit()
 
 # RESPONSES
-@export_group("Responses")
+@export_group("Responses", "responses_")
 @export var responses_interact: Array[String] = []
 
 # COOLDOWN
@@ -77,12 +84,16 @@ var is_on_cooldown: bool = false:
 	set(value):
 		if value == is_on_cooldown: return
 		is_on_cooldown = value
-		if is_on_cooldown: _on_cooldown_set()
-		else: _on_cooldown_end()
+		if is_on_cooldown:
+			_on_cooldown_set()
+		else:
+			_on_cooldown_end()
+			cooldown_ended.emit()
 func set_on_cooldown(time: float = cooldown_seconds):
 	if not cooldown_enabled: return
 	cooldown_timer.start(time)
 	is_on_cooldown = true
+	cooldown_set.emit(time)
 func reset_cooldown():
 	cooldown_timer.stop()
 	is_on_cooldown = false
