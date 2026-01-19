@@ -71,7 +71,10 @@ static func _generate_loot_pools():
 	for pickup_id in DATA.keys():
 		var pickup_data = DATA[pickup_id]
 		for pool_id in pickup_data["pools"] + [Pool.ALL]:
-			pools[pool_id][pickup_data["rarity"]].append(pickup_id)
+			var pickup_rarity = pickup_data["rarity"]
+			if pickup_rarity == Rarity.ANY:
+				pickup_rarity = [Rarity.COMMON, Rarity.RARE, Rarity.EPIC].pick_random()
+			pools[pool_id][pickup_rarity].append(pickup_id)
 	Logger.write("LOOT POOLS GENERATED: " + JSON.stringify(pools, "\t"))
 
 static func _static_init():
@@ -81,8 +84,7 @@ static func _static_init():
 
 ## Get random [Pickup] of certain rarity from given [param pool] or [code]null[/code]
 ## is nothing found. If [param rarity] < 0 ([member Rarity.ANY]) will use random [member Rarity].
-static func get_random(pool: Pool = Pool.ALL,
-	rarity: Rarity = Rarity.ANY) -> Pickup:
+static func get_random(pool: Pool = Pool.ALL, rarity: Rarity = Rarity.ANY) -> Pickup:
 	var pickup_ids := get_pickup_ids(pool, rarity)
 	if not pickup_ids: return null
 	
@@ -116,30 +118,20 @@ static func get_by_roll(pool: Pool = Pool.ALL,
 ## If [param rarity] < 0 ([member Rarity.ANY]) will use random [enum Rarity].
 static func get_pickup_ids(pool: Pool = Pool.ALL,
 	rarity: Rarity = Rarity.ANY) -> Array:
-	if rarity < 0:
-		rarity = [
-			Rarity.COMMON,
-			Rarity.RARE,
-			Rarity.EPIC
-		].pick_random()
+	if rarity < 0: rarity = [Rarity.COMMON, Rarity.RARE, Rarity.EPIC].pick_random()
 	return pools[pool][rarity] as Array
 
 ## Get percent chance for a [Pickup] of certain [enum Rarity] appearing with given luck
 ## ([param chances]). If [param rarity] < 0 ([member Rarity.ANY]) will use random [enum Rarity].
 static func get_rarity_chance(rarity: Rarity = Rarity.ANY,
 	chances: Chances = Chances.OKAY) -> float:
-	if rarity < 0:
-		rarity = [
-			Rarity.COMMON,
-			Rarity.RARE,
-			Rarity.EPIC
-		].pick_random()
+	if rarity < 0: rarity = [Rarity.COMMON, Rarity.RARE, Rarity.EPIC].pick_random()
 	return CHANCES[chances][rarity] as float
 
 ## Get [Pickup] [enum Rarity] from a roll [param percent] and luck ([param chances]).
 ## The higher the [param chances] the less roll [param percent] you need to get a higher
 ## [enum Rarity]. By default [param percent] is a random [float] from 0 to 100.
-## NOTE: Will return [member Rarity.ANY] (-1) if no other [enum Rarity] could be achieved.
+## [br]NOTE: Will return [member Rarity.ANY] (-1) if no other [enum Rarity] could be achieved.
 static func get_rarity_by_roll(chances: Chances = Chances.OKAY,
 	percent: float = -1) -> Rarity:
 	if percent < 0: percent = randf() * 100
@@ -147,7 +139,6 @@ static func get_rarity_by_roll(chances: Chances = Chances.OKAY,
 	var count := 0
 	for rarity in [Rarity.COMMON, Rarity.RARE, Rarity.EPIC]:
 		count += get_rarity_chance(rarity, chances)
-		
 		if percent < rarity: return rarity
 	
 	return Rarity.ANY
