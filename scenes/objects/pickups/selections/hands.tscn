@@ -1,31 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3bwq34ppci21"]
+[gd_scene load_steps=4 format=3 uid="uid://b3bwq34ppci21"]
 
 [ext_resource type="PackedScene" uid="uid://b06xiwtd3gwst" path="res://scenes/objects/pickups/selections/selection.tscn" id="1_woy7k"]
 [ext_resource type="PackedScene" uid="uid://sff2p8pycjb6" path="res://scenes/objects/pickups/spawners/hand.tscn" id="2_woy7k"]
-[ext_resource type="Script" uid="uid://bdthhytbyglco" path="res://scripts/npcs/ai/observer.gd" id="3_0213h"]
-[ext_resource type="PackedScene" uid="uid://cm4gifg7cth66" path="res://scenes/objects/npcs/eyes/haunted.tscn" id="4_hoi5p"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3x6ss"]
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_epwbv"]
-material = SubResource("StandardMaterial3D_3x6ss")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssvqc"]
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ycbic"]
-lightmap_size_hint = Vector2i(25, 18)
-material = SubResource("StandardMaterial3D_ssvqc")
-radius = 0.75
-height = 2.5
-radial_segments = 12
-rings = 1
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jvmqb"]
-size = Vector3(15, 15, 15)
+[ext_resource type="PackedScene" uid="uid://ruhm37xbjtwm" path="res://scenes/objects/npcs/observers/observer_selection.tscn" id="3_c17ql"]
 
 [node name="PickupSelection" node_paths=PackedStringArray("spawners") instance=ExtResource("1_woy7k")]
 spawners = [NodePath("Spawners/PickupSpawner2"), NodePath("Spawners/PickupSpawner1"), NodePath("Spawners/PickupSpawner3")]
@@ -34,54 +11,27 @@ spawners = [NodePath("Spawners/PickupSpawner2"), NodePath("Spawners/PickupSpawne
 transform = Transform3D(0.819152, 0, 0.573576, 0, 1, 0, -0.573576, 0, 0.819152, -1.5, 0, -2)
 is_hidden = true
 allow_multiple_interactions = false
+loot_chances = 3
 
 [node name="PickupSpawner2" parent="Spawners" index="1" instance=ExtResource("2_woy7k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
 is_hidden = true
 allow_multiple_interactions = false
+loot_chances = 3
 
 [node name="PickupSpawner3" parent="Spawners" index="2" instance=ExtResource("2_woy7k")]
 transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, 1.5, 0, -2)
 is_hidden = true
 allow_multiple_interactions = false
+loot_chances = 3
 
-[node name="Observer" type="Node3D" parent="." index="2" node_paths=PackedStringArray("scan_timer", "scan_area", "head", "eyes")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0918264, 2.06393, -4.73208)
-script = ExtResource("3_0213h")
-scan_timer = NodePath("Update")
-scan_area = NodePath("InterestArea")
-head = NodePath("Body")
-eyes = [NodePath("Body/EyeLeft"), NodePath("Body/EyeRight")]
-eyes_turn_rate = 3.0
+[node name="Observer" parent="." index="2" node_paths=PackedStringArray("selection", "eyes") instance=ExtResource("3_c17ql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.150807, 0.609284, -4.37814)
+selection = NodePath("..")
+eyes = []
 
-[node name="Body2" type="MeshInstance3D" parent="Observer" index="0"]
-transform = Transform3D(6.1, 3.27826e-07, -5.06639e-07, 1.49012e-07, 5.06, -4.05312e-06, -1.78814e-07, -3.57628e-06, 3.7, 6.70552e-08, 1.57684, -2.52879)
-visible = false
-mesh = SubResource("SphereMesh_epwbv")
-
-[node name="Body" type="Node3D" parent="Observer" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
-
-[node name="Head" type="MeshInstance3D" parent="Observer/Body" index="0"]
-transform = Transform3D(-1.31134e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -0.3, 4.37114e-08, 1.91069e-15, 0, 0, -0.5)
-mesh = SubResource("CapsuleMesh_ycbic")
-skeleton = NodePath("")
-
-[node name="EyeLeft" parent="Observer/Body" index="1" instance=ExtResource("4_hoi5p")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.675, 0.25, -0.565264)
-skeleton = NodePath("")
-
-[node name="EyeRight" parent="Observer/Body" index="2" instance=ExtResource("4_hoi5p")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.675, 0.25, -0.565)
-skeleton = NodePath("")
-
-[node name="InterestArea" type="Area3D" parent="Observer" index="2"]
-collision_layer = 0
-collision_mask = 3
-
-[node name="Hitbox" type="CollisionShape3D" parent="Observer/InterestArea" index="0"]
-shape = SubResource("BoxShape3D_jvmqb")
-
-[node name="Update" type="Timer" parent="Observer" index="3"]
-wait_time = 0.25
-autostart = true
+[node name="Light" type="SpotLight3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 3, -1.25)
+light_color = Color(0.890356, 0.739549, 0.603262, 1)
+light_energy = 0.75
+spot_range = 10.0

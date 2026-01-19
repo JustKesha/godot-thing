@@ -632,12 +632,7 @@ animation_enabled = true
 animation_player = NodePath("Hand/AnimationPlayer")
 particles_enabled = true
 
-[node name="Light" type="SpotLight3D" parent="." index="0"]
-transform = Transform3D(1, 0, 0, 0, 0.422618, 0.906308, 0, -0.906308, 0.422618, 0, 3, 1)
-light_color = Color(0.890356, 0.739549, 0.603262, 1)
-light_energy = 0.75
-
-[node name="Hand" type="Node3D" parent="." index="1"]
+[node name="Hand" type="Node3D" parent="." index="0"]
 transform = Transform3D(1.8976e-09, -1.07618e-08, -0.25, -0.246202, -0.0434121, 5.39808e-15, -0.0434121, 0.246202, -1.09278e-08, 0, 0.512162, -2.74574)
 
 [node name="Armature" type="Node3D" parent="Hand" index="0"]
@@ -913,5 +908,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_pfkwo")
 }
 
-[node name="SpawnPoint" type="Node3D" parent="." index="2"]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.025, 0.113758, 0.101582)
+[node name="SpawnPoint" type="Node3D" parent="." index="1"]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, -0.025, 0.113758, 0.101582)

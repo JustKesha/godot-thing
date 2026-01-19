@@ -4,6 +4,8 @@ class_name ObserverAI extends Observer
 @onready var player := References.player ## The player reference.
 
 @export_group("Scan", "scan_")
+## If set to [code]false[/code] will disable scanning.
+@export var scan_enabled: bool = true
 ## [method ObserverAI.scan] will be called on every [signal Timer.timeout].
 @export var scan_timer: Timer:
 	set(value):
@@ -35,6 +37,7 @@ enum TriggerType {
 
 ## Looks for possbile triggers and updates [member Observer.target_object] if one found.
 func scan():
+	if not scan_enabled: return
 	var trigger = get_trigger()
 	if not trigger: return
 	target_object = trigger
