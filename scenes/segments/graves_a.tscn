@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://43r0nnev0kv8"]
+[gd_scene load_steps=8 format=3 uid="uid://43r0nnev0kv8"]
 
 [ext_resource type="PackedScene" uid="uid://ddbnnkfv7j6kv" path="res://scenes/segment.tscn" id="1_gpx17"]
 [ext_resource type="PackedScene" uid="uid://co2cmgkm58g2n" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/path_D.fbx" id="2_8qtq0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dnpgkj5v053kf" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/grave_A_destroyed.fbx" id="4_ladsj"]
 [ext_resource type="PackedScene" uid="uid://d4d4rc5mnt7l2" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/gravestone.fbx" id="5_32tkp"]
 [ext_resource type="PackedScene" uid="uid://cprgsniy86yia" path="res://scenes/objects/pickups/spawners/basic.tscn" id="6_8qtq0"]
+[ext_resource type="PackedScene" uid="uid://busy2ftsx218w" path="res://scenes/objects/npcs/wandering_soot.tscn" id="7_8dmij"]
 
 [node name="Segment" instance=ExtResource("1_gpx17")]
 
@@ -83,3 +84,12 @@ loot_chances = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.80369, 0, 1.39545)
 loot_pool = 2
 loot_chances = 1
+
+[node name="WanderingSoot" parent="Pickups" index="3" instance=ExtResource("7_8dmij")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.53251, 0, -0.02703)
+
+[node name="WanderingSoot2" parent="Pickups" index="4" instance=ExtResource("7_8dmij")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.30122, 0, -2.41288)
+
+[node name="WanderingSoot3" parent="Pickups" index="5" instance=ExtResource("7_8dmij")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.84768, 0, 3.37028)

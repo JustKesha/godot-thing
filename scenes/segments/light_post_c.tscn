@@ -21,7 +21,7 @@ transform = Transform3D(0.126594, -0.108227, -0.986032, 0.0395945, 0.99379, -0.1
 [node name="HangingLantern" parent="Map/LightPost" index="1" instance=ExtResource("3_c4wn8")]
 transform = Transform3D(0.553183, 0.0118437, 0.577797, -0.0740876, 0.794685, 0.0546419, -0.573151, -0.091293, 0.550605, 0.00782086, 3.07593, 1.14867)
 
-[node name="Light" parent="Map/LightPost/HangingLantern" index="0" instance=ExtResource("4_o53g2")]
+[node name="Light" parent="Map/LightPost/HangingLantern" index="0" groups=["lights"] instance=ExtResource("4_o53g2")]
 transform = Transform3D(1, -4.47034e-09, 6.19889e-07, 4.47035e-09, 1, -1.34111e-08, -6.19889e-07, 1.34111e-08, 1, -0.25, -1, 0.25)
 
 [node name="PickupSpawner" parent="Pickups" index="0" instance=ExtResource("6_c4wn8")]

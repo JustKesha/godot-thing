@@ -10,11 +10,11 @@ class_name PlayerCameraController extends Node
 @export var turn_rate := 15.0
 @export var mouse_mode := Input.MOUSE_MODE_CAPTURED
 @export var h_sensitivity := 1.0
-@export var h_min := -2.0
-@export var h_max := 2.0
+@export var h_min := -2.5
+@export var h_max := 2.5
 @export var v_sensitivity := 1.0
 @export var v_min := -0.95
-@export var v_max := 0.85
+@export var v_max := 1.0
 var sensitivity_divider := 100000.0
 
 @export var is_user_input_on := true

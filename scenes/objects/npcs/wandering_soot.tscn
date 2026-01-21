@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://busy2ftsx218w"]
+
+[ext_resource type="Script" uid="uid://6vnkkrmdbqbn" path="res://scripts/npcs/ai/wandering_soot.gd" id="1_qfcyq"]
+
+[sub_resource type="Curve" id="Curve_cmax3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.247525, 1), 0.0, 0.0, 0, 0, Vector2(0.749175, 0.747995), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_110g6"]
+curve = SubResource("Curve_cmax3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cmax3"]
+emission_shape_scale = Vector3(0.5, 0.1, 0.5)
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = 0.25
+initial_velocity_max = 0.75
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_110g6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmax3"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_jkgvg"]
+material = SubResource("StandardMaterial3D_cmax3")
+radius = 0.167
+height = 0.333
+radial_segments = 8
+rings = 4
+
+[sub_resource type="TorusMesh" id="TorusMesh_0qruo"]
+inner_radius = 0.167
+outer_radius = 0.333
+
+[node name="WanderingSoot" type="Node3D" node_paths=PackedStringArray("update_timer", "particles_alive")]
+script = ExtResource("1_qfcyq")
+is_hidden = true
+update_timer = NodePath("Update")
+particles_alive = NodePath("Particles")
+particles_death = 1
+
+[node name="Particles" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.039391, 0)
+amount = 16
+lifetime = 0.75
+fixed_fps = 10
+process_material = SubResource("ParticleProcessMaterial_cmax3")
+draw_pass_1 = SubResource("SphereMesh_jkgvg")
+
+[node name="Debug" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.978804, 0)
+visible = false
+mesh = SubResource("TorusMesh_0qruo")
+
+[node name="Update" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true

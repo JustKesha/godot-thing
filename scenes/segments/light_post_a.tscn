@@ -33,7 +33,7 @@ transform = Transform3D(0.880874, 0, 0.47335, 0, 1, 0, -0.47335, 0, 0.880874, 2.
 [node name="HangingLantern" parent="Map/LightPost" index="1" instance=ExtResource("5_qifxr")]
 transform = Transform3D(0.555456, 0, 0.575734, 0, 0.8, 0, -0.575734, 0, 0.555456, 0.0136204, 3.08986, 1.10724)
 
-[node name="Light" parent="Map/LightPost/HangingLantern" index="1" instance=ExtResource("4_gkopc")]
+[node name="Light" parent="Map/LightPost/HangingLantern" index="1" groups=["lights"] instance=ExtResource("4_gkopc")]
 transform = Transform3D(1, 0, 7.15256e-08, 0, 1, 0, -7.15256e-08, 0, 1, -0.25, -1, -0.25)
 intensity = 4.0
 

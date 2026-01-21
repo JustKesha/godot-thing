@@ -81,8 +81,8 @@ enum FuelState { NONE = 0, LOW = 20, MID = 50, HIGH = 100 }
 			* (fuel_depletion_rate_max - fuel_depletion_rate_min)
 			+ fuel_depletion_rate_min
 		)
-@export var fuel_depletion_rate_min := 0.25
-@export var fuel_depletion_rate_max := 2.75
+@export var fuel_depletion_rate_min := 0.1
+@export var fuel_depletion_rate_max := 0.5
 ## NOTE Read only, use lock & unlock methods instead
 var is_fuel_depletion_paused: bool:
 	get(): return not fuel_depletion_paused_by.is_empty()
@@ -142,9 +142,10 @@ func _on_fuel_changed(by: float, current: float):
 			light.flicker_min_duration = 0.1
 			light.flicker_max_duration = 0.25
 	
-	light.intensity = (
-		fuel / fuel_limit * (light.max_intensity - light.min_intensity)
-		+ light.min_intensity )
+	if not stopppyyy:
+		light.intensity = (
+			fuel / fuel_limit * (light.max_intensity - light.min_intensity)
+			+ light.min_intensity )
 	
 	Logger.write(debug_info)
 
@@ -153,8 +154,17 @@ func _ready():
 	fuel = fuel
 	fuel_changed.emit(0, fuel)
 
-func _unhandled_input(event: InputEvent):
-	if event.is_action_pressed(extinguish_action): extinguish()
+#func _unhandled_input(event: InputEvent):
+	#if event.is_action_pressed(extinguish_action): extinguish()
+
+var stopppyyy = false
+func _process(delta: float) -> void:
+	if Input.is_action_pressed(extinguish_action):
+		light.intensity -= .1
+		if light.intensity == light.min_intensity: extinguish()
+		stopppyyy= true
+	else:
+		stopppyyy= false
 
 var debug_info: String:
 	get(): return 'LANTERN: '+', '.join([
