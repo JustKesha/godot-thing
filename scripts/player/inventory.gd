@@ -8,15 +8,6 @@ signal item_selected(item: Item)
 signal item_unselected(item: Item)
 
 @onready var player: PlayerAPI = References.player
-var debug_info: String:
-	get():
-		if not items: return ''
-		var str := 'INV: '
-		for i in range(len(items)):
-			var item = items[i]
-			if i != 0: str += ',\n     '
-			str += item.id.to_upper()+' x'+str(item.quantity)+'/'+str(item.stack)
-		return str
 
 @export_group("General")
 @export var slots := 4
@@ -208,3 +199,19 @@ func _unhandled_input(event: InputEvent):
 
 func _ready():
 	init()
+
+var debug_on: bool = false
+var debug_info: String:
+	get():
+		if not debug_on: return ''
+		if not items: return ''
+		
+		var str := 'INV: '
+		
+		for i in range(len(items)):
+			var item = items[i]
+			
+			if i != 0: str += ',\n     '
+			str += item.id.to_upper() + ' x' + str(item.quantity) + '/' + str(item.stack)
+		
+		return str + '.'

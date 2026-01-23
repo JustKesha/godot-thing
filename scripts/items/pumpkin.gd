@@ -1,9 +1,8 @@
 extends Item
 
-@export var fuel_gain: float = 15.0
+@export var effect_id: String = "satiety"
+@export var effect_duration: float = 5.0
 
 func _on_use():
-	if player.lantern.fuel == player.lantern.fuel_limit:
-		return false
-	player.lantern.fuel += fuel_gain
+	player.effects.apply(effect_id, effect_duration)
 	return true

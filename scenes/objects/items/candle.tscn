@@ -43,6 +43,7 @@ rings = 3
 [node name="Item" instance=ExtResource("1_acbkm")]
 script = ExtResource("2_kb1g5")
 min_fuel = 2.5
+stack = 3
 on_use_responses = Array[String](["A fleeting victory over the encroaching gloom... Let us see how long it holds.", "The flame sputters to life anew, a tiny bastion against the overwhelming dark.", "The light returns, but the shadows have grown longer in its absence.", "A small defiance against the eternal night. Take solace in it while you can."])
 on_deny_responses = Array[String](["A profligate gesture... The flame yet burns.", "Preserve your meager resources for the true darkness that lies ahead.", "The flame is yet steady. This impulse is born of fear, not necessity.", "To squander a spark in the face of extant light is the height of folly."])
 icon_path = "uid://d2n4bc325brgi"

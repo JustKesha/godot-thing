@@ -5,7 +5,7 @@ func _on_remove(): pass
 func _on_tick(tps: float): pass
 
 signal applied()
-signal removed()
+signal removed(id: String)
 signal ticked(tps: float)
 
 @onready var player := References.player
@@ -27,15 +27,17 @@ var is_active: bool = false:
 			
 			_on_apply()
 			applied.emit()
-			Logger.write('EFFECT: ' + effect_id + 'x' + str(stack) + ' APPLIED FOR ' + str(duration_timer.wait_time) + ' SECONDS')
+			if debug_on:
+				Logger.write('EFFECT: x' + str(stack) + ' ' + effect_id.to_upper() + ' APPLIED FOR ' + str(duration_timer.wait_time) + ' SECONDS.')
 		else:
 			duration_timer.stop()
 			tick_timer.stop()
 			queue_free()
 			
 			_on_remove()
-			removed.emit()
-			Logger.write('EFFECT: ' + effect_id + ' REMOVED')
+			removed.emit(effect_id)
+			if debug_on:
+				Logger.write('EFFECT: ' + effect_id.to_upper() + ' REMOVED.')
 
 @export_group("Tick", "tick_")
 @export var tick_interval: float = 0.25:
@@ -56,14 +58,20 @@ var ticks_per_second: float:
 	get(): return 1 / tick_interval
 
 @export_group("Stack", "stack_")
-@export var stack_min: int = 1
-@export var stack_max: int = 32
-var stack: int = stack_min:
+@export var stack_min: int = 0
+@export var stack_max: int = 99
+@export var stack_default: int = 1
+var stack: int = 0:
 	set(value):
 		stack = clamp(value, stack_min, stack_max)
 
 @export_group("Duration", "duration_")
-@export var duration_default: float = 1.0
+@export var duration_min: float = 0.05
+@export var duration_default: float = 1.0:
+	set(value):
+		duration_default = value
+		if duration_default < duration_min: duration_default = duration_min
+@export var duration_default_apply_mode := DurationApplyMode.SOFT_SET
 @export var duration_timer: Timer:
 	set(value):
 		duration_timer = value
@@ -74,30 +82,52 @@ var stack: int = stack_min:
 
 # HELPERS
 
-enum DurationApplyMode { HARD_SET, SOFT_SET, ADD }
+enum DurationApplyMode { AUTO, HARD_SET, SOFT_SET, ADD }
 
 func set_duration(duration: float = duration_default,
 	mode := DurationApplyMode.SOFT_SET):
-	var time_left := duration_timer.time_left
+	if duration < 0: duration = duration_default
+	
+	var time_left := get_time_left()
+	var restart := false
 	
 	match mode:
+		DurationApplyMode.ADD:
+			duration_timer.wait_time = duration + time_left
+			restart = true
+			
 		DurationApplyMode.HARD_SET:
 			duration_timer.wait_time = duration
+			restart = true
 		
 		DurationApplyMode.SOFT_SET, _:
 			if duration > time_left:
 				duration_timer.wait_time = duration
-		
-		DurationApplyMode.ADD:
-			duration_timer.wait_time = duration + time_left
+				restart = true
+	
+	if restart and not duration_timer.is_stopped():
+		duration_timer.start()
+
+# TODO
+# enum StackApplyMode { AUTO, HARD_SET, SOFT_SET, ADD }
 
 func set_stack(new_stack: int):
 	stack = new_stack
 
+func get_time_left() -> float:
+	if not duration_timer: return 0
+	return duration_timer.time_left
+
 # ACTIONS
 
-func apply(duration: float = duration_default, stack_add: int = 0,
-	duration_apply_mode := DurationApplyMode.SOFT_SET):
+func apply(duration: float = -1.0, stack_add: int = stack_default,
+	duration_apply_mode := DurationApplyMode.AUTO):
+	if duration < 0:
+		duration = duration_default
+	
+	if duration_apply_mode == DurationApplyMode.AUTO:
+		duration_apply_mode = duration_default_apply_mode
+	
 	set_duration(duration, duration_apply_mode)
 	set_stack(stack + stack_add)
 	is_active = true
@@ -113,3 +143,5 @@ func tick():
 
 func _ready():
 	if apply_on_ready: apply()
+
+var debug_on: bool = false

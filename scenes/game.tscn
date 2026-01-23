@@ -1,8 +1,8 @@
-[gd_scene load_steps=60 format=4 uid="uid://b7owo051mahdu"]
+[gd_scene load_steps=61 format=4 uid="uid://b7owo051mahdu"]
 
 [ext_resource type="Script" uid="uid://bt6r0b4npj65x" path="res://scripts/world/generator.gd" id="1_iywne"]
 [ext_resource type="Script" uid="uid://bau8n7lhn1s68" path="res://scripts/world/api.gd" id="2_264po"]
-[ext_resource type="Script" uid="uid://cfcy0l63lmkbv" path="res://scripts/player/eyes.gd" id="6_0tnpc"]
+[ext_resource type="Script" uid="uid://cfcy0l63lmkbv" path="res://scripts/player/interactor.gd" id="6_0tnpc"]
 [ext_resource type="Script" uid="uid://dax72mr3u4mak" path="res://scripts/generic/light.gd" id="6_p57ef"]
 [ext_resource type="Script" uid="uid://blcuhiqwtfdl5" path="res://scripts/player/lantern.gd" id="6_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://b8mxrvh7c55n7" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_standing.fbx" id="7_gee14"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://c26pbg35u3ubc" path="res://scripts/player/ui/cursor.gd" id="13_ca42v"]
 [ext_resource type="Texture2D" uid="uid://1x0dqgjaimb1" path="res://assets/sprites/cursor/inspect.png" id="13_ir15t"]
 [ext_resource type="Script" uid="uid://d0qhr5rcxkybf" path="res://scripts/generic/bar.gd" id="14_37s47"]
+[ext_resource type="Script" uid="uid://u4xqd02gjokn" path="res://scripts/player/effects.gd" id="14_pl11u"]
 [ext_resource type="Script" uid="uid://utcd1g44dmpc" path="res://scripts/player/movement.gd" id="14_suyxu"]
 [ext_resource type="Script" uid="uid://be3bpi6vm5va5" path="res://scripts/world/systems/events.gd" id="14_trtic"]
 [ext_resource type="Script" uid="uid://b62supoquwoav" path="res://scripts/player/camera/camera_effects.gd" id="15_rysoc"]
@@ -904,6 +905,12 @@ intensity = 0.0
 radius_multiplier = 2.0
 intensity_increase_speed = 6.0
 
+[node name="Effects" type="Node3D" parent="Player/Lantern"]
+script = ExtResource("14_pl11u")
+starting_effects = Array[StringName]([&"regeneration"])
+starting_durations = Array[float]([6.0])
+starting_stacks = Array[int]([7])
+
 [node name="Update" type="Timer" parent="Player/Lantern"]
 autostart = true
 
@@ -1159,7 +1166,7 @@ autowrap_mode = 2
 [node name="Timeout" type="Timer" parent="Player/UI/DialogueWindow"]
 one_shot = true
 
-[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("eyes", "lantern", "inventory", "camera", "camera_effects", "movement", "body", "head", "cursor", "dialogue_window")]
+[node name="API" type="Node" parent="Player" node_paths=PackedStringArray("eyes", "lantern", "inventory", "camera", "camera_effects", "movement", "effects", "body", "head", "cursor", "dialogue_window")]
 script = ExtResource("10_vtaks")
 eyes = NodePath("../Trypod/Head/Camera/Eyes")
 lantern = NodePath("../Lantern")
@@ -1167,6 +1174,7 @@ inventory = NodePath("../Trypod/Inventory")
 camera = NodePath("../Trypod/Head/Camera")
 camera_effects = NodePath("../Trypod/Head")
 movement = NodePath("..")
+effects = NodePath("../Lantern/Effects")
 body = NodePath("..")
 head = NodePath("../Trypod/Head")
 cursor = NodePath("../UI/Cursor")

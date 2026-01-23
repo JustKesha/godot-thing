@@ -7,6 +7,7 @@ class_name PlayerAPI extends Node
 @export var camera: PlayerCameraController
 @export var camera_effects: PlayerCameraEffects
 @export var movement: PlayerMovementController
+@export var effects: PlayerEffectsManager
 
 @export_group("Body")
 @export var body: Node3D

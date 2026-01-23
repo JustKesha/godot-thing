@@ -30,7 +30,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.150807, 0.609284, -4.37814)
 selection = NodePath("..")
 eyes = []
 
-[node name="Light" type="SpotLight3D" parent="." index="3"]
+[node name="Light" type="SpotLight3D" parent="." index="3" groups=["lights"]]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 3, -1.25)
 light_color = Color(0.890356, 0.739549, 0.603262, 1)
 light_energy = 0.75
