@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://chg5cqgqni7h1"]
+
+[ext_resource type="Script" uid="uid://dads11mmt2xnp" path="res://scripts/effect.gd" id="1_ne68b"]
+[ext_resource type="PackedScene" uid="uid://b8mxrvh7c55n7" path="res://assets/models/KayKit_HalloweenBits_1.0_FREE/Assets/fbx/lantern_standing.fbx" id="1_yunin"]
+
+[node name="Effect" type="Node3D" node_paths=PackedStringArray("tick_timer", "duration_timer")]
+script = ExtResource("1_ne68b")
+tick_timer = NodePath("Tick")
+duration_timer = NodePath("Duration")
+
+[node name="Reference" parent="." instance=ExtResource("1_yunin")]
+transform = Transform3D(-0.283701, 0, -0.204973, 0, 0.35, 0, 0.204973, 0, -0.283701, 0, 0, 0)
+visible = false
+
+[node name="Duration" type="Timer" parent="."]
+
+[node name="Tick" type="Timer" parent="."]
